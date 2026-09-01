@@ -1,0 +1,84 @@
+﻿@model StudentRentalSystem.Models.Student
+
+
+<h2>
+    Student Registration
+</h2>
+
+
+<form method="post"
+      enctype="multipart/form-data">
+
+
+    <label>
+        Full Name
+    </label>
+
+    <input asp-for="FullName" />
+
+    <br />
+
+
+    <label>
+        Mobile Number
+    </label>
+
+    <input asp-for="Mobile" />
+
+    <br />
+
+
+    <label>
+        Email
+    </label>
+
+    <input asp-for="Email" />
+
+    <br />
+
+
+    <label>
+        Password
+    </label>
+
+    <input asp-for="Password"
+           type="password" />
+
+    <br />
+
+
+    <label>
+        Father's Number
+    </label>
+
+    <input asp-for="FathersNumber" />
+
+    <br />
+
+
+    <label>
+        Mother's Number
+    </label>
+
+    <input asp-for="MothersNumber" />
+
+    <br />
+
+
+    <label>
+        Student ID Card Picture
+    </label>
+
+    <input type="file"
+           name="StudentIdCardImage" />
+
+
+    <br />
+
+
+    <button type="submit">
+        Register
+    </button>
+
+
+</form>
