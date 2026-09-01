@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StudentRentalSystem.Data;
-using StudentRentalSystem.Models;
 
 
 namespace StudentRentalSystem.Controllers
@@ -12,7 +12,6 @@ namespace StudentRentalSystem.Controllers
         private readonly ApplicationDbContext _context;
 
 
-
         public AccountController(ApplicationDbContext context)
         {
             _context = context;
@@ -20,117 +19,114 @@ namespace StudentRentalSystem.Controllers
 
 
 
-        // Registration Page
+        // Login Page
 
-        public IActionResult Register()
+        public IActionResult Login()
         {
             return View();
         }
 
 
 
-        // Registration Submit
+        // Login Submit
 
 
         [HttpPost]
-        public IActionResult Register(Student student, IFormFile StudentIdCardImage)
+        public IActionResult Login(string email, string password)
         {
 
 
-            if (ModelState.IsValid)
-            {
-
-
-                if (StudentIdCardImage != null)
-                {
-
-                    string folder =
-                    Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot/uploads"
-                    );
-
-
-                    if (!Directory.Exists(folder))
-                    {
-                        Directory.CreateDirectory(folder);
-                    }
-
-
-
-                    string fileName =
-                    Guid.NewGuid().ToString()
-                    +
-                    Path.GetExtension(
-                    StudentIdCardImage.FileName
-                    );
-
-
-
-                    string filePath =
-                    Path.Combine(
-                    folder,
-                    fileName
-                    );
-
-
-
-                    using (var stream =
-                    new FileStream(
-                    filePath,
-                    FileMode.Create))
-                    {
-
-                        StudentIdCardImage.CopyTo(stream);
-
-                    }
-
-
-
-                    student.StudentIdCardImage =
-                    "/uploads/" + fileName;
-
-
-                }
-
-
-
-                student.IsApproved = false;
-
-
-                student.RegistrationDate =
-                DateTime.Now;
-
-
-
-                _context.Students.Add(student);
-
-
-                _context.SaveChanges();
-
-
-
-                return RedirectToAction(
-                "RegisterSuccess"
+            var student = _context.Students
+                .FirstOrDefault(
+                x => x.Email == email
+                &&
+                x.Password == password
                 );
 
+
+
+            if (student == null)
+            {
+
+                ViewBag.Error =
+                "Invalid email or password";
+
+                return View();
 
             }
 
 
-            return View(student);
+
+            if (student.IsApproved == false)
+            {
+
+                ViewBag.Error =
+                "Your account is waiting for admin approval";
+
+
+                return View();
+
+            }
+
+
+
+            HttpContext.Session.SetInt32(
+                "StudentId",
+                student.StudentId
+            );
+
+
+            HttpContext.Session.SetString(
+                "StudentName",
+                student.FullName
+            );
+
+
+
+            return RedirectToAction(
+                "Dashboard"
+            );
 
         }
 
 
 
-        public IActionResult RegisterSuccess()
+
+
+        public IActionResult Dashboard()
         {
+
+
+            var name =
+            HttpContext.Session.GetString(
+                "StudentName"
+            );
+
+
+            ViewBag.Name = name;
+
 
             return View();
 
         }
 
+
+
+
+
+        public IActionResult Logout()
+        {
+
+
+            HttpContext.Session.Clear();
+
+
+            return RedirectToAction(
+                "Login"
+            );
+
+
+        }
 
 
     }

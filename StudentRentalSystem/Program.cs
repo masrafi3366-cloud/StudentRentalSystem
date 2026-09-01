@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using StudentRentalSystem.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
-// Add MVC Services
+
 builder.Services.AddControllersWithViews();
 
 
-// Add Database Connection
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")
@@ -16,10 +17,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 );
 
 
+
+builder.Services.AddSession();
+
+
+
 var app = builder.Build();
 
 
-// Configure HTTP Request Pipeline
 
 if (!app.Environment.IsDevelopment())
 {
@@ -29,7 +34,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 
+
 app.UseHttpsRedirection();
+
 
 app.UseStaticFiles();
 
@@ -37,15 +44,19 @@ app.UseStaticFiles();
 app.UseRouting();
 
 
+
+app.UseSession();
+
+
 app.UseAuthorization();
 
 
-// Default Route
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
+
 
 
 app.Run();
