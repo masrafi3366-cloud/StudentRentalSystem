@@ -1,0 +1,69 @@
+﻿@model StudentRentalSystem.Models.Student
+
+
+<h2>
+    My Profile
+</h2>
+
+
+<hr />
+
+
+<p>
+    Full Name:
+
+    @Model.FullName
+
+</p>
+
+
+<p>
+    Mobile:
+
+    @Model.Mobile
+
+</p>
+
+
+<p>
+    Email:
+
+    @Model.Email
+
+</p>
+
+
+<p>
+    Father Number:
+
+    @Model.FathersNumber
+
+</p>
+
+
+<p>
+    Mother Number:
+
+    @Model.MothersNumber
+
+</p>
+
+
+
+<p>
+    Student ID Card:
+</p>
+
+
+<img src="@Model.StudentIdCardImage"
+     width="250" />
+
+
+
+<br />
+<br />
+
+
+<a href="/Account/Dashboard">
+    Back Dashboard
+</a>

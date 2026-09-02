@@ -1,13 +1,58 @@
-﻿<h2>
-    Welcome
-    @ViewBag.Name
+﻿@model StudentRentalSystem.Models.Student
+
+
+<h2>
+    Welcome, @Model.FullName
 </h2>
 
 
+<hr />
+
+
+<h3>
+    Student Dashboard
+</h3>
+
+
 <p>
-    You are logged in successfully.
+    Mobile:
+    @Model.Mobile
 </p>
 
+
+<p>
+    Email:
+    @Model.Email
+</p>
+
+
+<p>
+    Account Status:
+</p>
+
+
+
+@if (Model.IsApproved)
+{
+    <p>
+        Approved
+    </p>
+}
+else
+{
+    <p>
+        Pending Approval
+    </p>
+}
+
+
+
+<a href="/Account/Profile">
+    View Profile
+</a>
+
+
+<br />
 
 
 <a href="/Account/Logout">
