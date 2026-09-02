@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using StudentRentalSystem.Data;
 using StudentRentalSystem.Models;
 
@@ -91,12 +90,14 @@ namespace StudentRentalSystem.Controllers
 
                 student.IsApproved = false;
 
+
                 student.RegistrationDate =
                 DateTime.Now;
 
 
 
                 _context.Students.Add(student);
+
 
                 _context.SaveChanges();
 
@@ -250,6 +251,13 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+
+
             return View(student);
 
         }
@@ -259,8 +267,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
         // =========================
-        // PROFILE
+        // PROFILE ENHANCED
         // =========================
 
 
@@ -283,6 +293,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
             var student =
             _context.Students
             .FirstOrDefault(
@@ -291,9 +303,93 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+
+
+
+
+
+
+            // Total Posted Items
+
+            ViewBag.PostedItems =
+            _context.Items
+            .Count(
+                x => x.StudentId == studentId
+            );
+
+
+
+
+
+
+
+
+            // Total Rented Items
+
+            ViewBag.RentedItems =
+            _context.Rentals
+            .Count(
+                x => x.StudentId == studentId
+            );
+
+
+
+
+
+
+
+
+            // Total Payments
+
+            ViewBag.Payments =
+            _context.Payments
+            .Count(
+                x =>
+                _context.Rentals.Any(
+                    r =>
+                    r.RentalId == x.RentalId
+                    &&
+                    r.StudentId == studentId
+                )
+            );
+
+
+
+
+
+
+
+
+            // Total Extra Charges
+
+            ViewBag.ExtraCharges =
+            _context.ExtraCharges
+            .Count(
+                x =>
+                _context.Rentals.Any(
+                    r =>
+                    r.RentalId == x.RentalId
+                    &&
+                    r.StudentId == studentId
+                )
+            );
+
+
+
+
+
+
+
             return View(student);
 
         }
+
+
 
 
 

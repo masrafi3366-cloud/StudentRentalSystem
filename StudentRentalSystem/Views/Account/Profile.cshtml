@@ -9,59 +9,121 @@
 <hr />
 
 
+
+<h3>
+    Personal Information
+</h3>
+
+
+
 <p>
-    Full Name:
+    Name:
 
     @Model.FullName
-
 </p>
+
 
 
 <p>
     Mobile:
 
     @Model.Mobile
-
 </p>
+
 
 
 <p>
     Email:
 
     @Model.Email
-
-</p>
-
-
-<p>
-    Father Number:
-
-    @Model.FathersNumber
-
-</p>
-
-
-<p>
-    Mother Number:
-
-    @Model.MothersNumber
-
 </p>
 
 
 
 <p>
-    Student ID Card:
+    Account Status:
+
+    @if (Model.IsApproved)
+    {
+        <span>
+            Approved
+        </span>
+    }
+    else
+    {
+        <span>
+            Pending
+        </span>
+    }
+
 </p>
 
 
-<img src="@Model.StudentIdCardImage"
-     width="250" />
+
+<hr />
+
+
+
+<h3>
+    Student Activity
+</h3>
+
+
+
+<p>
+    Posted Items:
+
+    @ViewBag.PostedItems
+</p>
+
+
+
+<p>
+    Rented Items:
+
+    @ViewBag.RentedItems
+</p>
+
+
+
+<p>
+    Total Payments:
+
+    @ViewBag.Payments
+</p>
+
+
+
+<p>
+    Extra Charges:
+
+    @ViewBag.ExtraCharges
+</p>
+
+
+
+<hr />
+
+
+
+<h3>
+    Student ID Card
+</h3>
+
+
+@if (Model.StudentIdCardImage != null)
+{
+
+    <img src="@Model.StudentIdCardImage"
+         width="300" />
+
+}
 
 
 
 <br />
 <br />
+
 
 
 <a href="/Account/Dashboard">
