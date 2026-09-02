@@ -1,0 +1,69 @@
+﻿@model StudentRentalSystem.Models.Item
+
+
+<h2>
+    Post New Item
+</h2>
+
+
+
+<form method="post"
+      enctype="multipart/form-data">
+
+
+    <label>
+        Item Name
+    </label>
+
+    <input asp-for="ItemName" />
+
+    <br />
+
+
+    <label>
+        Category
+    </label>
+
+    <input asp-for="Category" />
+
+
+    <br />
+
+
+    <label>
+        Description
+    </label>
+
+    <textarea asp-for="Description"></textarea>
+
+
+    <br />
+
+
+    <label>
+        Image
+    </label>
+
+    <input type="file"
+           name="Image" />
+
+
+    <br />
+
+
+    <label>
+        Price Per Day
+    </label>
+
+    <input asp-for="PricePerDay" />
+
+
+    <br />
+
+
+    <button type="submit">
+        Post Item
+    </button>
+
+
+</form>

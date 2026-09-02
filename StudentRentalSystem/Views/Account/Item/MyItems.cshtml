@@ -1,0 +1,87 @@
+﻿@model IEnumerable<StudentRentalSystem.Models.Item>
+
+
+<h2>
+    My Posted Items
+</h2>
+
+
+
+<table border="1">
+
+
+    <tr>
+
+        <th>
+            Name
+        </th>
+
+
+        <th>
+            Category
+        </th>
+
+
+        <th>
+            Price
+        </th>
+
+
+        <th>
+            Status
+        </th>
+
+
+    </tr>
+
+
+
+    @foreach (var item in Model)
+    {
+
+
+        <tr>
+
+
+            <td>
+                @item.ItemName
+            </td>
+
+
+            <td>
+                @item.Category
+            </td>
+
+
+            <td>
+                @item.PricePerDay
+            </td>
+
+
+            <td>
+
+
+                @if (item.AdminApproved)
+                {
+                    <span>
+                        Approved
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        Pending
+                    </span>
+                }
+
+
+            </td>
+
+
+        </tr>
+
+
+    }
+
+
+</table>
