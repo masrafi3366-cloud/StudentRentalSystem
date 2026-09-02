@@ -1,132 +1,333 @@
 ﻿@model StudentRentalSystem.Models.Student
 
 
-<h2>
-    Welcome, @Model.FullName
-</h2>
-
-
-<hr />
-
-
-<h3>
-    Student Dashboard
-</h3>
-
-
-
-<p>
-    Mobile:
-    @Model.Mobile
-</p>
-
-
-
-<p>
-    Email:
-    @Model.Email
-</p>
-
-
-
-<p>
-    Account Status:
-</p>
-
-
-
-@if (Model.IsApproved)
-{
-    <p>
-        Approved
-    </p>
-}
-else
-{
-    <p>
-        Pending Approval
-    </p>
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
 
 
-<hr />
+<div class="container mt-4">
 
 
 
-<h3>
-    Student Actions
-</h3>
+    <div class="card shadow mb-4">
+
+
+        <div class="card-body">
+
+
+            <h2 class="card-title">
+                Welcome, @Model.FullName
+            </h2>
+
+
+            <hr />
+
+
+            <p>
+                <strong>Mobile:</strong>
+                @Model.Mobile
+            </p>
+
+
+
+            <p>
+                <strong>Email:</strong>
+                @Model.Email
+            </p>
 
 
 
 
-<a href="/Account/Profile">
-    View Profile
-</a>
+            <p>
+                <strong>Account Status:</strong>
+
+                @if (Model.IsApproved)
+                {
+                    <span class="badge bg-success">
+                        Approved
+                    </span>
+                }
+                else
+                {
+                    <span class="badge bg-warning">
+                        Pending Approval
+                    </span>
+                }
+
+            </p>
+
+
+        </div>
+
+
+    </div>
 
 
 
-<br />
-<br />
 
 
 
-<a href="/Item/Create">
-    Post New Item
-</a>
+
+    <h3 class="mb-3">
+        Student Actions
+    </h3>
 
 
 
-<br />
-<br />
+
+
+    <div class="row">
 
 
 
-<a href="/Item/MyItems">
-    My Posted Items
-</a>
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow h-100">
+
+
+                <div class="card-body">
+
+
+                    <h5 class="card-title">
+                        Profile
+                    </h5>
+
+
+                    <p>
+                        View and manage your profile information.
+                    </p>
+
+
+                    <a href="/Account/Profile"
+                       class="btn btn-primary">
+
+                        View Profile
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
 
 
 
-<br />
-<br />
 
 
 
-<a href="/Item/Browse">
-    Browse Items
-</a>
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow h-100">
+
+
+                <div class="card-body">
+
+
+                    <h5 class="card-title">
+                        Item Management
+                    </h5>
+
+
+                    <p>
+                        Post new items and manage your posted items.
+                    </p>
+
+
+                    <a href="/Item/Create"
+                       class="btn btn-success">
+
+                        Post Item
+
+                    </a>
+
+
+                    <br />
+                    <br />
+
+
+                    <a href="/Item/MyItems"
+                       class="btn btn-outline-success">
+
+                        My Items
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
 
 
 
-<br />
-<br />
 
 
 
-<a href="/Rental/MyRentals">
-    My Rent Items
-</a>
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow h-100">
+
+
+                <div class="card-body">
+
+
+                    <h5 class="card-title">
+                        Rental System
+                    </h5>
+
+
+                    <p>
+                        Browse items and manage your rentals.
+                    </p>
+
+
+                    <a href="/Item/Browse"
+                       class="btn btn-info">
+
+                        Browse Items
+
+                    </a>
+
+
+                    <br />
+                    <br />
+
+
+                    <a href="/Rental/MyRentals"
+                       class="btn btn-outline-info">
+
+                        My Rentals
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
 
 
 
-<br />
-<br />
+
+
+    </div>
 
 
 
-<a href="/ExtraCharge/MyCharges">
-    My Extra Charges
-</a>
 
 
 
-<br />
-<br />
+
+
+    <div class="row mt-3">
 
 
 
-<a href="/Account/Logout">
-    Logout
-</a>
+
+
+        <div class="col-md-6 mb-3">
+
+
+            <div class="card shadow">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Extra Charges
+                    </h5>
+
+
+                    <p>
+                        Check your late return charges.
+                    </p>
+
+
+                    <a href="/ExtraCharge/MyCharges"
+                       class="btn btn-danger">
+
+                        View Charges
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="col-md-6 mb-3">
+
+
+            <div class="card shadow">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Account
+                    </h5>
+
+
+                    <p>
+                        Logout from your account.
+                    </p>
+
+
+                    <a href="/Account/Logout"
+                       class="btn btn-dark">
+
+                        Logout
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+</div>
