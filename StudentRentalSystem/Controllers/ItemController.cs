@@ -23,7 +23,11 @@ namespace StudentRentalSystem.Controllers
 
 
 
-        // Create Item Page
+
+        // =========================
+        // CREATE ITEM PAGE
+        // =========================
+
 
         public IActionResult Create()
         {
@@ -34,7 +38,10 @@ namespace StudentRentalSystem.Controllers
 
             if (studentId == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
             }
 
 
@@ -46,7 +53,11 @@ namespace StudentRentalSystem.Controllers
 
 
 
-        // Save Item
+
+
+        // =========================
+        // SAVE ITEM
+        // =========================
 
 
         [HttpPost]
@@ -58,15 +69,22 @@ namespace StudentRentalSystem.Controllers
             HttpContext.Session.GetInt32("StudentId");
 
 
+
             if (studentId == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
             }
+
+
 
 
 
             if (ModelState.IsValid)
             {
+
 
 
                 if (Image != null)
@@ -92,15 +110,15 @@ namespace StudentRentalSystem.Controllers
                     Guid.NewGuid().ToString()
                     +
                     Path.GetExtension(
-                    Image.FileName
+                        Image.FileName
                     );
 
 
 
                     string filePath =
                     Path.Combine(
-                    folder,
-                    fileName
+                        folder,
+                        fileName
                     );
 
 
@@ -114,6 +132,7 @@ namespace StudentRentalSystem.Controllers
                         Image.CopyTo(stream);
 
                     }
+
 
 
 
@@ -149,12 +168,11 @@ namespace StudentRentalSystem.Controllers
                     "MyItems"
                 );
 
-
             }
 
 
-            return View(item);
 
+            return View(item);
 
         }
 
@@ -164,7 +182,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
-        // Student Posted Items
+
+        // =========================
+        // MY ITEMS
+        // =========================
 
 
         public IActionResult MyItems()
@@ -172,7 +193,9 @@ namespace StudentRentalSystem.Controllers
 
 
             int? studentId =
-            HttpContext.Session.GetInt32("StudentId");
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
 
 
 
@@ -186,10 +209,11 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             var items =
             _context.Items
             .Where(
-            x => x.StudentId == studentId
+                x => x.StudentId == studentId
             )
             .ToList();
 
@@ -197,8 +221,65 @@ namespace StudentRentalSystem.Controllers
 
             return View(items);
 
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // BROWSE ITEMS
+        // =========================
+
+
+        public IActionResult Browse()
+        {
+
+
+            var items =
+            _context.Items
+            .Where(
+                x => x.AdminApproved == true
+            )
+            .ToList();
+
+
+
+            return View(items);
 
         }
+
+
+
+
+
+
+
+        // =========================
+        // ITEM DETAILS
+        // =========================
+
+
+        public IActionResult Details(int id)
+        {
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x => x.ItemId == id
+            );
+
+
+
+            return View(item);
+
+        }
+
 
 
     }

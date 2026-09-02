@@ -1,0 +1,96 @@
+﻿@model IEnumerable<StudentRentalSystem.Models.Item>
+
+
+<h2>
+    Browse Items
+</h2>
+
+
+
+<table border="1" cellpadding="10">
+
+
+    <tr>
+
+        <th>
+            Image
+        </th>
+
+
+        <th>
+            Item Name
+        </th>
+
+
+        <th>
+            Category
+        </th>
+
+
+        <th>
+            Price Per Day
+        </th>
+
+
+        <th>
+            Action
+        </th>
+
+
+    </tr>
+
+
+
+
+    @foreach (var item in Model)
+    {
+
+
+        <tr>
+
+
+            <td>
+
+                <img src="@item.Image"
+                     width="120" />
+
+            </td>
+
+
+
+            <td>
+                @item.ItemName
+            </td>
+
+
+
+            <td>
+                @item.Category
+            </td>
+
+
+
+            <td>
+                @item.PricePerDay
+            </td>
+
+
+
+            <td>
+
+
+                <a href="/Item/Details/@item.ItemId">
+                    View Details
+                </a>
+
+
+            </td>
+
+
+        </tr>
+
+
+    }
+
+
+</table>
