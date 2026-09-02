@@ -1,96 +1,108 @@
 ﻿@model IEnumerable<StudentRentalSystem.Models.Item>
 
 
-<h2>
-    Browse Items
-</h2>
+@{
+    ViewData["Title"] = "Browse Items";
+}
 
 
 
-<table border="1" cellpadding="10">
+<div class="container mt-4">
 
 
-    <tr>
-
-        <th>
-            Image
-        </th>
-
-
-        <th>
-            Item Name
-        </th>
-
-
-        <th>
-            Category
-        </th>
-
-
-        <th>
-            Price Per Day
-        </th>
-
-
-        <th>
-            Action
-        </th>
-
-
-    </tr>
+    <h2 class="mb-4">
+        Available Items
+    </h2>
 
 
 
 
-    @foreach (var item in Model)
-    {
-
-
-        <tr>
-
-
-            <td>
-
-                <img src="@item.Image"
-                     width="120" />
-
-            </td>
+    <div class="row">
 
 
 
-            <td>
-                @item.ItemName
-            </td>
+        @foreach (var item in Model)
+        {
+
+
+            <div class="col-md-4 mb-4">
+
+
+                <div class="card shadow h-100">
 
 
 
-            <td>
-                @item.Category
-            </td>
+                    @if (item.Image != null)
+                    {
+
+                        <img src="@item.Image"
+                             class="card-img-top"
+                             style="height:220px; object-fit:cover;" />
+
+                    }
 
 
 
-            <td>
-                @item.PricePerDay
-            </td>
+
+                    <div class="card-body">
 
 
 
-            <td>
+                        <h5 class="card-title">
+                            @item.ItemName
+                        </h5>
 
 
-                <a href="/Item/Details/@item.ItemId">
-                    View Details
-                </a>
+
+                        <p class="card-text">
+
+                            Category:
+
+                            @item.Category
+
+                        </p>
 
 
-            </td>
 
 
-        </tr>
+                        <p class="card-text">
+
+                            Price Per Day:
+
+                            <strong>
+                                @item.PricePerDay
+                            </strong>
+
+                        </p>
 
 
-    }
 
 
-</table>
+
+                        <a href="/Item/Details/@item.ItemId"
+                           class="btn btn-primary">
+
+                            View Details
+
+                        </a>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        }
+
+
+
+    </div>
+
+
+</div>
