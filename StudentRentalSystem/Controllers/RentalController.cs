@@ -239,6 +239,59 @@ namespace StudentRentalSystem.Controllers
         }
 
 
+
+
+
+
+
+
+        // =========================
+        // MY RENT ITEMS
+        // =========================
+
+
+        public IActionResult MyRentals()
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+            if (studentId == null)
+            {
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+            }
+
+
+
+
+
+            var rentals =
+            _context.Rentals
+            .Where(
+                x => x.StudentId == studentId
+            )
+            .ToList();
+
+
+
+
+
+            return View(rentals);
+
+
+        }
+
+
+
+
     }
 
 }

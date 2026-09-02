@@ -1,0 +1,108 @@
+﻿@model IEnumerable<StudentRentalSystem.Models.Rental>
+
+
+<h2>
+    My Rent Items
+</h2>
+
+
+<table border="1" cellpadding="10">
+
+
+    <tr>
+
+        <th>
+            Rental ID
+        </th>
+
+
+        <th>
+            Item ID
+        </th>
+
+
+        <th>
+            Rental Days
+        </th>
+
+
+        <th>
+            Start Date
+        </th>
+
+
+        <th>
+            End Date
+        </th>
+
+
+        <th>
+            Amount
+        </th>
+
+
+        <th>
+            Status
+        </th>
+
+
+    </tr>
+
+
+
+    @foreach (var rental in Model)
+    {
+
+
+        <tr>
+
+
+            <td>
+                @rental.RentalId
+            </td>
+
+
+
+            <td>
+                @rental.ItemId
+            </td>
+
+
+
+            <td>
+                @rental.RentalDays
+            </td>
+
+
+
+            <td>
+                @rental.StartDate.ToShortDateString()
+            </td>
+
+
+
+            <td>
+                @rental.EndDate.ToShortDateString()
+            </td>
+
+
+
+            <td>
+                @rental.TotalAmount
+            </td>
+
+
+
+            <td>
+                @rental.Status
+            </td>
+
+
+
+        </tr>
+
+
+    }
+
+
+</table>
