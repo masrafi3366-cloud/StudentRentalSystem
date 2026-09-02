@@ -1,0 +1,129 @@
+﻿@model IEnumerable<StudentRentalSystem.Models.Student>
+
+
+<h2>
+    Student Verification
+</h2>
+
+
+<table border="1" cellpadding="10">
+
+
+    <tr>
+
+        <th>
+            Name
+        </th>
+
+
+        <th>
+            Mobile
+        </th>
+
+
+        <th>
+            Email
+        </th>
+
+
+        <th>
+            Status
+        </th>
+
+
+        <th>
+            Action
+        </th>
+
+    </tr>
+
+
+
+    @foreach (var student in Model)
+    {
+
+        <tr>
+
+
+            <td>
+                @student.FullName
+            </td>
+
+
+
+            <td>
+                @student.Mobile
+            </td>
+
+
+
+            <td>
+                @student.Email
+            </td>
+
+
+
+
+            <td>
+
+                @if (student.IsApproved)
+                {
+                    <span>
+                        Approved
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        Pending
+                    </span>
+                }
+
+            </td>
+
+
+
+
+            <td>
+
+
+                <a href="/Admin/Dashboard/StudentDetails/@student.StudentId">
+                    Details
+                </a>
+
+
+                <br />
+
+
+                <a href="/Admin/Dashboard/Approve/@student.StudentId">
+                    Approve
+                </a>
+
+
+                <br />
+
+
+                <a href="/Admin/Dashboard/Reject/@student.StudentId">
+                    Reject
+                </a>
+
+
+            </td>
+
+
+        </tr>
+
+    }
+
+
+</table>
+
+
+
+<br />
+
+
+
+<a href="/Admin/ItemApproval">
+    Manage Items
+</a>

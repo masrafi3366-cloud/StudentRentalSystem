@@ -1,0 +1,60 @@
+﻿@model StudentRentalSystem.Models.Item
+
+
+<h2>
+    Item Details
+</h2>
+
+
+
+<p>
+    Item Name:
+
+    @Model.ItemName
+
+</p>
+
+
+
+<p>
+    Category:
+
+    @Model.Category
+
+</p>
+
+
+
+
+<p>
+    Description:
+
+    @Model.Description
+
+</p>
+
+
+
+
+<p>
+    Price Per Day:
+
+    @Model.PricePerDay
+
+</p>
+
+
+
+
+<img src="@Model.Image"
+     width="300" />
+
+
+
+<br />
+<br />
+
+
+<a href="/Admin/ItemApproval">
+    Back
+</a>
