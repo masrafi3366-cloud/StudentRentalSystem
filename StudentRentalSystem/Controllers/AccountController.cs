@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentRentalSystem.Data;
 using StudentRentalSystem.Models;
+using StudentRentalSystem.Helpers;
 
 
 namespace StudentRentalSystem.Controllers
@@ -88,6 +89,20 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+                // Password Hashing Added
+
+                student.Password =
+                PasswordHelper.HashPassword(
+                    student.Password
+                );
+
+
+
+
+
+
                 student.IsApproved = false;
 
 
@@ -153,14 +168,14 @@ namespace StudentRentalSystem.Controllers
         {
 
 
+
             var student =
             _context.Students
             .FirstOrDefault(
-                x =>
-                x.Email == email
-                &&
-                x.Password == password
+                x => x.Email == email
             );
+
+
 
 
 
@@ -178,6 +193,32 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+            bool passwordMatch =
+            PasswordHelper.VerifyPassword(
+                password,
+                student.Password
+            );
+
+
+
+
+
+            if (passwordMatch == false)
+            {
+
+                ViewBag.Error =
+                "Invalid email or password";
+
+
+                return View();
+
+            }
+
+
+
+
+
             if (student.IsApproved == false)
             {
 
@@ -188,6 +229,7 @@ namespace StudentRentalSystem.Controllers
                 return View();
 
             }
+
 
 
 
@@ -314,8 +356,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // Total Posted Items
-
             ViewBag.PostedItems =
             _context.Items
             .Count(
@@ -329,8 +369,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // Total Rented Items
-
             ViewBag.RentedItems =
             _context.Rentals
             .Count(
@@ -343,8 +381,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-            // Total Payments
 
             ViewBag.Payments =
             _context.Payments
@@ -364,8 +400,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-            // Total Extra Charges
 
             ViewBag.ExtraCharges =
             _context.ExtraCharges
