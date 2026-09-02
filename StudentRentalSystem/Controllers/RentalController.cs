@@ -245,8 +245,9 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
         // =========================
-        // MY RENT ITEMS
+        // MY RENTALS
         // =========================
 
 
@@ -285,6 +286,139 @@ namespace StudentRentalSystem.Controllers
 
 
             return View(rentals);
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // RETURN ITEM
+        // =========================
+
+
+        public IActionResult ReturnItem(int id)
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+            if (studentId == null)
+            {
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+            }
+
+
+
+
+
+            var rental =
+            _context.Rentals
+            .FirstOrDefault(
+                x => x.RentalId == id
+            );
+
+
+
+            if (rental == null)
+            {
+                return NotFound();
+            }
+
+
+
+
+
+            DateTime today =
+            DateTime.Now;
+
+
+
+
+
+            if (today <= rental.EndDate)
+            {
+
+                rental.Status =
+                "Completed";
+
+            }
+            else
+            {
+
+                rental.Status =
+                "Late";
+
+            }
+
+
+
+
+
+            _context.SaveChanges();
+
+
+
+
+
+            return RedirectToAction(
+                "ReturnSuccess",
+                new
+                {
+                    id = rental.RentalId
+                }
+            );
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // RETURN SUCCESS
+        // =========================
+
+
+        public IActionResult ReturnSuccess(int id)
+        {
+
+
+            var rental =
+            _context.Rentals
+            .FirstOrDefault(
+                x => x.RentalId == id
+            );
+
+
+
+            if (rental == null)
+            {
+                return NotFound();
+            }
+
+
+
+            return View(rental);
 
 
         }

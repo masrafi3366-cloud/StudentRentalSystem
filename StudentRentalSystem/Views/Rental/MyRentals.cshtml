@@ -6,6 +6,7 @@
 </h2>
 
 
+
 <table border="1" cellpadding="10">
 
 
@@ -46,13 +47,19 @@
         </th>
 
 
+        <th>
+            Action
+        </th>
+
+
     </tr>
+
+
 
 
 
     @foreach (var rental in Model)
     {
-
 
         <tr>
 
@@ -99,10 +106,37 @@
 
 
 
+
+            <td>
+
+
+                @if (rental.Status == "Confirmed")
+                {
+
+                    <a href="/Rental/ReturnItem/@rental.RentalId">
+                        Return Item
+                    </a>
+
+                }
+                else
+                {
+
+                    <span>
+                        No Action
+                    </span>
+
+                }
+
+
+
+            </td>
+
+
+
         </tr>
 
-
     }
+
 
 
 </table>
