@@ -1,87 +1,216 @@
 ﻿@model IEnumerable<StudentRentalSystem.Models.Item>
 
 
-<h2>
-    My Posted Items
-</h2>
+@{
+    ViewData["Title"] = "My Items";
+}
 
 
 
-<table border="1">
+<div class="container mt-4">
 
 
-    <tr>
-
-        <th>
-            Name
-        </th>
-
-
-        <th>
-            Category
-        </th>
-
-
-        <th>
-            Price
-        </th>
-
-
-        <th>
-            Status
-        </th>
-
-
-    </tr>
+    <h2 class="mb-4">
+        My Posted Items
+    </h2>
 
 
 
-    @foreach (var item in Model)
-    {
+    <a href="/Item/Create"
+       class="btn btn-success mb-3">
+
+        + Post New Item
+
+    </a>
 
 
-        <tr>
 
 
-            <td>
-                @item.ItemName
-            </td>
+
+    <div class="table-responsive">
 
 
-            <td>
-                @item.Category
-            </td>
+        <table class="table table-bordered table-hover shadow">
 
 
-            <td>
-                @item.PricePerDay
-            </td>
+            <thead class="table-dark">
 
 
-            <td>
+                <tr>
+
+                    <th>
+                        Image
+                    </th>
 
 
-                @if (item.AdminApproved)
+                    <th>
+                        Item Name
+                    </th>
+
+
+                    <th>
+                        Category
+                    </th>
+
+
+                    <th>
+                        Price / Day
+                    </th>
+
+
+                    <th>
+                        Status
+                    </th>
+
+
+                    <th>
+                        Created Date
+                    </th>
+
+
+                    <th>
+                        Action
+                    </th>
+
+
+                </tr>
+
+
+            </thead>
+
+
+
+
+
+            <tbody>
+
+
+
+                @foreach (var item in Model)
                 {
-                    <span>
-                        Approved
-                    </span>
+
+
+                    <tr>
+
+
+
+                        <td>
+
+
+                            @if (!string.IsNullOrEmpty(item.Image))
+                            {
+
+                                <img src="@item.Image"
+                                     width="80"
+                                     height="60"
+                                     style="object-fit:cover;"
+                                     class="rounded" />
+
+                            }
+                            else
+                            {
+
+                                <span>
+                                    No Image
+                                </span>
+
+                            }
+
+
+                        </td>
+
+
+
+
+
+                        <td>
+                            @item.ItemName
+                        </td>
+
+
+
+
+                        <td>
+                            @item.Category
+                        </td>
+
+
+
+
+                        <td>
+                            @item.PricePerDay
+                        </td>
+
+
+
+
+
+                        <td>
+
+
+                            @if (item.AdminApproved)
+                            {
+
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+
+                            }
+                            else
+                            {
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                            }
+
+
+                        </td>
+
+
+
+
+
+                        <td>
+                            @item.CreatedDate.ToShortDateString()
+                        </td>
+
+
+
+
+
+                        <td>
+
+
+                            <a href="/Item/Details/@item.ItemId"
+                               class="btn btn-primary btn-sm">
+
+                                View
+
+                            </a>
+
+
+                        </td>
+
+
+
+                    </tr>
+
+
                 }
-                else
-                {
-                    <span>
-                        Pending
-                    </span>
-                }
 
 
-            </td>
+
+            </tbody>
 
 
-        </tr>
+
+        </table>
 
 
-    }
+    </div>
 
 
-</table>
+
+</div>

@@ -1,142 +1,179 @@
 ﻿@model IEnumerable<StudentRentalSystem.Models.Rental>
 
 
-<h2>
-    My Rent Items
-</h2>
+
+@{
+    ViewData["Title"] = "My Rentals";
+}
 
 
 
-<table border="1" cellpadding="10">
+
+<div class="container mt-4">
 
 
-    <tr>
-
-        <th>
-            Rental ID
-        </th>
-
-
-        <th>
-            Item ID
-        </th>
-
-
-        <th>
-            Rental Days
-        </th>
-
-
-        <th>
-            Start Date
-        </th>
-
-
-        <th>
-            End Date
-        </th>
-
-
-        <th>
-            Amount
-        </th>
-
-
-        <th>
-            Status
-        </th>
-
-
-        <th>
-            Action
-        </th>
-
-
-    </tr>
+    <h2 class="mb-4">
+        My Rental History
+    </h2>
 
 
 
 
 
-    @foreach (var rental in Model)
-    {
-
-        <tr>
-
-
-            <td>
-                @rental.RentalId
-            </td>
+    <div class="table-responsive">
 
 
 
-            <td>
-                @rental.ItemId
-            </td>
+        <table class="table table-bordered table-hover shadow">
 
 
 
-            <td>
-                @rental.RentalDays
-            </td>
+            <thead class="table-dark">
+
+
+                <tr>
+
+
+                    <th>
+                        Rental ID
+                    </th>
+
+
+                    <th>
+                        Start Date
+                    </th>
+
+
+                    <th>
+                        End Date
+                    </th>
+
+
+                    <th>
+                        Days
+                    </th>
+
+
+                    <th>
+                        Amount
+                    </th>
+
+
+                    <th>
+                        Status
+                    </th>
+
+
+                </tr>
+
+
+            </thead>
 
 
 
-            <td>
-                @rental.StartDate.ToShortDateString()
-            </td>
+
+
+            <tbody>
 
 
 
-            <td>
-                @rental.EndDate.ToShortDateString()
-            </td>
-
-
-
-            <td>
-                @rental.TotalAmount
-            </td>
-
-
-
-            <td>
-                @rental.Status
-            </td>
-
-
-
-
-            <td>
-
-
-                @if (rental.Status == "Confirmed")
+                @foreach (var rental in Model)
                 {
 
-                    <a href="/Rental/ReturnItem/@rental.RentalId">
-                        Return Item
-                    </a>
+
+                    <tr>
+
+
+                        <td>
+                            @rental.RentalId
+                        </td>
+
+
+
+                        <td>
+                            @rental.StartDate.ToShortDateString()
+                        </td>
+
+
+
+                        <td>
+                            @rental.EndDate.ToShortDateString()
+                        </td>
+
+
+
+                        <td>
+                            @rental.RentalDays
+                        </td>
+
+
+
+                        <td>
+                            @rental.TotalAmount
+                        </td>
+
+
+
+
+                        <td>
+
+
+
+                            @if (rental.Status == "Approved")
+                            {
+
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+
+                            }
+                            else if (rental.Status == "Pending")
+                            {
+
+                                <span class="badge bg-warning">
+                                    Pending
+                                </span>
+
+                            }
+                            else if (rental.Status == "Late")
+                            {
+
+                                <span class="badge bg-danger">
+                                    Late
+                                </span>
+
+                            }
+                            else
+                            {
+
+                                <span class="badge bg-secondary">
+                                    @rental.Status
+                                </span>
+
+                            }
+
+
+
+                        </td>
+
+
+
+                    </tr>
+
 
                 }
-                else
-                {
-
-                    <span>
-                        No Action
-                    </span>
-
-                }
 
 
 
-            </td>
+            </tbody>
 
 
 
-        </tr>
-
-    }
+        </table>
 
 
 
-</table>
+    </div>
+
+
+</div>
