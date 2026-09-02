@@ -6,12 +6,16 @@
 </h2>
 
 
+<hr />
+
+
 <p>
     Rental ID:
 
     @Model.RentalId
 
 </p>
+
 
 
 <p>
@@ -22,9 +26,19 @@
 </p>
 
 
+
 <p>
     Status:
 
-    Waiting for Payment
+    @Model.Status
 
 </p>
+
+
+
+<br />
+
+
+<a href="/Payment/Create/@Model.RentalId">
+    Pay Now
+</a>

@@ -1,0 +1,49 @@
+﻿@model StudentRentalSystem.Models.Rental
+
+
+<h2>
+    Payment
+</h2>
+
+
+<hr />
+
+
+<p>
+    Rental Amount:
+
+    @Model.TotalAmount
+</p>
+
+
+
+
+<form method="post">
+
+
+    <input type="hidden"
+           name="RentalId"
+           value="@Model.RentalId" />
+
+
+
+    <label>
+        Transaction ID
+    </label>
+
+
+    <input type="text"
+           name="TransactionId" />
+
+
+
+    <br /><br />
+
+
+    <button type="submit">
+        Confirm Payment
+    </button>
+
+
+
+</form>
