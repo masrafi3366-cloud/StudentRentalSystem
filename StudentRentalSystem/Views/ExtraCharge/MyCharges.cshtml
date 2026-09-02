@@ -1,0 +1,101 @@
+﻿@model IEnumerable<StudentRentalSystem.Models.ExtraCharge>
+
+
+<h2>
+    My Extra Charges
+</h2>
+
+
+<table border="1" cellpadding="10">
+
+
+    <tr>
+
+        <th>
+            Charge ID
+        </th>
+
+
+        <th>
+            Rental ID
+        </th>
+
+
+        <th>
+            Late Days
+        </th>
+
+
+        <th>
+            Amount
+        </th>
+
+
+        <th>
+            Payment Status
+        </th>
+
+
+    </tr>
+
+
+
+    @foreach (var charge in Model)
+    {
+
+
+        <tr>
+
+
+            <td>
+                @charge.ChargeId
+            </td>
+
+
+            <td>
+                @charge.RentalId
+            </td>
+
+
+            <td>
+                @charge.LateDays
+            </td>
+
+
+            <td>
+                @charge.Amount
+            </td>
+
+
+            <td>
+
+
+                @if (charge.PaidStatus)
+                {
+
+                    <span>
+                        Paid
+                    </span>
+
+                }
+                else
+                {
+
+                    <span>
+                        Unpaid
+                    </span>
+
+                }
+
+
+            </td>
+
+
+
+        </tr>
+
+
+    }
+
+
+</table>

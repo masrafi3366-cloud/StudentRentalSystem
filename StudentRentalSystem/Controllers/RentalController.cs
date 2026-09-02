@@ -363,6 +363,45 @@ namespace StudentRentalSystem.Controllers
                 rental.Status =
                 "Late";
 
+
+
+                int lateDays =
+                (today - rental.EndDate).Days;
+
+
+
+                decimal chargeAmount =
+                lateDays * 50;
+
+
+
+                ExtraCharge charge =
+                new ExtraCharge();
+
+
+
+                charge.RentalId =
+                rental.RentalId;
+
+
+
+                charge.LateDays =
+                lateDays;
+
+
+
+                charge.Amount =
+                chargeAmount;
+
+
+
+                charge.PaidStatus =
+                false;
+
+
+
+                _context.ExtraCharges.Add(charge);
+
             }
 
 
