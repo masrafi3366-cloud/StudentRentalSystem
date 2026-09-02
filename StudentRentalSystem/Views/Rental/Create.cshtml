@@ -1,0 +1,69 @@
+﻿@model StudentRentalSystem.Models.Item
+
+
+<h2>
+    Rent Item
+</h2>
+
+
+<h3>
+    @Model.ItemName
+</h3>
+
+
+
+<img src="@Model.Image"
+     width="250" />
+
+
+
+<p>
+    Price Per Day:
+
+    @Model.PricePerDay
+
+</p>
+
+
+
+
+<form method="post">
+
+
+    <input type="hidden"
+           name="ItemId"
+           value="@Model.ItemId" />
+
+
+
+    <label>
+        Start Date
+    </label>
+
+    <input type="date"
+           name="StartDate" />
+
+
+    <br />
+
+
+
+
+    <label>
+        End Date
+    </label>
+
+    <input type="date"
+           name="EndDate" />
+
+
+    <br />
+
+
+
+    <button type="submit">
+        Proceed
+    </button>
+
+
+</form>
