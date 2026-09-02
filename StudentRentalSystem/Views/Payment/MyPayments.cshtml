@@ -1,9 +1,8 @@
-﻿@model IEnumerable<StudentRentalSystem.Models.ExtraCharge>
-
+﻿@model IEnumerable<StudentRentalSystem.Models.Payment>
 
 
 @{
-    ViewData["Title"] = "My Charges";
+    ViewData["Title"] = "My Payments";
 }
 
 
@@ -12,13 +11,14 @@
 
 
     <h2 class="mb-4">
-        My Extra Charges
+        Payment History
     </h2>
 
 
 
 
     <div class="table-responsive">
+
 
 
         <table class="table table-bordered table-hover shadow">
@@ -32,7 +32,7 @@
 
 
                     <th>
-                        Charge ID
+                        Payment ID
                     </th>
 
 
@@ -42,17 +42,22 @@
 
 
                     <th>
-                        Late Days
-                    </th>
-
-
-                    <th>
                         Amount
                     </th>
 
 
                     <th>
+                        Payment Date
+                    </th>
+
+
+                    <th>
                         Status
+                    </th>
+
+
+                    <th>
+                        Transaction ID
                     </th>
 
 
@@ -69,7 +74,7 @@
 
 
 
-                @foreach (var charge in Model)
+                @foreach (var payment in Model)
                 {
 
 
@@ -77,25 +82,25 @@
 
 
                         <td>
-                            @charge.ChargeId
+                            @payment.PaymentId
                         </td>
 
 
 
                         <td>
-                            @charge.RentalId
+                            @payment.RentalId
                         </td>
 
 
 
                         <td>
-                            @charge.LateDays
+                            @payment.Amount
                         </td>
 
 
 
                         <td>
-                            @charge.Amount
+                            @payment.PaymentDate.ToShortDateString()
                         </td>
 
 
@@ -104,8 +109,7 @@
                         <td>
 
 
-
-                            @if (charge.PaidStatus)
+                            @if (payment.PaymentStatus == "Completed")
                             {
 
                                 <span class="badge bg-success">
@@ -116,14 +120,20 @@
                             else
                             {
 
-                                <span class="badge bg-danger">
-                                    Unpaid
+                                <span class="badge bg-warning text-dark">
+                                    Pending
                                 </span>
 
                             }
 
 
+                        </td>
 
+
+
+
+                        <td>
+                            @payment.TransactionId
                         </td>
 
 
@@ -140,6 +150,7 @@
 
 
         </table>
+
 
 
     </div>
