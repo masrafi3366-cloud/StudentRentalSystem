@@ -1,0 +1,295 @@
+﻿@model IEnumerable<StudentRentalSystem.Models.Item>
+
+
+@{
+    ViewData["Title"] = "Item Approval";
+}
+
+
+
+<div class="container mt-4">
+
+
+    <h2 class="mb-4">
+
+        Item Approval Management 📦
+
+    </h2>
+
+
+
+
+
+    @if (Model == null || !Model.Any())
+    {
+
+
+        <div class="alert alert-info text-center">
+
+            No items found.
+
+        </div>
+
+
+    }
+
+    else
+    {
+
+
+        <div class="table-responsive">
+
+
+            <table class="table table-bordered table-hover shadow">
+
+
+                <thead class="table-dark">
+
+
+                    <tr>
+
+
+                        <th>
+                            Image
+                        </th>
+
+
+                        <th>
+                            Item Name
+                        </th>
+
+
+                        <th>
+                            Category
+                        </th>
+
+
+                        <th>
+                            Owner ID
+                        </th>
+
+
+                        <th>
+                            Price / Day
+                        </th>
+
+
+                        <th>
+                            Status
+                        </th>
+
+
+                        <th>
+                            Action
+                        </th>
+
+
+                    </tr>
+
+
+                </thead>
+
+
+
+
+
+                <tbody>
+
+
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        <tr>
+
+
+                            <td>
+
+
+                                @if (!string.IsNullOrEmpty(item.Image))
+                                {
+
+                                    <img src="@item.Image"
+                                         width="80"
+                                         height="60"
+                                         class="rounded"
+                                         style="object-fit:cover;" />
+
+                                }
+                                else
+                                {
+
+                                    <span>
+                                        No Image
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+                                @item.ItemName
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+                                @item.Category
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+                                @item.StudentId
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+                                @item.PricePerDay
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+                                @if (item.AdminApproved)
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        Approved
+
+                                    </span>
+
+                                }
+                                else
+                                {
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Pending
+
+                                    </span>
+
+                                }
+
+
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+                                @if (!item.AdminApproved)
+                                {
+
+
+                                    <a href="/Admin/Dashboard/ApproveItem/@item.ItemId"
+                                       class="btn btn-success btn-sm mb-1"
+                                       onclick="return confirm('Approve this item?');">
+
+
+                                        Approve
+
+
+                                    </a>
+
+
+
+
+
+                                    <a href="/Admin/Dashboard/RejectItem/@item.ItemId"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Reject this item?');">
+
+
+                                        Reject
+
+
+                                    </a>
+
+
+                                }
+                                else
+                                {
+
+
+                                    <span class="badge bg-success">
+
+                                        Verified
+
+                                    </span>
+
+
+                                }
+
+
+
+                            </td>
+
+
+
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+
+            </table>
+
+
+
+        </div>
+
+
+    }
+
+
+
+</div>
