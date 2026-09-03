@@ -1,69 +1,275 @@
 ﻿@model StudentRentalSystem.Models.Item
 
 
-<h2>
-    Rent Item
-</h2>
-
-
-<h3>
-    @Model.ItemName
-</h3>
-
-
-
-<img src="@Model.Image"
-     width="250" />
-
-
-
-<p>
-    Price Per Day:
-
-    @Model.PricePerDay
-
-</p>
+@{
+    ViewData["Title"] = "Rent Item";
+}
 
 
 
 
-<form method="post">
 
 
-    <input type="hidden"
-           name="ItemId"
-           value="@Model.ItemId" />
+<div class="container mt-5">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-md-7">
 
 
 
-    <label>
-        Start Date
-    </label>
-
-    <input type="date"
-           name="StartDate" />
-
-
-    <br />
+            <div class="card shadow p-4">
 
 
 
 
-    <label>
-        End Date
-    </label>
-
-    <input type="date"
-           name="EndDate" />
 
 
-    <br />
+                <h2 class="text-center mb-4">
+
+                    Rent Item
+
+                </h2>
 
 
 
-    <button type="submit">
-        Proceed
-    </button>
 
 
-</form>
+
+
+                <div class="text-center mb-4">
+
+
+
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+
+                        <img src="@Model.Image"
+                             class="img-fluid rounded shadow"
+                             style="max-width:300px;" />
+
+                    }
+
+                    else
+                    {
+
+                        <p class="text-muted">
+
+                            No Image Available
+
+                        </p>
+
+                    }
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <h3 class="text-center">
+
+                    @Model.ItemName
+
+                </h3>
+
+
+
+
+
+
+
+
+                <p class="text-center text-muted">
+
+
+                    Category:
+
+                    @Model.Category
+
+
+                </p>
+
+
+
+
+
+
+
+
+                <h5 class="text-center text-success mb-4">
+
+
+                    Price Per Day:
+
+                    ৳ @Model.PricePerDay
+
+
+                </h5>
+
+
+
+
+
+
+
+
+
+                @if (TempData["Error"] != null)
+                {
+
+                    <div class="alert alert-danger text-center">
+
+                        @TempData["Error"]
+
+                    </div>
+
+                }
+
+
+
+
+
+
+
+
+
+                <form method="post">
+
+
+                    @Html.AntiForgeryToken()
+
+
+
+
+
+                    <input type="hidden"
+                           name="ItemId"
+                           value="@Model.ItemId" />
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Start Date
+
+                        </label>
+
+
+
+                        <input type="date"
+                               name="StartDate"
+                               class="form-control"
+                               required />
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            End Date
+
+                        </label>
+
+
+
+                        <input type="date"
+                               name="EndDate"
+                               class="form-control"
+                               required />
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <button type="submit"
+                            class="btn btn-success w-100">
+
+
+                        Confirm Rent
+
+
+                    </button>
+
+
+
+
+
+                </form>
+
+
+
+
+
+
+
+
+
+                <div class="text-center mt-3">
+
+
+                    <a href="/Item/Browse"
+                       class="btn btn-outline-secondary">
+
+
+                        Back To Items
+
+
+                    </a>
+
+
+
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
