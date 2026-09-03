@@ -7,8 +7,6 @@
 
 
 
-
-
 <div class="container mt-5">
 
 
@@ -22,13 +20,26 @@
 
 
 
-
-
                 <h2 class="text-center mb-4">
 
                     Post New Item
 
                 </h2>
+
+
+
+
+
+                @if (TempData["Success"] != null)
+                {
+
+                    <div class="alert alert-success text-center">
+
+                        @TempData["Success"]
+
+                    </div>
+
+                }
 
 
 
@@ -40,6 +51,8 @@
                       enctype="multipart/form-data">
 
 
+
+                    @Html.AntiForgeryToken()
 
 
 
@@ -54,6 +67,7 @@
                             Item Name
 
                         </label>
+
 
 
                         <input asp-for="ItemName"
@@ -76,7 +90,6 @@
 
 
 
-
                     <div class="mb-3">
 
 
@@ -90,11 +103,16 @@
 
                         <input asp-for="Category"
                                class="form-control"
-                               placeholder="Example: Book, Electronics" />
+                               placeholder="Example: Book, Electronics, Furniture" />
+
+
+
+                        <span asp-validation-for="Category"
+                              class="text-danger">
+                        </span>
 
 
                     </div>
-
 
 
 
@@ -120,8 +138,13 @@
                                   placeholder="Write item details"></textarea>
 
 
-                    </div>
 
+                        <span asp-validation-for="Description"
+                              class="text-danger">
+                        </span>
+
+
+                    </div>
 
 
 
@@ -155,7 +178,6 @@
 
 
 
-
                     <div class="mb-3">
 
 
@@ -171,8 +193,13 @@
                                type="number"
                                step="0.01"
                                class="form-control"
-                               placeholder="Enter daily rent price" />
+                               placeholder="Enter rental price" />
 
+
+
+                        <span asp-validation-for="PricePerDay"
+                              class="text-danger">
+                        </span>
 
 
                     </div>
@@ -197,9 +224,8 @@
 
 
 
-
-
                 </form>
+
 
 
 
@@ -236,6 +262,9 @@
 
 
 </div>
+
+
+
 
 
 

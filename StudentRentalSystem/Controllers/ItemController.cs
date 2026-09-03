@@ -16,8 +16,12 @@ namespace StudentRentalSystem.Controllers
 
         public ItemController(ApplicationDbContext context)
         {
+
             _context = context;
+
         }
+
+
 
 
 
@@ -32,22 +36,29 @@ namespace StudentRentalSystem.Controllers
         public IActionResult Create()
         {
 
+
             int? studentId =
             HttpContext.Session.GetInt32("StudentId");
 
 
+
             if (studentId == null)
             {
+
                 return RedirectToAction(
                     "Login",
                     "Account"
                 );
+
             }
 
 
-            return View();
+
+            return View(new Item());
 
         }
+
+
 
 
 
@@ -61,8 +72,13 @@ namespace StudentRentalSystem.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Item item, IFormFile Image)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(
+            Item item,
+            IFormFile Image
+        )
         {
+
 
 
             int? studentId =
@@ -70,111 +86,170 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
             if (studentId == null)
             {
+
                 return RedirectToAction(
                     "Login",
                     "Account"
                 );
+
             }
 
 
 
 
 
-            if (ModelState.IsValid)
+
+
+            if (!ModelState.IsValid)
+            {
+
+                return View(item);
+
+            }
+
+
+
+
+
+
+
+
+            // IMAGE UPLOAD
+
+
+            if (Image != null && Image.Length > 0)
             {
 
 
 
-                if (Image != null)
-                {
-
-
-                    string folder =
-                    Path.Combine(
+                string folder =
+                Path.Combine(
                     Directory.GetCurrentDirectory(),
                     "wwwroot/uploads/items"
-                    );
-
-
-
-                    if (!Directory.Exists(folder))
-                    {
-                        Directory.CreateDirectory(folder);
-                    }
-
-
-
-                    string fileName =
-                    Guid.NewGuid().ToString()
-                    +
-                    Path.GetExtension(
-                        Image.FileName
-                    );
-
-
-
-                    string filePath =
-                    Path.Combine(
-                        folder,
-                        fileName
-                    );
-
-
-
-                    using (var stream =
-                    new FileStream(
-                    filePath,
-                    FileMode.Create))
-                    {
-
-                        Image.CopyTo(stream);
-
-                    }
+                );
 
 
 
 
-                    item.Image =
-                    "/uploads/items/" + fileName;
 
+
+                if (!Directory.Exists(folder))
+                {
+
+                    Directory.CreateDirectory(folder);
 
                 }
 
 
 
-                item.StudentId =
-                studentId.Value;
 
 
 
-                item.AdminApproved = false;
 
-
-                item.CreatedDate =
-                DateTime.Now;
-
-
-
-                _context.Items.Add(item);
-
-
-                _context.SaveChanges();
-
-
-
-                return RedirectToAction(
-                    "MyItems"
+                string fileName =
+                Guid.NewGuid().ToString()
+                +
+                Path.GetExtension(
+                    Image.FileName
                 );
+
+
+
+
+
+
+                string filePath =
+                Path.Combine(
+                    folder,
+                    fileName
+                );
+
+
+
+
+
+
+
+                using (var stream =
+                new FileStream(
+                    filePath,
+                    FileMode.Create
+                ))
+                {
+
+                    Image.CopyTo(stream);
+
+                }
+
+
+
+
+
+
+                item.Image =
+                "/uploads/items/" + fileName;
+
+
 
             }
 
 
 
-            return View(item);
+
+
+
+
+            item.StudentId =
+            studentId.Value;
+
+
+
+            item.AdminApproved =
+            false;
+
+
+
+            item.CreatedDate =
+            DateTime.Now;
+
+
+
+
+
+
+
+
+            _context.Items.Add(item);
+
+
+            _context.SaveChanges();
+
+
+
+
+
+
+            TempData["Success"] =
+            "Item posted successfully. Waiting for admin approval.";
+
+
+
+
+
+
+
+            return RedirectToAction(
+                "MyItems"
+            );
+
+
 
         }
+
 
 
 
@@ -201,11 +276,16 @@ namespace StudentRentalSystem.Controllers
 
             if (studentId == null)
             {
+
                 return RedirectToAction(
                     "Login",
                     "Account"
                 );
+
             }
+
+
+
 
 
 
@@ -213,13 +293,21 @@ namespace StudentRentalSystem.Controllers
             var items =
             _context.Items
             .Where(
-                x => x.StudentId == studentId
+                x => x.StudentId == studentId.Value
+            )
+            .OrderByDescending(
+                x => x.CreatedDate
             )
             .ToList();
 
 
 
+
+
+
+
             return View(items);
+
 
         }
 
@@ -243,15 +331,24 @@ namespace StudentRentalSystem.Controllers
             var items =
             _context.Items
             .Where(
-                x => x.AdminApproved == true
+                x => x.AdminApproved
+            )
+            .OrderByDescending(
+                x => x.CreatedDate
             )
             .ToList();
 
 
 
+
+
+
             return View(items);
 
+
         }
+
+
 
 
 
@@ -276,9 +373,24 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+            if (item == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
             return View(item);
 
+
         }
+
 
 
 
