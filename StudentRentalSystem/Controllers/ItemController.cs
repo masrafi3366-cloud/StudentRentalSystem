@@ -85,11 +85,8 @@ namespace StudentRentalSystem.Controllers
             {
 
 
-
                 int? studentId =
                 HttpContext.Session.GetInt32("StudentId");
-
-
 
 
 
@@ -103,7 +100,6 @@ namespace StudentRentalSystem.Controllers
                     );
 
                 }
-
 
 
 
@@ -126,7 +122,6 @@ namespace StudentRentalSystem.Controllers
 
                     return View(item);
 
-
                 }
 
 
@@ -142,7 +137,6 @@ namespace StudentRentalSystem.Controllers
 
                 if (Image != null && Image.Length > 0)
                 {
-
 
 
                     string folder =
@@ -167,7 +161,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
                     string fileName =
                     Guid.NewGuid().ToString()
                     +
@@ -180,13 +173,11 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
                     string filePath =
                     Path.Combine(
                         folder,
                         fileName
                     );
-
 
 
 
@@ -208,11 +199,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
                     item.Image =
                     "/uploads/items/" + fileName;
-
 
 
                 }
@@ -235,10 +223,13 @@ namespace StudentRentalSystem.Controllers
 
 
 
+                item.IsRented =
+                false;
+
+
+
                 item.CreatedDate =
                 DateTime.Now;
-
-
 
 
 
@@ -257,10 +248,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
                 TempData["Success"] =
                 "Item posted successfully.";
-
 
 
 
@@ -273,12 +262,10 @@ namespace StudentRentalSystem.Controllers
                 );
 
 
-
             }
 
             catch (Exception ex)
             {
-
 
 
                 Console.WriteLine(
@@ -343,7 +330,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             var items =
             _context.Items
             .Where(
@@ -353,7 +339,6 @@ namespace StudentRentalSystem.Controllers
                 x => x.CreatedDate
             )
             .ToList();
-
 
 
 
@@ -375,7 +360,7 @@ namespace StudentRentalSystem.Controllers
 
 
         // =========================
-        // BROWSE ITEMS
+        // BROWSE AVAILABLE ITEMS
         // =========================
 
 
@@ -386,12 +371,16 @@ namespace StudentRentalSystem.Controllers
             var items =
             _context.Items
             .Where(
-                x => x.AdminApproved == true
+                x =>
+                x.AdminApproved == true
+                &&
+                x.IsRented == false
             )
             .OrderByDescending(
                 x => x.CreatedDate
             )
             .ToList();
+
 
 
 
@@ -430,12 +419,37 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             if (item == null)
             {
 
                 return NotFound();
 
             }
+
+
+
+
+
+
+
+            if (item.IsRented)
+            {
+
+
+                TempData["Error"] =
+                "This item is currently rented.";
+
+
+
+                return RedirectToAction(
+                    "Browse"
+                );
+
+
+            }
+
+
 
 
 
