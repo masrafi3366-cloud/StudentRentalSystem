@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
-
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 
@@ -31,18 +28,9 @@
             }
 
 
-
             .btn {
                 border-radius: 8px;
             }
-
-
-
-            .table {
-                border-radius: 10px;
-                overflow: hidden;
-            }
-
 
 
             footer {
@@ -57,9 +45,9 @@
 
 
 
+
+
 <body>
-
-
 
 
 
@@ -73,9 +61,12 @@
             <a class="navbar-brand fw-bold"
                href="/">
 
+
                 Student Rental System
 
+
             </a>
+
 
 
 
@@ -106,16 +97,15 @@
 
 
 
+                <ul class="navbar-nav ms-auto">
 
-                <!-- LEFT MENU -->
 
 
-                <ul class="navbar-nav me-auto">
+
 
 
 
                     <li class="nav-item">
-
 
                         <a class="nav-link"
                            href="/Item/Browse">
@@ -124,94 +114,21 @@
 
                         </a>
 
-
                     </li>
 
 
 
-                </ul>
 
 
 
 
 
-
-
-
-
-                <!-- RIGHT MENU -->
-
-
-                <ul class="navbar-nav ms-auto">
-
-
-
-
-
-
-                    @* ADMIN MENU *@
-
-
-                    @if (
-                    Context.Session.GetString("Admin")
-                    != null
-                    )
+                    @if (Context.Session.GetInt32("StudentId") != null)
                     {
 
 
-                        <li class="nav-item">
-
-
-                            <a class="nav-link"
-                               href="/Admin">
-
-                                Admin Dashboard
-
-                            </a>
-
-
-                        </li>
-
-
-
-
 
                         <li class="nav-item">
-
-
-                            <a class="nav-link text-danger"
-                               href="/Admin/Admin/Logout">
-
-                                Logout
-
-                            </a>
-
-
-                        </li>
-
-
-
-                    }
-
-
-
-
-
-
-
-
-                    @* STUDENT MENU *@
-
-
-                    else if (
-                    Context.Session.GetInt32("StudentId")
-                    != null
-                    )
-                    {
-
-
-                        <li class="nav-item">
-
 
                             <a class="nav-link"
                                href="/Account/Dashboard">
@@ -220,8 +137,9 @@
 
                             </a>
 
-
                         </li>
+
+
 
 
 
@@ -229,6 +147,41 @@
 
                         <li class="nav-item">
 
+                            <a class="nav-link"
+                               href="/Rental/MyRentals">
+
+                                My Rentals
+
+                            </a>
+
+                        </li>
+
+
+
+
+
+
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               href="/Payment/MyPayments">
+
+                                My Payments
+
+                            </a>
+
+                        </li>
+
+
+
+
+
+
+
+
+                        <li class="nav-item">
 
                             <a class="nav-link"
                                href="/Account/Profile">
@@ -237,15 +190,16 @@
 
                             </a>
 
-
                         </li>
 
 
 
 
 
-                        <li class="nav-item">
 
+
+
+                        <li class="nav-item">
 
                             <a class="nav-link text-danger"
                                href="/Account/Logout">
@@ -254,21 +208,11 @@
 
                             </a>
 
-
                         </li>
 
 
+
                     }
-
-
-
-
-
-
-
-
-                    @* GUEST MENU *@
-
 
                     else
                     {
@@ -292,6 +236,9 @@
 
 
 
+
+
+
                         <li class="nav-item">
 
 
@@ -306,8 +253,9 @@
                         </li>
 
 
-
                     }
+
+
 
 
 
@@ -319,13 +267,12 @@
 
 
 
-
             </div>
 
 
 
-        </div>
 
+        </div>
 
 
     </nav>
@@ -353,9 +300,7 @@
 
 
 
-
     <footer class="bg-dark text-white text-center p-4">
-
 
 
         <h5>
@@ -363,17 +308,14 @@
         </h5>
 
 
-
         <p>
             Rent • Share • Manage
         </p>
 
 
-
         <small>
             © 2026 Student Rental System
         </small>
-
 
 
     </footer>
@@ -385,10 +327,8 @@
 
 
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
-
 
 
 

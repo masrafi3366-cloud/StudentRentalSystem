@@ -11,6 +11,10 @@
 
 
 
+
+
+    <!-- USER INFO CARD -->
+
     <div class="card shadow mb-4">
 
 
@@ -18,45 +22,74 @@
 
 
             <h2 class="card-title">
-                Welcome, @Model.FullName
+
+                Welcome, @Model.FullName 👋
+
             </h2>
+
 
 
             <hr />
 
 
+
             <p>
-                <strong>Mobile:</strong>
+                <strong>
+                    Mobile:
+                </strong>
+
                 @Model.Mobile
             </p>
 
 
 
+
+
             <p>
-                <strong>Email:</strong>
+                <strong>
+                    Email:
+                </strong>
+
                 @Model.Email
             </p>
 
 
 
 
+
             <p>
-                <strong>Account Status:</strong>
+
+                <strong>
+                    Account Status:
+                </strong>
+
+
 
                 @if (Model.IsApproved)
                 {
+
                     <span class="badge bg-success">
+
                         Approved
+
                     </span>
-                }
-                else
-                {
-                    <span class="badge bg-warning">
-                        Pending Approval
-                    </span>
+
                 }
 
+                else
+                {
+
+                    <span class="badge bg-warning text-dark">
+
+                        Pending Approval
+
+                    </span>
+
+                }
+
+
             </p>
+
 
 
         </div>
@@ -70,9 +103,16 @@
 
 
 
+
+
     <h3 class="mb-3">
-        Student Actions
+
+        Student Dashboard
+
     </h3>
+
+
+
 
 
 
@@ -84,6 +124,11 @@
 
 
 
+
+
+        <!-- PROFILE -->
+
+
         <div class="col-md-4 mb-3">
 
 
@@ -94,19 +139,27 @@
 
 
                     <h5 class="card-title">
+
                         Profile
+
                     </h5>
 
 
+
                     <p>
-                        View and manage your profile information.
+
+                        View your personal information.
+
                     </p>
+
 
 
                     <a href="/Account/Profile"
                        class="btn btn-primary">
 
+
                         View Profile
+
 
                     </a>
 
@@ -126,6 +179,11 @@
 
 
 
+
+
+        <!-- ITEM MANAGEMENT -->
+
+
         <div class="col-md-4 mb-3">
 
 
@@ -136,31 +194,43 @@
 
 
                     <h5 class="card-title">
-                        Item Management
+
+                        My Items
+
                     </h5>
 
 
+
                     <p>
-                        Post new items and manage your posted items.
+
+                        Post and manage your items.
+
                     </p>
+
 
 
                     <a href="/Item/Create"
                        class="btn btn-success">
 
-                        Post Item
+
+                        Post New Item
+
 
                     </a>
 
 
+
                     <br />
                     <br />
+
 
 
                     <a href="/Item/MyItems"
                        class="btn btn-outline-success">
 
-                        My Items
+
+                        View My Items
+
 
                     </a>
 
@@ -178,6 +248,11 @@
 
 
 
+
+
+
+
+        <!-- RENTAL -->
 
 
         <div class="col-md-4 mb-3">
@@ -190,31 +265,43 @@
 
 
                     <h5 class="card-title">
+
                         Rental System
+
                     </h5>
 
 
+
                     <p>
-                        Browse items and manage your rentals.
+
+                        Browse and manage rentals.
+
                     </p>
+
 
 
                     <a href="/Item/Browse"
                        class="btn btn-info">
 
+
                         Browse Items
+
 
                     </a>
 
 
+
                     <br />
                     <br />
+
 
 
                     <a href="/Rental/MyRentals"
                        class="btn btn-outline-info">
 
+
                         My Rentals
+
 
                     </a>
 
@@ -226,12 +313,14 @@
 
 
         </div>
+
 
 
 
 
 
     </div>
+
 
 
 
@@ -246,29 +335,97 @@
 
 
 
-        <div class="col-md-6 mb-3">
 
 
-            <div class="card shadow">
+        <!-- PAYMENT -->
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow h-100">
 
 
                 <div class="card-body">
 
 
                     <h5>
-                        Extra Charges
+
+                        Payments
+
                     </h5>
 
 
+
                     <p>
-                        Check your late return charges.
+
+                        Check your payment history.
+
                     </p>
+
+
+
+                    <a href="/Payment/MyPayments"
+                       class="btn btn-success">
+
+
+                        My Payments
+
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <!-- EXTRA CHARGES -->
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow h-100">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+
+                        Extra Charges
+
+                    </h5>
+
+
+
+                    <p>
+
+                        Check late return charges.
+
+                    </p>
+
 
 
                     <a href="/ExtraCharge/MyCharges"
                        class="btn btn-danger">
 
+
                         View Charges
+
 
                     </a>
 
@@ -287,29 +444,43 @@
 
 
 
-        <div class="col-md-6 mb-3">
 
 
-            <div class="card shadow">
+
+        <!-- ACCOUNT -->
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow h-100">
 
 
                 <div class="card-body">
 
 
                     <h5>
+
                         Account
+
                     </h5>
 
 
+
                     <p>
+
                         Logout from your account.
+
                     </p>
+
 
 
                     <a href="/Account/Logout"
                        class="btn btn-dark">
 
+
                         Logout
+
 
                     </a>
 
@@ -325,7 +496,11 @@
 
 
 
+
     </div>
+
+
+
 
 
 
