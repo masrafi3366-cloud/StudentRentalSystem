@@ -7,12 +7,17 @@
 
 
 
+
+
 <div class="container mt-4">
 
 
     <h2 class="mb-4">
-        Payment History
+
+        My Payment History
+
     </h2>
+
 
 
 
@@ -27,32 +32,29 @@
         <div class="card shadow p-5 text-center">
 
 
-
             <h4 class="text-muted">
 
-                No Payment History
+                No Payment Found
 
             </h4>
 
 
 
-
             <p>
 
-                You don't have any payment records yet.
-
-                Your payment details will appear here after completing a rental payment.
+                You have not completed any payment yet.
 
             </p>
 
 
 
 
-
-            <a href="/Rental/MyRentals"
+            <a href="/Item/Browse"
                class="btn btn-primary">
 
-                View My Rentals
+
+                Browse Items
+
 
             </a>
 
@@ -61,9 +63,7 @@
         </div>
 
 
-
     }
-
 
 
 
@@ -105,17 +105,17 @@
 
 
                         <th>
-                            Payment Date
+                            Transaction ID
+                        </th>
+
+
+                        <th>
+                            Date
                         </th>
 
 
                         <th>
                             Status
-                        </th>
-
-
-                        <th>
-                            Transaction ID
                         </th>
 
 
@@ -143,25 +143,53 @@
 
 
                             <td>
+
                                 @payment.PaymentId
+
                             </td>
 
 
 
+
+
                             <td>
+
                                 @payment.RentalId
+
                             </td>
 
 
 
+
+
+
                             <td>
-                                @payment.Amount
+
+                                ৳ @payment.Amount
+
                             </td>
 
 
 
+
+
+
                             <td>
+
+                                @payment.TransactionId
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
                                 @payment.PaymentDate.ToShortDateString()
+
                             </td>
 
 
@@ -171,10 +199,12 @@
 
 
                             <td>
+
 
 
                                 @if (payment.PaymentStatus == "Completed")
                                 {
+
 
                                     <span class="badge bg-success">
 
@@ -182,31 +212,26 @@
 
                                     </span>
 
+
                                 }
 
                                 else
                                 {
 
+
                                     <span class="badge bg-warning text-dark">
 
-                                        Pending
+                                        @payment.PaymentStatus
 
                                     </span>
+
 
                                 }
 
 
+
                             </td>
 
-
-
-
-
-
-
-                            <td>
-                                @payment.TransactionId
-                            </td>
 
 
 

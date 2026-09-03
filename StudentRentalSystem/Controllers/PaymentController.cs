@@ -26,6 +26,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
         // =========================
         // PAYMENT PAGE
         // =========================
@@ -58,13 +59,11 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             var rental =
             _context.Rentals
             .FirstOrDefault(
                 x => x.RentalId == id
             );
-
 
 
 
@@ -85,10 +84,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
             // SECURITY CHECK
-
 
             if (rental.StudentId != studentId.Value)
             {
@@ -103,9 +99,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             return View(rental);
-
 
 
         }
@@ -141,6 +135,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             if (studentId == null)
             {
 
@@ -170,7 +165,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             if (rental == null)
             {
 
@@ -185,6 +179,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            // USER CHECK
 
             if (rental.StudentId != studentId.Value)
             {
@@ -200,17 +195,19 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             // DUPLICATE PAYMENT CHECK
 
 
             var existingPayment =
             _context.Payments
             .FirstOrDefault(
-                x => x.RentalId == RentalId
+                x =>
+                x.RentalId == RentalId
                 &&
                 x.PaymentStatus == "Completed"
             );
+
+
 
 
 
@@ -293,9 +290,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             _context.Payments.Add(payment);
-
 
 
 
@@ -314,9 +309,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             _context.SaveChanges();
-
 
 
 
@@ -334,7 +327,6 @@ namespace StudentRentalSystem.Controllers
             );
 
 
-
         }
 
 
@@ -346,12 +338,38 @@ namespace StudentRentalSystem.Controllers
 
 
         // =========================
-        // SUCCESS PAGE
+        // PAYMENT SUCCESS
         // =========================
 
 
         public IActionResult Success(int id)
         {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+
+            }
+
+
+
+
+
+
 
 
             var payment =
@@ -380,11 +398,133 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+            // SECURITY CHECK
+
+
+            var rental =
+            _context.Rentals
+            .FirstOrDefault(
+                x => x.RentalId == payment.RentalId
+            );
+
+
+
+
+
+
+
+
+            if (rental == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
+
+
+
+            if (rental.StudentId != studentId.Value)
+            {
+
+                return Unauthorized();
+
+            }
+
+
+
+
+
+
+
+
             return View(payment);
 
 
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // MY PAYMENTS
+        // =========================
+
+
+        public IActionResult MyPayments()
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var payments =
+            _context.Payments
+            .Where(
+                x =>
+                _context.Rentals.Any(
+                    r =>
+                    r.RentalId == x.RentalId
+                    &&
+                    r.StudentId == studentId.Value
+                )
+            )
+            .OrderByDescending(
+                x => x.PaymentDate
+            )
+            .ToList();
+
+
+
+
+
+
+
+
+            return View(payments);
+
 
         }
+
+
+
 
 
 
