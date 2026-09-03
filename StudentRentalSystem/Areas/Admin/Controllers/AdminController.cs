@@ -14,22 +14,45 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         private readonly ApplicationDbContext _context;
 
 
-        public AdminController(ApplicationDbContext context)
+
+        public AdminController(
+            ApplicationDbContext context
+        )
         {
+
             _context = context;
+
         }
 
 
+
+
+
+
+
+
+        // =========================
+        // ADMIN LOGIN GET
+        // =========================
 
 
         public IActionResult Login()
         {
+
             return View();
+
         }
 
 
 
 
+
+
+
+
+        // =========================
+        // ADMIN LOGIN POST
+        // =========================
 
 
         [HttpPost]
@@ -38,6 +61,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
             string password
         )
         {
+
 
 
             var admin =
@@ -51,16 +75,26 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
+
             if (admin == null)
             {
 
+
                 ViewBag.Error =
-                "Invalid admin login";
+                "Invalid admin email or password";
 
 
                 return View();
 
             }
+
+
+
+
+
 
 
 
@@ -71,33 +105,54 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
+
+
             return RedirectToAction(
                 "Index",
                 "Dashboard"
             );
 
 
+
         }
 
 
 
 
 
+
+
+
+
+        // =========================
+        // ADMIN LOGOUT
+        // =========================
+
+
         public IActionResult Logout()
         {
+
 
             HttpContext.Session.Remove(
                 "Admin"
             );
 
 
+
             return RedirectToAction(
                 "Login"
             );
 
+
         }
 
 
+
+
     }
+
 
 }
