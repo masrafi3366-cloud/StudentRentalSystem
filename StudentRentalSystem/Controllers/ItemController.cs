@@ -91,6 +91,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
                 if (studentId == null)
                 {
 
@@ -114,7 +115,9 @@ namespace StudentRentalSystem.Controllers
                     foreach (var error in ModelState.Values.SelectMany(x => x.Errors))
                     {
 
-                        Console.WriteLine(error.ErrorMessage);
+                        Console.WriteLine(
+                            error.ErrorMessage
+                        );
 
                     }
 
@@ -161,12 +164,14 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
                     string fileName =
                     Guid.NewGuid().ToString()
                     +
                     Path.GetExtension(
                         Image.FileName
                     );
+
 
 
 
@@ -184,6 +189,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
                     using (var stream =
                     new FileStream(
                         filePath,
@@ -194,6 +200,8 @@ namespace StudentRentalSystem.Controllers
                         Image.CopyTo(stream);
 
                     }
+
+
 
 
 
@@ -330,6 +338,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             var items =
             _context.Items
             .Where(
@@ -339,6 +348,7 @@ namespace StudentRentalSystem.Controllers
                 x => x.CreatedDate
             )
             .ToList();
+
 
 
 
@@ -386,6 +396,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             return View(items);
 
 
@@ -420,6 +431,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
             if (item == null)
             {
 
@@ -433,21 +446,87 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            if (item.IsRented)
+
+            var owner =
+            _context.Students
+            .FirstOrDefault(
+                x => x.StudentId == item.StudentId
+            );
+
+
+
+
+
+
+
+
+            if (owner != null)
             {
 
-
-                TempData["Error"] =
-                "This item is currently rented.";
-
+                ViewBag.OwnerName =
+                owner.FullName;
 
 
-                return RedirectToAction(
-                    "Browse"
-                );
+                ViewBag.OwnerMobile =
+                owner.Mobile;
 
+
+                ViewBag.OwnerEmail =
+                owner.Email;
 
             }
+
+
+
+
+
+
+
+
+            int? currentStudentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+
+
+            // OWN ITEM CHECK
+
+
+            if (currentStudentId != null
+               &&
+               item.StudentId == currentStudentId.Value)
+            {
+
+                ViewBag.IsOwner =
+                true;
+
+            }
+            else
+            {
+
+                ViewBag.IsOwner =
+                false;
+
+            }
+
+
+
+
+
+
+
+
+            // RENT STATUS
+
+
+            ViewBag.IsAvailable =
+            !item.IsRented;
 
 
 
