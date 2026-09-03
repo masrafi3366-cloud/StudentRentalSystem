@@ -371,11 +371,16 @@ namespace StudentRentalSystem.Controllers
 
         // =========================
         // BROWSE AVAILABLE ITEMS
+        // SEARCH + CATEGORY FILTER
         // =========================
 
 
-        public IActionResult Browse()
+        public IActionResult Browse(
+            string search,
+            string category
+        )
         {
+
 
 
             var items =
@@ -386,9 +391,79 @@ namespace StudentRentalSystem.Controllers
                 &&
                 x.IsRented == false
             )
-            .OrderByDescending(
-                x => x.CreatedDate
+            .AsQueryable();
+
+
+
+
+
+
+
+
+
+            // SEARCH FILTER
+
+
+            if (!string.IsNullOrEmpty(search))
+            {
+
+
+                items =
+                items.Where(
+                    x =>
+                    x.ItemName.Contains(search)
+                    ||
+                    x.Description.Contains(search)
+                );
+
+
+            }
+
+
+
+
+
+
+
+
+
+            // CATEGORY FILTER
+
+
+            if (!string.IsNullOrEmpty(category))
+            {
+
+
+                items =
+                items.Where(
+                    x =>
+                    x.Category == category
+                );
+
+
+            }
+
+
+
+
+
+
+
+
+
+            // CATEGORY LIST
+
+
+            ViewBag.Categories =
+            _context.Items
+            .Where(
+                x =>
+                x.AdminApproved == true
             )
+            .Select(
+                x => x.Category
+            )
+            .Distinct()
             .ToList();
 
 
@@ -397,7 +472,33 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            return View(items);
+
+
+            ViewBag.Search =
+            search;
+
+
+
+
+
+            ViewBag.SelectedCategory =
+            category;
+
+
+
+
+
+
+
+
+
+            return View(
+                items
+                .OrderByDescending(
+                    x => x.CreatedDate
+                )
+                .ToList()
+            );
 
 
 
@@ -495,9 +596,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // OWN ITEM CHECK
-
-
             if (currentStudentId != null
                &&
                item.StudentId == currentStudentId.Value)
@@ -520,9 +618,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-            // RENT STATUS
 
 
             ViewBag.IsAvailable =

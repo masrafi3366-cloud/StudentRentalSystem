@@ -25,6 +25,135 @@
 
 
 
+    <!-- SEARCH + CATEGORY FILTER -->
+
+
+    <form method="get"
+          action="/Item/Browse"
+          class="card shadow p-3 mb-4">
+
+
+        <div class="row g-2">
+
+
+
+
+
+            <div class="col-md-5">
+
+
+                <input type="text"
+                       name="search"
+                       value="@ViewBag.Search"
+                       class="form-control"
+                       placeholder="Search item name..." />
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="col-md-5">
+
+
+                <select name="category"
+                        class="form-select">
+
+
+                    <option value="">
+                        All Categories
+                    </option>
+
+
+
+
+                    @if (ViewBag.Categories != null)
+                    {
+
+
+                        foreach (var cat in ViewBag.Categories)
+                        {
+
+
+                            if (ViewBag.SelectedCategory == cat)
+                            {
+
+                                <option value="@cat"
+                                        selected>
+
+                                    @cat
+
+                                </option>
+
+                            }
+
+                            else
+                            {
+
+                                <option value="@cat">
+
+                                    @cat
+
+                                </option>
+
+                            }
+
+
+
+                        }
+
+
+                    }
+
+
+
+                </select>
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="col-md-2">
+
+
+                <button type="submit"
+                        class="btn btn-primary w-100">
+
+
+                    Search
+
+
+                </button>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </form>
+
+
+
+
+
+
+
+
+
     @if (Model == null || !Model.Any())
     {
 
@@ -42,9 +171,17 @@
 
             <p>
 
-                Currently no item is available for rent.
+                No item matched your search.
 
             </p>
+
+
+            <a href="/Item/Browse"
+               class="btn btn-outline-primary">
+
+                Clear Filter
+
+            </a>
 
 
         </div>
@@ -142,7 +279,6 @@
 
                             <p>
 
-
                                 <span class="badge bg-info text-dark">
 
                                     @item.Category
@@ -159,7 +295,7 @@
 
 
 
-                            <p class="card-text">
+                            <p>
 
 
                                 <strong>
