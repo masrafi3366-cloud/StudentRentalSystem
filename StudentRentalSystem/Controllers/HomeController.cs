@@ -14,12 +14,16 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
         public HomeController(
             ILogger<HomeController> logger
         )
         {
+
             _logger = logger;
+
         }
+
 
 
 
@@ -34,8 +38,12 @@ namespace StudentRentalSystem.Controllers
 
         public IActionResult Index()
         {
+
             return View();
+
         }
+
+
 
 
 
@@ -50,8 +58,11 @@ namespace StudentRentalSystem.Controllers
 
         public IActionResult Privacy()
         {
+
             return View();
+
         }
+
 
 
 
@@ -76,29 +87,44 @@ namespace StudentRentalSystem.Controllers
         {
 
 
-            var errorModel =
-            new ErrorViewModel
-            {
+            var requestId =
+            Activity.Current?.Id
+            ??
+            HttpContext.TraceIdentifier;
 
-                RequestId =
-                Activity.Current?.Id
-                ??
-                HttpContext.TraceIdentifier
 
-            };
+
 
 
 
             _logger.LogError(
                 "Application error occurred. RequestId: {RequestId}",
-                errorModel.RequestId
+                requestId
             );
+
+
+
+
+
+
+            ErrorViewModel errorModel =
+            new ErrorViewModel
+            {
+
+                RequestId = requestId
+
+            };
+
+
+
 
 
 
             return View(errorModel);
 
+
         }
+
 
 
 
