@@ -69,10 +69,9 @@ namespace StudentRentalSystem.Models
 
 
         [Required(ErrorMessage = "Password is required")]
-        [StringLength(
-            20,
-            MinimumLength = 6,
-            ErrorMessage = "Password must be 6-20 characters"
+        [RegularExpression(
+            @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$",
+            ErrorMessage = "Password must contain at least 8 characters, uppercase, lowercase, number and special character"
         )]
         public string Password { get; set; } = string.Empty;
 
