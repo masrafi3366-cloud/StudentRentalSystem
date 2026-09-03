@@ -12,8 +12,8 @@ using StudentRentalSystem.Data;
 namespace StudentRentalSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260903060546_AddDefaultAdmin")]
-    partial class AddDefaultAdmin
+    [Migration("20260903085840_AddRentalReturnDate")]
+    partial class AddRentalReturnDate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,14 +44,6 @@ namespace StudentRentalSystem.Migrations
                     b.HasKey("AdminId");
 
                     b.ToTable("Admins");
-
-                    b.HasData(
-                        new
-                        {
-                            AdminId = 1,
-                            Email = "admin@gmail.com",
-                            Password = "Admin@123"
-                        });
                 });
 
             modelBuilder.Entity("StudentRentalSystem.Models.ExtraCharge", b =>
@@ -169,6 +161,9 @@ namespace StudentRentalSystem.Migrations
 
                     b.Property<int>("RentalDays")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ReturnDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");

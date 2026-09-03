@@ -119,19 +119,7 @@ namespace StudentRentalSystem.Data
 
 
 
-            modelBuilder.Entity<Admin>()
-            .HasData(
-                new Admin
-                {
 
-                    AdminId = 1,
-
-                    Email = "admin@gmail.com",
-
-                    Password = "Admin@123"
-
-                }
-            );
 
 
 

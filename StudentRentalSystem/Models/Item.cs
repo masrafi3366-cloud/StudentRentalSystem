@@ -75,6 +75,10 @@ namespace StudentRentalSystem.Models
 
 
 
+
+        public bool IsRented { get; set; }
+
+
     }
 
 }

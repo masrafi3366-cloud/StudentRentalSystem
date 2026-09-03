@@ -13,7 +13,15 @@ namespace StudentRentalSystem.Models
 
 
 
+
+
+
+
         public int StudentId { get; set; }
+
+
+
+
 
 
 
@@ -21,7 +29,15 @@ namespace StudentRentalSystem.Models
 
 
 
+
+
+
+
         public int RentalDays { get; set; }
+
+
+
+
 
 
 
@@ -29,7 +45,15 @@ namespace StudentRentalSystem.Models
 
 
 
+
+
+
+
         public DateTime EndDate { get; set; }
+
+
+
+
 
 
 
@@ -37,7 +61,26 @@ namespace StudentRentalSystem.Models
 
 
 
+
+
+
+
+        // Pending / Active / Completed / Returned
+
         public string Status { get; set; } = "Pending";
+
+
+
+
+
+
+
+        // Actual return date
+
+        public DateTime? ReturnDate { get; set; }
+
+
+
 
 
     }
