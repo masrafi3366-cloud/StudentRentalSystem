@@ -59,6 +59,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             var rental =
             _context.Rentals
             .FirstOrDefault(
@@ -84,7 +85,9 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             // SECURITY CHECK
+
 
             if (rental.StudentId != studentId.Value)
             {
@@ -92,6 +95,7 @@ namespace StudentRentalSystem.Controllers
                 return Unauthorized();
 
             }
+
 
 
 
@@ -153,11 +157,13 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             var rental =
             _context.Rentals
             .FirstOrDefault(
                 x => x.RentalId == RentalId
             );
+
 
 
 
@@ -181,12 +187,14 @@ namespace StudentRentalSystem.Controllers
 
             // USER CHECK
 
+
             if (rental.StudentId != studentId.Value)
             {
 
                 return Unauthorized();
 
             }
+
 
 
 
@@ -206,7 +214,6 @@ namespace StudentRentalSystem.Controllers
                 &&
                 x.PaymentStatus == "Completed"
             );
-
 
 
 
@@ -235,8 +242,67 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            // ITEM CHECK
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x => x.ItemId == rental.ItemId
+            );
+
+
+
+
+
+
+
+
+            if (item == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
+
+
+
+            // ALREADY RENTED CHECK
+
+
+            if (item.IsRented)
+            {
+
+                TempData["Error"] =
+                "This item is already rented.";
+
+
+
+
+
+                return RedirectToAction(
+                    "Browse",
+                    "Item"
+                );
+
+            }
+
+
+
+
+
+
+
+
+
             Payment payment =
             new Payment();
+
 
 
 
@@ -253,8 +319,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             payment.Amount =
             rental.TotalAmount;
+
 
 
 
@@ -271,8 +339,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             payment.PaymentStatus =
             "Completed";
+
 
 
 
@@ -290,6 +360,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             _context.Payments.Add(payment);
 
 
@@ -297,6 +368,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+
+            // RENTAL CONFIRM
 
 
             rental.Status =
@@ -309,7 +384,23 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+            // ITEM UNAVAILABLE
+
+
+            item.IsRented =
+            true;
+
+
+
+
+
+
+
+
+
             _context.SaveChanges();
+
 
 
 
@@ -350,6 +441,7 @@ namespace StudentRentalSystem.Controllers
             HttpContext.Session.GetInt32(
                 "StudentId"
             );
+
 
 
 
@@ -397,10 +489,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-
-            // SECURITY CHECK
 
 
             var rental =
@@ -522,7 +610,6 @@ namespace StudentRentalSystem.Controllers
 
 
         }
-
 
 
 

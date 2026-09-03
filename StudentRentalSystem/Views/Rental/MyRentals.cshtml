@@ -19,7 +19,7 @@
 
     <h2 class="mb-4">
 
-        My Rented Items
+        My Rented Items 🔄
 
     </h2>
 
@@ -54,6 +54,7 @@
 
 
 
+
             <a href="/Item/Browse"
                class="btn btn-primary">
 
@@ -81,7 +82,6 @@
 
 
 
-
         <div class="table-responsive">
 
 
@@ -101,11 +101,9 @@
                         </th>
 
 
-
                         <th>
-                            Item ID
+                            Item
                         </th>
-
 
 
                         <th>
@@ -113,11 +111,14 @@
                         </th>
 
 
-
                         <th>
                             End Date
                         </th>
 
+
+                        <th>
+                            Return Date
+                        </th>
 
 
                         <th>
@@ -125,17 +126,14 @@
                         </th>
 
 
-
                         <th>
                             Amount
                         </th>
 
 
-
                         <th>
                             Status
                         </th>
-
 
 
                         <th>
@@ -154,6 +152,7 @@
 
 
 
+
                 <tbody>
 
 
@@ -163,7 +162,6 @@
 
 
                         <tr>
-
 
 
                             <td>
@@ -177,11 +175,22 @@
 
 
 
+
                             <td>
 
-                                @rental.ItemId
+
+                                <a href="/Item/Details/@rental.ItemId"
+                                   class="btn btn-outline-primary btn-sm">
+
+
+                                    View Item
+
+
+                                </a>
+
 
                             </td>
+
 
 
 
@@ -201,11 +210,44 @@
 
 
 
+
                             <td>
 
                                 @rental.EndDate.ToShortDateString()
 
                             </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+
+                                @if (rental.ReturnDate != null)
+                                {
+
+                                    @rental.ReturnDate.Value.ToShortDateString()
+
+                                }
+                                else
+                                {
+
+                                    <span class="text-muted">
+
+                                        Not Returned
+
+                                    </span>
+
+                                }
+
+
+
+                            </td>
+
 
 
 
@@ -225,6 +267,7 @@
 
 
 
+
                             <td>
 
                                 ৳ @rental.TotalAmount
@@ -237,23 +280,41 @@
 
 
 
+
                             <td>
 
 
 
-                                @if (rental.Status == "Active")
+
+                                @if (rental.Status == "Confirmed")
                                 {
+
 
                                     <span class="badge bg-success">
 
-                                        Active
+                                        Rented
 
                                     </span>
+
+
+                                }
+
+                                else if (rental.Status == "Pending")
+                                {
+
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Pending Payment
+
+                                    </span>
+
 
                                 }
 
                                 else if (rental.Status == "Returned")
                                 {
+
 
                                     <span class="badge bg-secondary">
 
@@ -261,27 +322,32 @@
 
                                     </span>
 
+
                                 }
 
                                 else if (rental.Status == "Late")
                                 {
 
+
                                     <span class="badge bg-danger">
 
-                                        Late
+                                        Late Return
 
                                     </span>
+
 
                                 }
 
                                 else
                                 {
 
-                                    <span class="badge bg-warning text-dark">
+
+                                    <span class="badge bg-info">
 
                                         @rental.Status
 
                                     </span>
+
 
                                 }
 
@@ -296,12 +362,12 @@
 
 
 
-
                             <td>
 
 
 
-                                @if (rental.Status == "Active")
+                                @if (!rental.IsReturned &&
+                                    rental.Status == "Confirmed")
                                 {
 
 
@@ -316,14 +382,29 @@
                                     </a>
 
 
+
+                                }
+
+                                else if (rental.IsReturned)
+                                {
+
+
+                                    <span class="badge bg-secondary">
+
+                                        Completed
+
+                                    </span>
+
+
                                 }
 
                                 else
                                 {
 
+
                                     <span class="text-muted">
 
-                                        Completed
+                                        Waiting
 
                                     </span>
 
@@ -333,6 +414,7 @@
 
 
                             </td>
+
 
 
 
@@ -354,7 +436,6 @@
 
 
         </div>
-
 
 
     }

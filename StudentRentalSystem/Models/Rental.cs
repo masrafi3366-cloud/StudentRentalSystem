@@ -83,6 +83,12 @@ namespace StudentRentalSystem.Models
 
 
 
+
+        public bool IsReturned { get; set; }
+
+
+
+
     }
 
 }
