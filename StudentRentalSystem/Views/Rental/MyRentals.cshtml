@@ -9,12 +9,20 @@
 
 
 
+
+
 <div class="container mt-4">
 
 
+
+
+
     <h2 class="mb-4">
-        My Rental History
+
+        My Rented Items
+
     </h2>
+
 
 
 
@@ -29,7 +37,6 @@
         <div class="card shadow p-5 text-center">
 
 
-
             <h4 class="text-muted">
 
                 No Rental Found
@@ -42,8 +49,6 @@
 
                 You have not rented any item yet.
 
-                Browse available items and start renting.
-
             </p>
 
 
@@ -52,14 +57,15 @@
             <a href="/Item/Browse"
                class="btn btn-primary">
 
+
                 Browse Items
+
 
             </a>
 
 
 
         </div>
-
 
 
     }
@@ -72,6 +78,7 @@
 
     else
     {
+
 
 
 
@@ -94,9 +101,17 @@
                         </th>
 
 
+
+                        <th>
+                            Item ID
+                        </th>
+
+
+
                         <th>
                             Start Date
                         </th>
+
 
 
                         <th>
@@ -104,9 +119,11 @@
                         </th>
 
 
+
                         <th>
                             Days
                         </th>
+
 
 
                         <th>
@@ -114,8 +131,15 @@
                         </th>
 
 
+
                         <th>
                             Status
+                        </th>
+
+
+
+                        <th>
+                            Action
                         </th>
 
 
@@ -141,32 +165,58 @@
                         <tr>
 
 
+
                             <td>
+
                                 @rental.RentalId
+
                             </td>
 
 
 
+
+
+
                             <td>
+
+                                @rental.ItemId
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
                                 @rental.StartDate.ToShortDateString()
+
                             </td>
 
 
 
+
+
+
+
                             <td>
+
                                 @rental.EndDate.ToShortDateString()
+
                             </td>
 
 
 
+
+
+
+
                             <td>
+
                                 @rental.RentalDays
-                            </td>
 
-
-
-                            <td>
-                                @rental.TotalAmount
                             </td>
 
 
@@ -177,25 +227,37 @@
 
                             <td>
 
+                                ৳ @rental.TotalAmount
+
+                            </td>
 
 
-                                @if (rental.Status == "Approved")
+
+
+
+
+
+                            <td>
+
+
+
+                                @if (rental.Status == "Active")
                                 {
 
                                     <span class="badge bg-success">
 
-                                        Approved
+                                        Active
 
                                     </span>
 
                                 }
 
-                                else if (rental.Status == "Pending")
+                                else if (rental.Status == "Returned")
                                 {
 
-                                    <span class="badge bg-warning text-dark">
+                                    <span class="badge bg-secondary">
 
-                                        Pending
+                                        Returned
 
                                     </span>
 
@@ -215,7 +277,7 @@
                                 else
                                 {
 
-                                    <span class="badge bg-secondary">
+                                    <span class="badge bg-warning text-dark">
 
                                         @rental.Status
 
@@ -226,6 +288,53 @@
 
 
                             </td>
+
+
+
+
+
+
+
+
+
+                            <td>
+
+
+
+                                @if (rental.Status == "Active")
+                                {
+
+
+                                    <a href="/Rental/ReturnItem/@rental.RentalId"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Are you sure you want to return this item?');">
+
+
+                                        Return Item
+
+
+                                    </a>
+
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="text-muted">
+
+                                        Completed
+
+                                    </span>
+
+
+                                }
+
+
+
+                            </td>
+
+
 
 
 
