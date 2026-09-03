@@ -1,52 +1,260 @@
 ﻿@model StudentRentalSystem.Models.Payment
 
 
-<h2>
-    Payment Successful
-</h2>
-
-
-<hr />
-
-
-<p>
-    Payment ID:
-
-    @Model.PaymentId
-
-</p>
+@{
+    ViewData["Title"] = "Payment Successful";
+}
 
 
 
-<p>
-    Amount:
-
-    @Model.Amount
-
-</p>
 
 
+<div class="container mt-5">
 
-<p>
-    Transaction ID:
 
-    @Model.TransactionId
+    <div class="row justify-content-center">
 
-</p>
+
+        <div class="col-md-6">
 
 
 
-<p>
-    Status:
-
-    @Model.PaymentStatus
-
-</p>
+            <div class="card shadow p-4 text-center">
 
 
-<br />
 
 
-<a href="/Account/Dashboard">
-    Go Dashboard
-</a>
+
+                <div class="mb-4">
+
+
+                    <h2 class="text-success">
+
+                        Payment Successful 🎉
+
+                    </h2>
+
+
+
+                    <p class="text-muted">
+
+                        Your payment has been completed successfully.
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+
+                <div class="text-start">
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Payment ID:
+                        </strong>
+
+
+                        @Model.PaymentId
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Amount:
+                        </strong>
+
+
+                        ৳ @Model.Amount
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Transaction ID:
+                        </strong>
+
+
+                        @Model.TransactionId
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Payment Date:
+                        </strong>
+
+
+                        @Model.PaymentDate.ToShortDateString()
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Status:
+                        </strong>
+
+
+
+
+                        @if (Model.PaymentStatus == "Completed")
+                        {
+
+                            <span class="badge bg-success">
+
+                                Paid
+
+                            </span>
+
+                        }
+
+                        else
+                        {
+
+                            <span class="badge bg-warning text-dark">
+
+                                @Model.PaymentStatus
+
+                            </span>
+
+                        }
+
+
+
+                    </p>
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+
+
+                <a href="/Account/Dashboard"
+                   class="btn btn-primary w-100 mb-2">
+
+
+                    Go Dashboard
+
+
+                </a>
+
+
+
+
+
+
+
+
+                <a href="/Payment/MyPayments"
+                   class="btn btn-outline-success w-100 mb-2">
+
+
+                    View My Payments
+
+
+                </a>
+
+
+
+
+
+
+
+
+                <a href="/Item/Browse"
+                   class="btn btn-outline-secondary w-100">
+
+
+                    Browse More Items
+
+
+                </a>
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
