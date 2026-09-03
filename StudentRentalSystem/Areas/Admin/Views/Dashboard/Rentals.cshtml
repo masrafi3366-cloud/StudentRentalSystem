@@ -1,4 +1,5 @@
-﻿@model IEnumerable<StudentRentalSystem.Models.Rental>
+﻿@model IEnumerable<StudentRentalSystem.Models.ViewModels.AdminRentalViewModel>
+
 
 
 @{
@@ -8,12 +9,13 @@
 
 
 
+
 <div class="container mt-4">
 
 
     <h2 class="mb-4">
 
-        Rental Monitoring 📋
+        Rental & Payment Monitoring 💳
 
     </h2>
 
@@ -21,193 +23,220 @@
 
 
 
-    @if (Model == null || !Model.Any())
-    {
-
-        <div class="alert alert-info">
-
-            No rental found.
-
-        </div>
-
-    }
-
-    else
-    {
+    <table class="table table-bordered table-hover shadow">
 
 
-        <table class="table table-bordered table-hover shadow">
+        <thead class="table-dark">
 
 
-            <thead class="table-dark">
+            <tr>
+
+
+                <th>
+                    Rental ID
+                </th>
+
+
+                <th>
+                    Student
+                </th>
+
+
+                <th>
+                    Item
+                </th>
+
+
+                <th>
+                    Date
+                </th>
+
+
+                <th>
+                    Days
+                </th>
+
+
+                <th>
+                    Amount
+                </th>
+
+
+                <th>
+                    Rental Status
+                </th>
+
+
+                <th>
+                    Payment
+                </th>
+
+
+            </tr>
+
+
+        </thead>
+
+
+
+
+
+        <tbody>
+
+
+
+            @foreach (var rental in Model)
+            {
 
 
                 <tr>
 
 
-                    <th>
-                        Rental ID
-                    </th>
+                    <td>
+
+                        @rental.RentalId
+
+                    </td>
 
 
-                    <th>
-                        Student ID
-                    </th>
 
 
-                    <th>
-                        Item ID
-                    </th>
+
+                    <td>
+
+                        @rental.StudentName
+
+                    </td>
 
 
-                    <th>
-                        Start Date
-                    </th>
 
 
-                    <th>
-                        End Date
-                    </th>
 
 
-                    <th>
-                        Days
-                    </th>
+                    <td>
+
+                        @rental.ItemName
+
+                    </td>
 
 
-                    <th>
-                        Amount
-                    </th>
 
 
-                    <th>
-                        Status
-                    </th>
+
+
+                    <td>
+
+                        @rental.StartDate.ToShortDateString()
+
+                        <br />
+
+                        @rental.EndDate.ToShortDateString()
+
+                    </td>
+
+
+
+
+
+
+                    <td>
+
+                        @rental.RentalDays
+
+                    </td>
+
+
+
+
+
+
+                    <td>
+
+                        ৳ @rental.TotalAmount
+
+                    </td>
+
+
+
+
+
+
+
+                    <td>
+
+
+                        <span class="badge bg-info">
+
+                            @rental.RentalStatus
+
+                        </span>
+
+
+                    </td>
+
+
+
+
+
+
+
+                    <td>
+
+
+
+                        @if (rental.PaymentStatus == "Completed")
+                        {
+
+                            <span class="badge bg-success">
+
+                                Paid
+
+                            </span>
+
+
+                            <br />
+
+
+                            <small>
+
+                                @rental.TransactionId
+
+                            </small>
+
+
+                        }
+
+                        else
+                        {
+
+                            <span class="badge bg-warning text-dark">
+
+                                Pending
+
+                            </span>
+
+                        }
+
+
+
+                    </td>
+
+
+
 
 
                 </tr>
 
 
-            </thead>
+            }
 
 
 
+        </tbody>
 
 
-            <tbody>
 
-
-                @foreach (var rental in Model)
-                {
-
-
-                    <tr>
-
-
-                        <td>
-                            @rental.RentalId
-                        </td>
-
-
-
-                        <td>
-                            @rental.StudentId
-                        </td>
-
-
-
-
-                        <td>
-                            @rental.ItemId
-                        </td>
-
-
-
-
-                        <td>
-                            @rental.StartDate.ToShortDateString()
-                        </td>
-
-
-
-                        <td>
-                            @rental.EndDate.ToShortDateString()
-                        </td>
-
-
-
-
-                        <td>
-                            @rental.RentalDays
-                        </td>
-
-
-
-
-                        <td>
-                            @rental.TotalAmount
-                        </td>
-
-
-
-
-                        <td>
-
-
-                            @if (rental.Status == "Confirmed")
-                            {
-
-                                <span class="badge bg-success">
-
-                                    Confirmed
-
-                                </span>
-
-                            }
-
-                            else if (rental.Status == "Completed")
-                            {
-
-                                <span class="badge bg-primary">
-
-                                    Completed
-
-                                </span>
-
-                            }
-
-                            else
-                            {
-
-                                <span class="badge bg-warning text-dark">
-
-                                    @rental.Status
-
-                                </span>
-
-                            }
-
-
-                        </td>
-
-
-
-                    </tr>
-
-
-                }
-
-
-
-            </tbody>
-
-
-
-        </table>
-
-
-    }
-
+    </table>
 
 
 

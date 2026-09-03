@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using StudentRentalSystem.Data;
 using StudentRentalSystem.Models;
+using StudentRentalSystem.Models.ViewModels;
+
 
 
 namespace StudentRentalSystem.Areas.Admin.Controllers
@@ -59,7 +61,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             var students =
             _context.Students
             .OrderByDescending(
@@ -104,8 +105,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
             if (student != null)
             {
 
@@ -113,7 +112,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
                 _context.SaveChanges();
-
 
             }
 
@@ -157,16 +155,13 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             if (student != null)
             {
-
 
                 _context.Students.Remove(student);
 
 
                 _context.SaveChanges();
-
 
             }
 
@@ -210,14 +205,12 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             if (student == null)
             {
 
                 return NotFound();
 
             }
-
 
 
 
@@ -275,14 +268,12 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             var items =
             _context.Items
             .OrderByDescending(
                 x => x.CreatedDate
             )
             .ToList();
-
 
 
 
@@ -323,19 +314,15 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             if (item != null)
             {
-
 
                 item.AdminApproved = true;
 
 
                 _context.SaveChanges();
 
-
             }
-
 
 
 
@@ -377,19 +364,15 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             if (item != null)
             {
-
 
                 _context.Items.Remove(item);
 
 
                 _context.SaveChanges();
 
-
             }
-
 
 
 
@@ -404,9 +387,17 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         }
 
 
-        // =========================
-        // RENTAL MONITORING
-        // =========================
+
+
+
+
+
+
+
+        // ==================================================
+        // RENTAL + PAYMENT MONITORING
+        // ==================================================
+
 
 
         public IActionResult Rentals()
@@ -431,6 +422,9 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
             var rentals =
             _context.Rentals
             .OrderByDescending(
@@ -443,10 +437,168 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-            return View(rentals);
+
+
+            var data =
+            rentals.Select(
+                rental => new AdminRentalViewModel
+                {
+
+
+                    RentalId =
+                    rental.RentalId,
+
+
+
+
+
+
+                    StudentName =
+                    _context.Students
+                    .Where(
+                        x =>
+                        x.StudentId == rental.StudentId
+                    )
+                    .Select(
+                        x => x.FullName
+                    )
+                    .FirstOrDefault()
+                    ??
+                    "Unknown",
+
+
+
+
+
+
+
+                    ItemName =
+                    _context.Items
+                    .Where(
+                        x =>
+                        x.ItemId == rental.ItemId
+                    )
+                    .Select(
+                        x => x.ItemName
+                    )
+                    .FirstOrDefault()
+                    ??
+                    "Unknown",
+
+
+
+
+
+
+
+                    StartDate =
+                    rental.StartDate,
+
+
+
+
+
+
+                    EndDate =
+                    rental.EndDate,
+
+
+
+
+
+
+                    RentalDays =
+                    rental.RentalDays,
+
+
+
+
+
+
+                    TotalAmount =
+                    rental.TotalAmount,
+
+
+
+
+
+
+                    RentalStatus =
+                    rental.Status,
+
+
+
+
+
+
+
+                    PaymentStatus =
+                    _context.Payments
+                    .Where(
+                        x =>
+                        x.RentalId == rental.RentalId
+                    )
+                    .Select(
+                        x => x.PaymentStatus
+                    )
+                    .FirstOrDefault()
+                    ??
+                    "Pending",
+
+
+
+
+
+
+
+                    TransactionId =
+                    _context.Payments
+                    .Where(
+                        x =>
+                        x.RentalId == rental.RentalId
+                    )
+                    .Select(
+                        x => x.TransactionId
+                    )
+                    .FirstOrDefault()
+                    ??
+                    "N/A",
+
+
+
+
+
+
+
+                    PaymentDate =
+                    _context.Payments
+                    .Where(
+                        x =>
+                        x.RentalId == rental.RentalId
+                    )
+                    .Select(
+                        x => x.PaymentDate
+                    )
+                    .FirstOrDefault()
+
+
+
+                }
+            )
+            .ToList();
+
+
+
+
+
+
+
+
+            return View(data);
 
 
         }
+
 
 
 
