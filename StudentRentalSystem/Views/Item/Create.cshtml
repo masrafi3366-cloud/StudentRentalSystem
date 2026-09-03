@@ -30,6 +30,7 @@
 
 
 
+
                 @if (TempData["Success"] != null)
                 {
 
@@ -47,12 +48,40 @@
 
 
 
+                @if (TempData["Error"] != null)
+                {
+
+                    <div class="alert alert-danger text-center">
+
+                        @TempData["Error"]
+
+                    </div>
+
+                }
+
+
+
+
+
+
+
+                <div asp-validation-summary="All"
+                     class="text-danger mb-3">
+                </div>
+
+
+
+
+
+
+
                 <form method="post"
                       enctype="multipart/form-data">
 
 
 
                     @Html.AntiForgeryToken()
+
 
 
 
@@ -90,6 +119,7 @@
 
 
 
+
                     <div class="mb-3">
 
 
@@ -113,6 +143,7 @@
 
 
                     </div>
+
 
 
 
@@ -153,6 +184,7 @@
 
 
 
+
                     <div class="mb-3">
 
 
@@ -170,6 +202,7 @@
 
 
                     </div>
+
 
 
 
@@ -224,7 +257,9 @@
 
 
 
+
                 </form>
+
 
 
 

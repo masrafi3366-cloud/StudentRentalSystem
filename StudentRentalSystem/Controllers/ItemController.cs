@@ -28,6 +28,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
         // =========================
         // CREATE ITEM PAGE
         // =========================
@@ -80,171 +81,223 @@ namespace StudentRentalSystem.Controllers
         {
 
 
-
-            int? studentId =
-            HttpContext.Session.GetInt32("StudentId");
-
-
-
-
-
-            if (studentId == null)
+            try
             {
 
+
+
+                int? studentId =
+                HttpContext.Session.GetInt32("StudentId");
+
+
+
+
+
+
+                if (studentId == null)
+                {
+
+                    return RedirectToAction(
+                        "Login",
+                        "Account"
+                    );
+
+                }
+
+
+
+
+
+
+
+
+                if (!ModelState.IsValid)
+                {
+
+
+                    foreach (var error in ModelState.Values.SelectMany(x => x.Errors))
+                    {
+
+                        Console.WriteLine(error.ErrorMessage);
+
+                    }
+
+
+
+                    return View(item);
+
+
+                }
+
+
+
+
+
+
+
+
+
+                // IMAGE UPLOAD
+
+
+                if (Image != null && Image.Length > 0)
+                {
+
+
+
+                    string folder =
+                    Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot/uploads/items"
+                    );
+
+
+
+
+
+                    if (!Directory.Exists(folder))
+                    {
+
+                        Directory.CreateDirectory(folder);
+
+                    }
+
+
+
+
+
+
+
+                    string fileName =
+                    Guid.NewGuid().ToString()
+                    +
+                    Path.GetExtension(
+                        Image.FileName
+                    );
+
+
+
+
+
+
+
+                    string filePath =
+                    Path.Combine(
+                        folder,
+                        fileName
+                    );
+
+
+
+
+
+
+
+                    using (var stream =
+                    new FileStream(
+                        filePath,
+                        FileMode.Create
+                    ))
+                    {
+
+                        Image.CopyTo(stream);
+
+                    }
+
+
+
+
+
+
+
+                    item.Image =
+                    "/uploads/items/" + fileName;
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+                item.StudentId =
+                studentId.Value;
+
+
+
+                item.AdminApproved =
+                true;
+
+
+
+                item.CreatedDate =
+                DateTime.Now;
+
+
+
+
+
+
+
+
+
+                _context.Items.Add(item);
+
+
+                _context.SaveChanges();
+
+
+
+
+
+
+
+
+                TempData["Success"] =
+                "Item posted successfully.";
+
+
+
+
+
+
+
+
                 return RedirectToAction(
-                    "Login",
-                    "Account"
+                    "MyItems"
                 );
+
+
 
             }
 
-
-
-
-
-
-
-            if (!ModelState.IsValid)
+            catch (Exception ex)
             {
+
+
+
+                Console.WriteLine(
+                    ex.Message
+                );
+
+
+
+                TempData["Error"] =
+                "Item posting failed. Please try again.";
+
+
+
+
 
                 return View(item);
 
-            }
-
-
-
-
-
-
-
-
-            // IMAGE UPLOAD
-
-
-            if (Image != null && Image.Length > 0)
-            {
-
-
-
-                string folder =
-                Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot/uploads/items"
-                );
-
-
-
-
-
-
-                if (!Directory.Exists(folder))
-                {
-
-                    Directory.CreateDirectory(folder);
-
-                }
-
-
-
-
-
-
-
-                string fileName =
-                Guid.NewGuid().ToString()
-                +
-                Path.GetExtension(
-                    Image.FileName
-                );
-
-
-
-
-
-
-                string filePath =
-                Path.Combine(
-                    folder,
-                    fileName
-                );
-
-
-
-
-
-
-
-                using (var stream =
-                new FileStream(
-                    filePath,
-                    FileMode.Create
-                ))
-                {
-
-                    Image.CopyTo(stream);
-
-                }
-
-
-
-
-
-
-                item.Image =
-                "/uploads/items/" + fileName;
-
-
 
             }
-
-
-
-
-
-
-
-            item.StudentId =
-            studentId.Value;
-
-
-
-            item.AdminApproved =
-            false;
-
-
-
-            item.CreatedDate =
-            DateTime.Now;
-
-
-
-
-
-
-
-
-            _context.Items.Add(item);
-
-
-            _context.SaveChanges();
-
-
-
-
-
-
-            TempData["Success"] =
-            "Item posted successfully. Waiting for admin approval.";
-
-
-
-
-
-
-
-            return RedirectToAction(
-                "MyItems"
-            );
 
 
 
@@ -290,6 +343,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             var items =
             _context.Items
             .Where(
@@ -307,6 +361,7 @@ namespace StudentRentalSystem.Controllers
 
 
             return View(items);
+
 
 
         }
@@ -331,7 +386,7 @@ namespace StudentRentalSystem.Controllers
             var items =
             _context.Items
             .Where(
-                x => x.AdminApproved
+                x => x.AdminApproved == true
             )
             .OrderByDescending(
                 x => x.CreatedDate
@@ -342,8 +397,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             return View(items);
+
 
 
         }
@@ -386,7 +441,9 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             return View(item);
+
 
 
         }
