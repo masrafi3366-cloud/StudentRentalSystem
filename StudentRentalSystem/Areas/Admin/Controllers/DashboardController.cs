@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentRentalSystem.Data;
+using StudentRentalSystem.Models;
 
 
 namespace StudentRentalSystem.Areas.Admin.Controllers
@@ -15,12 +16,15 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-        public DashboardController(ApplicationDbContext context)
+        public DashboardController(
+            ApplicationDbContext context
+        )
         {
 
             _context = context;
 
         }
+
 
 
 
@@ -36,8 +40,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         public IActionResult Index()
         {
 
-
-            // Admin Login Check
 
             if (
                 HttpContext.Session.GetString("Admin")
@@ -57,15 +59,24 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
             var students =
             _context.Students
+            .OrderByDescending(
+                x => x.RegistrationDate
+            )
             .ToList();
+
+
+
 
 
 
             return View(students);
 
+
         }
+
 
 
 
@@ -82,11 +93,16 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         public IActionResult Approve(int id)
         {
 
+
             var student =
             _context.Students
             .FirstOrDefault(
                 x => x.StudentId == id
             );
+
+
+
+
 
 
 
@@ -98,7 +114,11 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
                 _context.SaveChanges();
 
+
             }
+
+
+
 
 
 
@@ -106,7 +126,9 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                 "Index"
             );
 
+
         }
+
 
 
 
@@ -132,15 +154,24 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
+
             if (student != null)
             {
+
 
                 _context.Students.Remove(student);
 
 
                 _context.SaveChanges();
 
+
             }
+
+
+
 
 
 
@@ -158,6 +189,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
         // =========================
         // STUDENT DETAILS
         // =========================
@@ -166,6 +198,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         public IActionResult StudentDetails(int id)
         {
 
+
             var student =
             _context.Students
             .FirstOrDefault(
@@ -173,9 +206,204 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
             );
 
 
+
+
+
+
+
+            if (student == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
+
+
             return View(student);
 
+
         }
+
+
+
+
+
+
+
+
+
+        // ==================================================
+        // ITEM MANAGEMENT
+        // ==================================================
+
+
+
+
+
+
+
+        // =========================
+        // ALL ITEMS
+        // =========================
+
+
+        public IActionResult Items()
+        {
+
+
+            if (
+                HttpContext.Session.GetString("Admin")
+                == null
+            )
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Admin"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var items =
+            _context.Items
+            .OrderByDescending(
+                x => x.CreatedDate
+            )
+            .ToList();
+
+
+
+
+
+
+
+
+            return View(items);
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // APPROVE ITEM
+        // =========================
+
+
+        public IActionResult ApproveItem(int id)
+        {
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x => x.ItemId == id
+            );
+
+
+
+
+
+
+
+            if (item != null)
+            {
+
+
+                item.AdminApproved = true;
+
+
+                _context.SaveChanges();
+
+
+            }
+
+
+
+
+
+
+
+            return RedirectToAction(
+                "Items"
+            );
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // REJECT ITEM
+        // =========================
+
+
+        public IActionResult RejectItem(int id)
+        {
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x => x.ItemId == id
+            );
+
+
+
+
+
+
+
+            if (item != null)
+            {
+
+
+                _context.Items.Remove(item);
+
+
+                _context.SaveChanges();
+
+
+            }
+
+
+
+
+
+
+
+            return RedirectToAction(
+                "Items"
+            );
+
+
+        }
+
+
 
 
 
