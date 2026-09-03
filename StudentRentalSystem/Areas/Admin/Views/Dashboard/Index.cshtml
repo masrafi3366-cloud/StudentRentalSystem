@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<StudentRentalSystem.Models.Student>
 
 
-
 @{
-    ViewData["Title"] = "Student Verification";
+    ViewData["Title"] = "Admin Dashboard";
 }
 
 
@@ -12,9 +11,12 @@
 <div class="container mt-4">
 
 
+
+
+
     <h2 class="mb-4">
 
-        Student Verification
+        Admin Dashboard 🛠️
 
     </h2>
 
@@ -24,245 +26,448 @@
 
 
 
-    @if (Model == null || !Model.Any())
-    {
+
+    <!-- DASHBOARD CARDS -->
 
 
-        <div class="card shadow p-5 text-center">
+    <div class="row mb-4">
 
 
-            <h4 class="text-muted">
 
-                No Student Found
+
+
+        <div class="col-md-4">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+
+                        Total Students
+
+                    </h5>
+
+
+                    <h2 class="text-primary">
+
+                        @Model.Count()
+
+                    </h2>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-md-4">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+
+                        Pending Approval
+
+                    </h5>
+
+
+                    <h2 class="text-warning">
+
+                        @Model.Count(x => !x.IsApproved)
+
+                    </h2>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-md-4">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+
+                        Approved Students
+
+                    </h5>
+
+
+                    <h2 class="text-success">
+
+                        @Model.Count(x => x.IsApproved)
+
+                    </h2>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="card shadow">
+
+
+        <div class="card-body">
+
+
+
+            <h4 class="mb-3">
+
+                Student Verification Requests
 
             </h4>
 
 
-            <p>
 
-                No registration request available right now.
 
-            </p>
+
+
+
+
+            @if (Model == null || !Model.Any())
+            {
+
+
+                <div class="alert alert-info text-center">
+
+
+                    No student registration request available.
+
+
+                </div>
+
+
+            }
+
+
+
+
+
+
+
+            else
+            {
+
+
+
+                <div class="table-responsive">
+
+
+
+                    <table class="table table-bordered table-hover align-middle">
+
+
+
+                        <thead class="table-dark">
+
+
+                            <tr>
+
+
+                                <th>
+                                    ID
+                                </th>
+
+
+                                <th>
+                                    Name
+                                </th>
+
+
+                                <th>
+                                    Mobile
+                                </th>
+
+
+                                <th>
+                                    Email
+                                </th>
+
+
+                                <th>
+                                    Status
+                                </th>
+
+
+                                <th>
+                                    Action
+                                </th>
+
+
+                            </tr>
+
+
+                        </thead>
+
+
+
+
+
+
+
+
+                        <tbody>
+
+
+
+                            @foreach (var student in Model)
+                            {
+
+
+
+                                <tr>
+
+
+                                    <td>
+
+                                        @student.StudentId
+
+                                    </td>
+
+
+
+
+
+
+                                    <td>
+
+                                        @student.FullName
+
+                                    </td>
+
+
+
+
+
+
+                                    <td>
+
+                                        @student.Mobile
+
+                                    </td>
+
+
+
+
+
+
+
+                                    <td>
+
+                                        @student.Email
+
+                                    </td>
+
+
+
+
+
+
+
+                                    <td>
+
+
+                                        @if (student.IsApproved)
+                                        {
+
+
+                                            <span class="badge bg-success">
+
+                                                Approved
+
+                                            </span>
+
+
+                                        }
+
+                                        else
+                                        {
+
+
+                                            <span class="badge bg-warning text-dark">
+
+                                                Pending
+
+                                            </span>
+
+
+                                        }
+
+
+
+                                    </td>
+
+
+
+
+
+
+
+
+                                    <td>
+
+
+
+                                        <a href="/Admin/Dashboard/StudentDetails/@student.StudentId"
+                                           class="btn btn-primary btn-sm mb-1">
+
+
+                                            Details
+
+
+                                        </a>
+
+
+
+
+
+
+                                        @if (!student.IsApproved)
+                                        {
+
+
+
+                                            <a href="/Admin/Dashboard/Approve/@student.StudentId"
+                                               class="btn btn-success btn-sm mb-1"
+                                               onclick="return confirm('Approve this student?');">
+
+
+                                                Approve
+
+
+                                            </a>
+
+
+
+
+
+
+                                            <a href="/Admin/Dashboard/Reject/@student.StudentId"
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Reject this student?');">
+
+
+                                                Reject
+
+
+                                            </a>
+
+
+
+                                        }
+
+
+                                        else
+                                        {
+
+
+                                            <span class="badge bg-success">
+
+                                                Verified
+
+                                            </span>
+
+
+                                        }
+
+
+
+
+                                    </td>
+
+
+
+
+
+
+                                </tr>
+
+
+                            }
+
+
+
+                        </tbody>
+
+
+
+
+                    </table>
+
+
+
+
+                </div>
+
+
+            }
+
+
+
 
 
         </div>
 
 
-    }
+    </div>
 
 
-
-
-
-
-    else
-    {
-
-
-
-        <div class="table-responsive">
-
-
-            <table class="table table-bordered table-hover shadow">
-
-
-
-                <thead class="table-dark">
-
-
-                    <tr>
-
-
-                        <th>
-                            Name
-                        </th>
-
-
-                        <th>
-                            Mobile
-                        </th>
-
-
-                        <th>
-                            Status
-                        </th>
-
-
-                        <th>
-                            Action
-                        </th>
-
-
-                    </tr>
-
-
-                </thead>
-
-
-
-
-
-
-
-                <tbody>
-
-
-
-                    @foreach (var student in Model)
-                    {
-
-
-                        <tr>
-
-
-
-                            <td>
-
-                                @student.FullName
-
-                            </td>
-
-
-
-
-
-
-                            <td>
-
-                                @student.Mobile
-
-                            </td>
-
-
-
-
-
-
-
-
-                            <td>
-
-
-                                @if (student.IsApproved)
-                                {
-
-                                    <span class="badge bg-success">
-
-                                        Approved
-
-                                    </span>
-
-                                }
-
-                                else
-                                {
-
-                                    <span class="badge bg-warning text-dark">
-
-                                        Pending
-
-                                    </span>
-
-                                }
-
-
-
-                            </td>
-
-
-
-
-
-
-
-
-                            <td>
-
-
-
-                                <a href="/Admin/Dashboard/StudentDetails/@student.StudentId"
-                                   class="btn btn-primary btn-sm mb-2">
-
-                                    Details
-
-                                </a>
-
-
-
-
-
-                                <br />
-
-
-
-
-
-
-                                @if (!student.IsApproved)
-                                {
-
-
-
-                                    <a href="/Admin/Dashboard/Approve/@student.StudentId"
-                                       class="btn btn-success btn-sm mb-2"
-                                       onclick="return confirm('Are you sure you want to approve this student?');">
-
-
-                                        Approve
-
-
-                                    </a>
-
-
-
-                                    <br />
-
-
-
-
-
-
-
-                                    <a href="/Admin/Dashboard/Reject/@student.StudentId"
-                                       class="btn btn-danger btn-sm"
-                                       onclick="return confirm('Are you sure you want to reject this student? This action cannot be undone.');">
-
-
-                                        Reject
-
-
-                                    </a>
-
-
-
-                                }
-
-
-
-                            </td>
-
-
-
-                        </tr>
-
-
-                    }
-
-
-
-                </tbody>
-
-
-
-            </table>
-
-
-
-        </div>
-
-
-
-    }
 
 
 
