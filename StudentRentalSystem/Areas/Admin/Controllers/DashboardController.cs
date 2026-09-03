@@ -24,18 +24,59 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
+
+        // =========================
+        // ADMIN DASHBOARD
+        // =========================
+
+
         public IActionResult Index()
         {
+
+
+            // Admin Login Check
+
+            if (
+                HttpContext.Session.GetString("Admin")
+                == null
+            )
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Admin"
+                );
+
+            }
+
+
+
+
+
 
             var students =
             _context.Students
             .ToList();
 
 
+
             return View(students);
 
         }
 
+
+
+
+
+
+
+
+        // =========================
+        // APPROVE STUDENT
+        // =========================
 
 
         public IActionResult Approve(int id)
@@ -71,6 +112,14 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
+        // =========================
+        // REJECT STUDENT
+        // =========================
+
+
         public IActionResult Reject(int id)
         {
 
@@ -102,6 +151,16 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
         }
 
+
+
+
+
+
+
+
+        // =========================
+        // STUDENT DETAILS
+        // =========================
 
 
         public IActionResult StudentDetails(int id)

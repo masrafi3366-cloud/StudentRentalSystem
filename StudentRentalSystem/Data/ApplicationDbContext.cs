@@ -34,6 +34,9 @@ namespace StudentRentalSystem.Data
         public DbSet<ExtraCharge> ExtraCharges { get; set; }
 
 
+        public DbSet<Admin> Admins { get; set; }
+
+
     }
 
 }
