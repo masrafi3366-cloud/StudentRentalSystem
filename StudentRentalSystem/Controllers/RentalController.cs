@@ -464,6 +464,63 @@ namespace StudentRentalSystem.Controllers
         }
 
 
+        // =========================
+        // MY RENTED ITEMS
+        // =========================
+
+
+        public IActionResult MyRentedItems()
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+
+            }
+
+
+
+
+
+
+
+            var rentedItems =
+            _context.Rentals
+            .Where(
+                x =>
+                x.StudentId == studentId.Value
+                &&
+                x.IsReturned == false
+                &&
+                x.Status == "Confirmed"
+            )
+            .OrderByDescending(
+                x => x.StartDate
+            )
+            .ToList();
+
+
+
+
+
+
+
+            return View(rentedItems);
+
+
+        }
 
 
 

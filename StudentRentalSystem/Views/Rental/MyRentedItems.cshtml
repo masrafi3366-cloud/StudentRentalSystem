@@ -1,6 +1,289 @@
-﻿namespace StudentRentalSystem.Views.Rental
-{
-    public class MyRentedItems
-    {
-    }
+﻿@model IEnumerable<StudentRentalSystem.Models.Rental>
+
+
+
+@{
+    ViewData["Title"] = "My Rented Items";
 }
+
+
+
+
+
+
+<div class="container mt-4">
+
+
+
+
+
+    <h2 class="mb-4">
+
+        My Rented Items 🔄
+
+    </h2>
+
+
+
+
+
+
+
+    @if (Model == null || !Model.Any())
+    {
+
+
+        <div class="card shadow p-5 text-center">
+
+
+            <h4 class="text-muted">
+
+                No Active Rental
+
+            </h4>
+
+
+            <p>
+
+                You currently don't have any rented item.
+
+            </p>
+
+
+
+            <a href="/Item/Browse"
+               class="btn btn-primary">
+
+                Browse Items
+
+            </a>
+
+
+        </div>
+
+
+    }
+
+
+
+
+
+
+    else
+    {
+
+
+
+        <div class="row">
+
+
+
+
+
+            @foreach (var rental in Model)
+            {
+
+
+
+                <div class="col-md-4 mb-4">
+
+
+
+                    <div class="card shadow h-100">
+
+
+
+                        <div class="card-body">
+
+
+
+                            <h5 class="card-title">
+
+                                Rental #@rental.RentalId
+
+                            </h5>
+
+
+
+
+
+                            <hr />
+
+
+
+
+
+                            <p>
+
+                                <strong>
+                                    Item ID:
+                                </strong>
+
+                                @rental.ItemId
+
+                            </p>
+
+
+
+
+
+
+
+                            <p>
+
+                                <strong>
+                                    Start Date:
+                                </strong>
+
+                                <br />
+
+                                @rental.StartDate.ToShortDateString()
+
+                            </p>
+
+
+
+
+
+
+
+
+                            <p>
+
+                                <strong>
+                                    Return Date:
+                                </strong>
+
+                                <br />
+
+                                @rental.EndDate.ToShortDateString()
+
+                            </p>
+
+
+
+
+
+
+
+                            <p>
+
+                                <strong>
+                                    Days:
+                                </strong>
+
+                                @rental.RentalDays
+
+                            </p>
+
+
+
+
+
+
+
+                            <p>
+
+                                <strong>
+                                    Amount:
+                                </strong>
+
+                                ৳ @rental.TotalAmount
+
+                            </p>
+
+
+
+
+
+
+
+                            <p>
+
+
+                                <strong>
+                                    Remaining:
+                                </strong>
+
+
+                                @{
+                                    int remaining =
+                                    (rental.EndDate.Date -
+                                    DateTime.Now.Date).Days;
+                                }
+
+
+
+
+
+                                @if (remaining > 0)
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        @remaining days left
+
+                                    </span>
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="badge bg-danger">
+
+                                        Expired
+
+                                    </span>
+
+                                }
+
+
+
+                            </p>
+
+
+
+
+
+
+
+
+                            <a href="/Rental/ReturnItem/@rental.RentalId"
+                               class="btn btn-danger w-100"
+                               onclick="return confirm('Return this item?');">
+
+
+                                Return Item
+
+
+                            </a>
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+            }
+
+
+
+        </div>
+
+
+
+    }
+
+
+
+
+</div>
