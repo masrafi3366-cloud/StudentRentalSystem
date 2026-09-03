@@ -1,44 +1,278 @@
 ﻿@model StudentRentalSystem.Models.Rental
 
 
-<h2>
-    Rental Created Successfully
-</h2>
-
-
-<hr />
-
-
-<p>
-    Rental ID:
-
-    @Model.RentalId
-
-</p>
+@{
+    ViewData["Title"] = "Rental Confirmation";
+}
 
 
 
-<p>
-    Total Amount:
-
-    @Model.TotalAmount
-
-</p>
 
 
+<div class="container mt-5">
 
-<p>
-    Status:
 
-    @Model.Status
+    <div class="row justify-content-center">
 
-</p>
+
+        <div class="col-md-6">
 
 
 
-<br />
+            <div class="card shadow p-4 text-center">
 
 
-<a href="/Payment/Create/@Model.RentalId">
-    Pay Now
-</a>
+
+
+
+                <div class="mb-3">
+
+
+                    <h2 class="text-success">
+
+                        Rental Created Successfully 🎉
+
+                    </h2>
+
+
+                </div>
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+                <div class="text-start">
+
+
+
+                    <p>
+
+                        <strong>
+                            Rental ID:
+                        </strong>
+
+
+                        @Model.RentalId
+
+
+                    </p>
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Start Date:
+                        </strong>
+
+
+                        @Model.StartDate.ToShortDateString()
+
+
+                    </p>
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            End Date:
+                        </strong>
+
+
+                        @Model.EndDate.ToShortDateString()
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Rental Days:
+                        </strong>
+
+
+                        @Model.RentalDays
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Total Amount:
+                        </strong>
+
+
+                        ৳ @Model.TotalAmount
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+
+                        <strong>
+                            Status:
+                        </strong>
+
+
+
+
+
+                        @if (Model.Status == "Active")
+                        {
+
+                            <span class="badge bg-success">
+
+                                Active
+
+                            </span>
+
+                        }
+
+                        else if (Model.Status == "Returned")
+                        {
+
+                            <span class="badge bg-secondary">
+
+                                Returned
+
+                            </span>
+
+                        }
+
+                        else
+                        {
+
+                            <span class="badge bg-warning text-dark">
+
+                                @Model.Status
+
+                            </span>
+
+                        }
+
+
+
+                    </p>
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+
+                <a href="/Payment/Create/@Model.RentalId"
+                   class="btn btn-success w-100 mb-3">
+
+
+                    Proceed To Payment 💳
+
+
+                </a>
+
+
+
+
+
+
+
+
+
+                <a href="/Rental/MyRentals"
+                   class="btn btn-outline-primary w-100 mb-2">
+
+
+                    View My Rentals
+
+
+                </a>
+
+
+
+
+
+
+
+
+
+                <a href="/Item/Browse"
+                   class="btn btn-outline-secondary w-100">
+
+
+                    Browse More Items
+
+
+                </a>
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
