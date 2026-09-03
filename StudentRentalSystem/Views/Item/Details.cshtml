@@ -1,56 +1,342 @@
 ﻿@model StudentRentalSystem.Models.Item
 
 
-<h2>
-    Item Details
-</h2>
-
-
-<hr />
-
-
-<img src="@Model.Image"
-     width="300" />
+@{
+    ViewData["Title"] = "Item Details";
+}
 
 
 
-<h3>
-    @Model.ItemName
-</h3>
+<div class="container mt-4">
 
 
-
-<p>
-    Category:
-
-    @Model.Category
-
-</p>
+    <div class="row justify-content-center">
 
 
-
-<p>
-    Description:
-
-    @Model.Description
-
-</p>
+        <div class="col-md-8">
 
 
-
-<p>
-    Price Per Day:
-
-    @Model.PricePerDay
-
-</p>
+            <div class="card shadow p-4">
 
 
 
 
-<br />
+
+                <h2 class="text-center mb-4">
+
+                    Item Details
+
+                </h2>
 
 
-<a href="/Rental/Create/@Model.ItemId">
-    Rent Now
-</a>
+
+
+
+
+                <div class="text-center">
+
+
+                    <img src="@Model.Image"
+                         class="img-fluid rounded shadow"
+                         style="max-height:300px;" />
+
+
+                </div>
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+                <h3>
+
+                    @Model.ItemName
+
+                </h3>
+
+
+
+
+
+
+
+
+                <p>
+
+                    <strong>
+                        Category:
+                    </strong>
+
+                    @Model.Category
+
+                </p>
+
+
+
+
+
+
+
+
+                <p>
+
+                    <strong>
+                        Description:
+                    </strong>
+
+                    @Model.Description
+
+                </p>
+
+
+
+
+
+
+
+
+                <p>
+
+                    <strong>
+                        Price Per Day:
+                    </strong>
+
+                    ৳ @Model.PricePerDay
+
+                </p>
+
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+                <h4>
+
+                    Owner Information
+
+                </h4>
+
+
+
+
+
+
+
+                <p>
+
+                    <strong>
+                        Name:
+                    </strong>
+
+                    @ViewBag.OwnerName
+
+                </p>
+
+
+
+
+
+
+
+                <p>
+
+                    <strong>
+                        Mobile:
+                    </strong>
+
+                    @ViewBag.OwnerMobile
+
+                </p>
+
+
+
+
+
+
+
+                <p>
+
+                    <strong>
+                        Email:
+                    </strong>
+
+                    @ViewBag.OwnerEmail
+
+                </p>
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+
+                <h4>
+
+                    Availability
+
+                </h4>
+
+
+
+
+
+
+
+                @if (Model.IsRented)
+                {
+
+                    <span class="badge bg-danger p-2">
+
+                        Currently Rented
+
+                    </span>
+
+                }
+                else
+                {
+
+                    <span class="badge bg-success p-2">
+
+                        Available
+
+                    </span>
+
+                }
+
+
+
+
+
+
+
+
+                <br />
+                <br />
+
+
+
+
+
+
+
+
+                @if (ViewBag.IsOwner == true)
+                {
+
+
+                    <div class="alert alert-warning">
+
+                        You cannot rent your own item.
+
+                    </div>
+
+
+                }
+
+
+
+
+
+
+                else if (Model.IsRented)
+                {
+
+
+                    <button class="btn btn-secondary w-100"
+                            disabled>
+
+
+                        Currently Not Available
+
+
+                    </button>
+
+
+                }
+
+
+
+
+
+
+                else
+                {
+
+
+                    <a href="/Rental/Create/@Model.ItemId"
+                       class="btn btn-primary w-100">
+
+
+                        Rent Now
+
+
+                    </a>
+
+
+                }
+
+
+
+
+
+
+
+                <br />
+
+
+
+
+
+
+
+                <a href="/Item/Browse"
+                   class="btn btn-outline-dark w-100 mt-3">
+
+
+                    Back To Browse
+
+
+                </a>
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
