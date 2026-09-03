@@ -1,0 +1,214 @@
+﻿@model IEnumerable<StudentRentalSystem.Models.Rental>
+
+
+@{
+    ViewData["Title"] = "Rental Monitoring";
+}
+
+
+
+
+<div class="container mt-4">
+
+
+    <h2 class="mb-4">
+
+        Rental Monitoring 📋
+
+    </h2>
+
+
+
+
+
+    @if (Model == null || !Model.Any())
+    {
+
+        <div class="alert alert-info">
+
+            No rental found.
+
+        </div>
+
+    }
+
+    else
+    {
+
+
+        <table class="table table-bordered table-hover shadow">
+
+
+            <thead class="table-dark">
+
+
+                <tr>
+
+
+                    <th>
+                        Rental ID
+                    </th>
+
+
+                    <th>
+                        Student ID
+                    </th>
+
+
+                    <th>
+                        Item ID
+                    </th>
+
+
+                    <th>
+                        Start Date
+                    </th>
+
+
+                    <th>
+                        End Date
+                    </th>
+
+
+                    <th>
+                        Days
+                    </th>
+
+
+                    <th>
+                        Amount
+                    </th>
+
+
+                    <th>
+                        Status
+                    </th>
+
+
+                </tr>
+
+
+            </thead>
+
+
+
+
+
+            <tbody>
+
+
+                @foreach (var rental in Model)
+                {
+
+
+                    <tr>
+
+
+                        <td>
+                            @rental.RentalId
+                        </td>
+
+
+
+                        <td>
+                            @rental.StudentId
+                        </td>
+
+
+
+
+                        <td>
+                            @rental.ItemId
+                        </td>
+
+
+
+
+                        <td>
+                            @rental.StartDate.ToShortDateString()
+                        </td>
+
+
+
+                        <td>
+                            @rental.EndDate.ToShortDateString()
+                        </td>
+
+
+
+
+                        <td>
+                            @rental.RentalDays
+                        </td>
+
+
+
+
+                        <td>
+                            @rental.TotalAmount
+                        </td>
+
+
+
+
+                        <td>
+
+
+                            @if (rental.Status == "Confirmed")
+                            {
+
+                                <span class="badge bg-success">
+
+                                    Confirmed
+
+                                </span>
+
+                            }
+
+                            else if (rental.Status == "Completed")
+                            {
+
+                                <span class="badge bg-primary">
+
+                                    Completed
+
+                                </span>
+
+                            }
+
+                            else
+                            {
+
+                                <span class="badge bg-warning text-dark">
+
+                                    @rental.Status
+
+                                </span>
+
+                            }
+
+
+                        </td>
+
+
+
+                    </tr>
+
+
+                }
+
+
+
+            </tbody>
+
+
+
+        </table>
+
+
+    }
+
+
+
+
+</div>

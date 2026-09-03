@@ -404,6 +404,50 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         }
 
 
+        // =========================
+        // RENTAL MONITORING
+        // =========================
+
+
+        public IActionResult Rentals()
+        {
+
+
+            if (
+                HttpContext.Session.GetString("Admin")
+                == null
+            )
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Admin"
+                );
+
+            }
+
+
+
+
+
+
+            var rentals =
+            _context.Rentals
+            .OrderByDescending(
+                x => x.RentalId
+            )
+            .ToList();
+
+
+
+
+
+
+            return View(rentals);
+
+
+        }
+
 
 
 
