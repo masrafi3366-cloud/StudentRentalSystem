@@ -1,13 +1,75 @@
-﻿<h2>
-    Registration Successful
-</h2>
+﻿@{
+    ViewData["Title"] = "Registration Successful";
+}
 
 
-<p>
-    Your account is waiting for admin approval.
-</p>
+
+<div class="container mt-5">
 
 
-<a href="/Account/Register">
-    Back to Registration
-</a>
+    <div class="row justify-content-center">
+
+
+        <div class="col-md-6">
+
+
+            <div class="card shadow p-5 text-center">
+
+
+                <h2 class="text-success">
+
+                    Registration Successful
+
+                </h2>
+
+
+
+                <hr />
+
+
+
+                <p class="fs-5">
+
+                    Your account has been created successfully.
+
+                </p>
+
+
+
+                <p class="text-warning">
+
+                    Please wait for admin approval before login.
+
+                </p>
+
+
+
+                <p>
+
+                    After approval, you can login and use Student Rental System.
+
+                </p>
+
+
+
+
+
+                <a href="/Account/Login"
+                   class="btn btn-primary mt-3">
+
+                    Go To Login
+
+                </a>
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>

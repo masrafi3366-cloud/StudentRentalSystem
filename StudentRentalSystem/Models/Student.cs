@@ -15,6 +15,7 @@ namespace StudentRentalSystem.Models
 
 
 
+
         [Required(ErrorMessage = "Full name is required")]
         [StringLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
         public string FullName { get; set; } = string.Empty;
@@ -33,7 +34,7 @@ namespace StudentRentalSystem.Models
 
 
 
-        [Required(ErrorMessage = "Student ID card image is required")]
+        // Image is handled by controller upload
         public string StudentIdCardImage { get; set; } = string.Empty;
 
 
@@ -69,6 +70,7 @@ namespace StudentRentalSystem.Models
 
 
         [Required(ErrorMessage = "Password is required")]
+        [StringLength(200)]
         [RegularExpression(
             @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$",
             ErrorMessage = "Password must contain at least 8 characters, uppercase, lowercase, number and special character"
