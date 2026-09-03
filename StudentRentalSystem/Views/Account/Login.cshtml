@@ -1,46 +1,158 @@
-﻿<h2>
-    Student Login
-</h2>
-
-
-
-<form method="post">
-
-
-    <label>
-        Email
-    </label>
-
-    <input type="email" name="email" />
-
-
-    <br />
-
-
-    <label>
-        Password
-    </label>
-
-    <input type="password" name="password" />
-
-
-    <br />
-
-
-    <button type="submit">
-        Login
-    </button>
-
-
-</form>
-
-
-
-@if (ViewBag.Error != null)
-{
-
-    <p>
-        @ViewBag.Error
-    </p>
-
+﻿@{
+    ViewData["Title"] = "Login";
 }
+
+
+
+<div class="container mt-5">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-md-5">
+
+
+            <div class="card shadow p-4">
+
+
+
+                <h2 class="text-center mb-4">
+
+                    Student Login
+
+                </h2>
+
+
+
+
+
+                @if (ViewBag.Error != null)
+                {
+
+                    <div class="alert alert-danger">
+
+                        @ViewBag.Error
+
+                    </div>
+
+                }
+
+
+
+
+
+
+
+                <form method="post"
+                      action="/Account/Login">
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Email
+
+                        </label>
+
+
+                        <input type="email"
+                               name="email"
+                               class="form-control"
+                               placeholder="Enter email"
+                               required />
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Password
+
+                        </label>
+
+
+
+                        <input type="password"
+                               name="password"
+                               class="form-control"
+                               placeholder="Enter password"
+                               required />
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+
+
+                        Login
+
+
+                    </button>
+
+
+
+
+                </form>
+
+
+
+
+
+
+
+                <div class="text-center mt-3">
+
+
+                    <p>
+
+                        Don't have an account?
+
+                        <a href="/Account/Register">
+
+                            Register
+
+                        </a>
+
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
