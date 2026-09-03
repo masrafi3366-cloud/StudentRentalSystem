@@ -16,6 +16,8 @@
 
 
 
+
+
     <a href="/Item/Create"
        class="btn btn-success mb-3">
 
@@ -27,189 +29,284 @@
 
 
 
-    <div class="table-responsive">
 
 
-        <table class="table table-bordered table-hover shadow">
+    @if (Model == null || !Model.Any())
+    {
 
 
-            <thead class="table-dark">
+
+        <div class="card shadow p-5 text-center">
 
 
-                <tr>
+            <h4 class="text-muted">
 
-                    <th>
-                        Image
-                    </th>
+                No Items Found
 
-
-                    <th>
-                        Item Name
-                    </th>
+            </h4>
 
 
-                    <th>
-                        Category
-                    </th>
 
+            <p>
 
-                    <th>
-                        Price / Day
-                    </th>
+                You have not posted any item yet.
 
+                Start sharing your items with other students.
 
-                    <th>
-                        Status
-                    </th>
-
-
-                    <th>
-                        Created Date
-                    </th>
-
-
-                    <th>
-                        Action
-                    </th>
-
-
-                </tr>
-
-
-            </thead>
+            </p>
 
 
 
 
 
-            <tbody>
+            <a href="/Item/Create"
+               class="btn btn-primary">
+
+                Post Your First Item
+
+            </a>
 
 
 
-                @foreach (var item in Model)
-                {
+        </div>
+
+
+
+    }
+
+
+
+
+
+
+    else
+    {
+
+
+
+        <div class="table-responsive">
+
+
+            <table class="table table-bordered table-hover shadow">
+
+
+                <thead class="table-dark">
 
 
                     <tr>
 
 
-
-                        <td>
-
-
-                            @if (!string.IsNullOrEmpty(item.Image))
-                            {
-
-                                <img src="@item.Image"
-                                     width="80"
-                                     height="60"
-                                     style="object-fit:cover;"
-                                     class="rounded" />
-
-                            }
-                            else
-                            {
-
-                                <span>
-                                    No Image
-                                </span>
-
-                            }
+                        <th>
+                            Image
+                        </th>
 
 
-                        </td>
+                        <th>
+                            Item Name
+                        </th>
 
 
+                        <th>
+                            Category
+                        </th>
 
 
-
-                        <td>
-                            @item.ItemName
-                        </td>
-
+                        <th>
+                            Price / Day
+                        </th>
 
 
-
-                        <td>
-                            @item.Category
-                        </td>
-
+                        <th>
+                            Status
+                        </th>
 
 
-
-                        <td>
-                            @item.PricePerDay
-                        </td>
-
+                        <th>
+                            Created Date
+                        </th>
 
 
-
-
-                        <td>
-
-
-                            @if (item.AdminApproved)
-                            {
-
-                                <span class="badge bg-success">
-                                    Approved
-                                </span>
-
-                            }
-                            else
-                            {
-
-                                <span class="badge bg-warning text-dark">
-                                    Pending
-                                </span>
-
-                            }
-
-
-                        </td>
-
-
-
-
-
-                        <td>
-                            @item.CreatedDate.ToShortDateString()
-                        </td>
-
-
-
-
-
-                        <td>
-
-
-                            <a href="/Item/Details/@item.ItemId"
-                               class="btn btn-primary btn-sm">
-
-                                View
-
-                            </a>
-
-
-                        </td>
-
+                        <th>
+                            Action
+                        </th>
 
 
                     </tr>
 
 
-                }
+                </thead>
 
 
 
-            </tbody>
 
 
 
-        </table>
+                <tbody>
 
 
-    </div>
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        <tr>
+
+
+
+                            <td>
+
+
+                                @if (!string.IsNullOrEmpty(item.Image))
+                                {
+
+                                    <img src="@item.Image"
+                                         width="80"
+                                         height="60"
+                                         style="object-fit:cover;"
+                                         class="rounded" />
+
+                                }
+
+                                else
+                                {
+
+                                    <span>
+                                        No Image
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+                                @item.ItemName
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+                                @item.Category
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+                                @item.PricePerDay
+
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+
+                                @if (item.AdminApproved)
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        Approved
+
+                                    </span>
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Pending
+
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+                                @item.CreatedDate.ToShortDateString()
+
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+
+                                <a href="/Item/Details/@item.ItemId"
+                                   class="btn btn-primary btn-sm">
+
+                                    View
+
+                                </a>
+
+
+                            </td>
+
+
+
+
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+
+            </table>
+
+
+        </div>
+
+
+
+    }
+
+
 
 
 

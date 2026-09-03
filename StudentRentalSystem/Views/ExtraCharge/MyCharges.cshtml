@@ -18,131 +18,206 @@
 
 
 
-    <div class="table-responsive">
-
-
-        <table class="table table-bordered table-hover shadow">
 
 
 
-            <thead class="table-dark">
+    @if (Model == null || !Model.Any())
+    {
 
 
-                <tr>
+        <div class="card shadow p-5 text-center">
 
 
-                    <th>
-                        Charge ID
-                    </th>
+
+            <h4 class="text-muted">
+
+                No Extra Charges
+
+            </h4>
 
 
-                    <th>
-                        Rental ID
-                    </th>
 
 
-                    <th>
-                        Late Days
-                    </th>
+            <p>
 
+                You don't have any extra charges.
 
-                    <th>
-                        Amount
-                    </th>
+                Late return charges will appear here if applicable.
 
-
-                    <th>
-                        Status
-                    </th>
-
-
-                </tr>
-
-
-            </thead>
+            </p>
 
 
 
 
 
-            <tbody>
+            <a href="/Rental/MyRentals"
+               class="btn btn-primary">
+
+                View My Rentals
+
+            </a>
 
 
 
-                @foreach (var charge in Model)
-                {
+        </div>
+
+
+
+    }
+
+
+
+
+
+
+
+    else
+    {
+
+
+
+        <div class="table-responsive">
+
+
+            <table class="table table-bordered table-hover shadow">
+
+
+
+                <thead class="table-dark">
 
 
                     <tr>
 
 
-                        <td>
-                            @charge.ChargeId
-                        </td>
+                        <th>
+                            Charge ID
+                        </th>
 
 
-
-                        <td>
-                            @charge.RentalId
-                        </td>
-
+                        <th>
+                            Rental ID
+                        </th>
 
 
-                        <td>
-                            @charge.LateDays
-                        </td>
+                        <th>
+                            Late Days
+                        </th>
 
 
-
-                        <td>
-                            @charge.Amount
-                        </td>
-
+                        <th>
+                            Amount
+                        </th>
 
 
-
-                        <td>
-
-
-
-                            @if (charge.PaidStatus)
-                            {
-
-                                <span class="badge bg-success">
-                                    Paid
-                                </span>
-
-                            }
-                            else
-                            {
-
-                                <span class="badge bg-danger">
-                                    Unpaid
-                                </span>
-
-                            }
-
-
-
-                        </td>
-
+                        <th>
+                            Status
+                        </th>
 
 
                     </tr>
 
 
-                }
+                </thead>
 
 
 
-            </tbody>
 
 
 
-        </table>
 
 
-    </div>
+                <tbody>
+
+
+
+                    @foreach (var charge in Model)
+                    {
+
+
+                        <tr>
+
+
+                            <td>
+                                @charge.ChargeId
+                            </td>
+
+
+
+                            <td>
+                                @charge.RentalId
+                            </td>
+
+
+
+                            <td>
+                                @charge.LateDays
+                            </td>
+
+
+
+                            <td>
+                                @charge.Amount
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+
+                                @if (charge.PaidStatus)
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        Paid
+
+                                    </span>
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="badge bg-danger">
+
+                                        Unpaid
+
+                                    </span>
+
+                                }
+
+
+
+                            </td>
+
+
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+
+            </table>
+
+
+        </div>
+
+
+
+    }
+
+
 
 
 

@@ -20,160 +20,238 @@
 
 
 
-    <div class="table-responsive">
+
+
+    @if (Model == null || !Model.Any())
+    {
+
+
+        <div class="card shadow p-5 text-center">
 
 
 
-        <table class="table table-bordered table-hover shadow">
+            <h4 class="text-muted">
+
+                No Rental Found
+
+            </h4>
 
 
 
-            <thead class="table-dark">
+            <p>
+
+                You have not rented any item yet.
+
+                Browse available items and start renting.
+
+            </p>
 
 
-                <tr>
 
 
-                    <th>
-                        Rental ID
-                    </th>
+            <a href="/Item/Browse"
+               class="btn btn-primary">
+
+                Browse Items
+
+            </a>
 
 
-                    <th>
-                        Start Date
-                    </th>
+
+        </div>
 
 
-                    <th>
-                        End Date
-                    </th>
 
-
-                    <th>
-                        Days
-                    </th>
-
-
-                    <th>
-                        Amount
-                    </th>
-
-
-                    <th>
-                        Status
-                    </th>
-
-
-                </tr>
-
-
-            </thead>
+    }
 
 
 
 
 
-            <tbody>
+
+
+    else
+    {
 
 
 
-                @foreach (var rental in Model)
-                {
+        <div class="table-responsive">
+
+
+
+            <table class="table table-bordered table-hover shadow">
+
+
+
+                <thead class="table-dark">
 
 
                     <tr>
 
 
-                        <td>
-                            @rental.RentalId
-                        </td>
+                        <th>
+                            Rental ID
+                        </th>
 
 
-
-                        <td>
-                            @rental.StartDate.ToShortDateString()
-                        </td>
-
+                        <th>
+                            Start Date
+                        </th>
 
 
-                        <td>
-                            @rental.EndDate.ToShortDateString()
-                        </td>
+                        <th>
+                            End Date
+                        </th>
 
 
-
-                        <td>
-                            @rental.RentalDays
-                        </td>
-
+                        <th>
+                            Days
+                        </th>
 
 
-                        <td>
-                            @rental.TotalAmount
-                        </td>
+                        <th>
+                            Amount
+                        </th>
 
 
-
-
-                        <td>
-
-
-
-                            @if (rental.Status == "Approved")
-                            {
-
-                                <span class="badge bg-success">
-                                    Approved
-                                </span>
-
-                            }
-                            else if (rental.Status == "Pending")
-                            {
-
-                                <span class="badge bg-warning">
-                                    Pending
-                                </span>
-
-                            }
-                            else if (rental.Status == "Late")
-                            {
-
-                                <span class="badge bg-danger">
-                                    Late
-                                </span>
-
-                            }
-                            else
-                            {
-
-                                <span class="badge bg-secondary">
-                                    @rental.Status
-                                </span>
-
-                            }
-
-
-
-                        </td>
-
+                        <th>
+                            Status
+                        </th>
 
 
                     </tr>
 
 
-                }
+                </thead>
 
 
 
-            </tbody>
 
 
 
-        </table>
+
+                <tbody>
 
 
 
-    </div>
+                    @foreach (var rental in Model)
+                    {
+
+
+                        <tr>
+
+
+                            <td>
+                                @rental.RentalId
+                            </td>
+
+
+
+                            <td>
+                                @rental.StartDate.ToShortDateString()
+                            </td>
+
+
+
+                            <td>
+                                @rental.EndDate.ToShortDateString()
+                            </td>
+
+
+
+                            <td>
+                                @rental.RentalDays
+                            </td>
+
+
+
+                            <td>
+                                @rental.TotalAmount
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+
+                                @if (rental.Status == "Approved")
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        Approved
+
+                                    </span>
+
+                                }
+
+                                else if (rental.Status == "Pending")
+                                {
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Pending
+
+                                    </span>
+
+                                }
+
+                                else if (rental.Status == "Late")
+                                {
+
+                                    <span class="badge bg-danger">
+
+                                        Late
+
+                                    </span>
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="badge bg-secondary">
+
+                                        @rental.Status
+
+                                    </span>
+
+                                }
+
+
+
+                            </td>
+
+
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+
+            </table>
+
+
+
+        </div>
+
+
+
+    }
+
+
+
 
 
 </div>

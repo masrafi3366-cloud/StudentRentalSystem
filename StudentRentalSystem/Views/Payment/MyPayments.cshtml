@@ -17,143 +17,221 @@
 
 
 
-    <div class="table-responsive">
 
 
 
-        <table class="table table-bordered table-hover shadow">
+    @if (Model == null || !Model.Any())
+    {
+
+
+        <div class="card shadow p-5 text-center">
 
 
 
-            <thead class="table-dark">
+            <h4 class="text-muted">
+
+                No Payment History
+
+            </h4>
 
 
-                <tr>
 
 
-                    <th>
-                        Payment ID
-                    </th>
+            <p>
 
+                You don't have any payment records yet.
 
-                    <th>
-                        Rental ID
-                    </th>
+                Your payment details will appear here after completing a rental payment.
 
-
-                    <th>
-                        Amount
-                    </th>
-
-
-                    <th>
-                        Payment Date
-                    </th>
-
-
-                    <th>
-                        Status
-                    </th>
-
-
-                    <th>
-                        Transaction ID
-                    </th>
-
-
-                </tr>
-
-
-            </thead>
+            </p>
 
 
 
 
 
-            <tbody>
+            <a href="/Rental/MyRentals"
+               class="btn btn-primary">
+
+                View My Rentals
+
+            </a>
 
 
 
-                @foreach (var payment in Model)
-                {
+        </div>
+
+
+
+    }
+
+
+
+
+
+
+
+    else
+    {
+
+
+
+        <div class="table-responsive">
+
+
+
+            <table class="table table-bordered table-hover shadow">
+
+
+
+                <thead class="table-dark">
 
 
                     <tr>
 
 
-                        <td>
-                            @payment.PaymentId
-                        </td>
+                        <th>
+                            Payment ID
+                        </th>
 
 
-
-                        <td>
-                            @payment.RentalId
-                        </td>
-
+                        <th>
+                            Rental ID
+                        </th>
 
 
-                        <td>
-                            @payment.Amount
-                        </td>
+                        <th>
+                            Amount
+                        </th>
 
 
-
-                        <td>
-                            @payment.PaymentDate.ToShortDateString()
-                        </td>
-
+                        <th>
+                            Payment Date
+                        </th>
 
 
-
-                        <td>
-
-
-                            @if (payment.PaymentStatus == "Completed")
-                            {
-
-                                <span class="badge bg-success">
-                                    Paid
-                                </span>
-
-                            }
-                            else
-                            {
-
-                                <span class="badge bg-warning text-dark">
-                                    Pending
-                                </span>
-
-                            }
+                        <th>
+                            Status
+                        </th>
 
 
-                        </td>
-
-
-
-
-                        <td>
-                            @payment.TransactionId
-                        </td>
-
+                        <th>
+                            Transaction ID
+                        </th>
 
 
                     </tr>
 
 
-                }
+                </thead>
 
 
 
-            </tbody>
 
 
 
-        </table>
+
+
+                <tbody>
 
 
 
-    </div>
+                    @foreach (var payment in Model)
+                    {
+
+
+                        <tr>
+
+
+                            <td>
+                                @payment.PaymentId
+                            </td>
+
+
+
+                            <td>
+                                @payment.RentalId
+                            </td>
+
+
+
+                            <td>
+                                @payment.Amount
+                            </td>
+
+
+
+                            <td>
+                                @payment.PaymentDate.ToShortDateString()
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+                                @if (payment.PaymentStatus == "Completed")
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        Paid
+
+                                    </span>
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Pending
+
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+                                @payment.TransactionId
+                            </td>
+
+
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+
+            </table>
+
+
+
+        </div>
+
+
+
+    }
+
+
 
 
 
