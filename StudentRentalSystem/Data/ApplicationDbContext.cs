@@ -67,7 +67,11 @@ namespace StudentRentalSystem.Data
 
 
 
-            // Item Price Precision
+
+            // =========================
+            // DECIMAL PRECISION CONFIG
+            // =========================
+
 
 
             modelBuilder.Entity<Item>()
@@ -79,10 +83,6 @@ namespace StudentRentalSystem.Data
 
 
 
-
-            // Rental Total Amount Precision
-
-
             modelBuilder.Entity<Rental>()
                 .Property(x => x.TotalAmount)
                 .HasPrecision(18, 2);
@@ -90,10 +90,6 @@ namespace StudentRentalSystem.Data
 
 
 
-
-
-
-            // Payment Amount Precision
 
 
             modelBuilder.Entity<Payment>()
@@ -105,13 +101,40 @@ namespace StudentRentalSystem.Data
 
 
 
-
-            // Extra Charge Amount Precision
-
-
             modelBuilder.Entity<ExtraCharge>()
                 .Property(x => x.Amount)
                 .HasPrecision(18, 2);
+
+
+
+
+
+
+
+
+
+            // =========================
+            // DEFAULT ADMIN ACCOUNT
+            // =========================
+
+
+
+            modelBuilder.Entity<Admin>()
+            .HasData(
+                new Admin
+                {
+
+                    AdminId = 1,
+
+                    Email = "admin@gmail.com",
+
+                    Password = "Admin@123"
+
+                }
+            );
+
+
+
 
 
 
