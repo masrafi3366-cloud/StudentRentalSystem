@@ -1,49 +1,252 @@
 ﻿@model StudentRentalSystem.Models.Rental
 
 
-<h2>
-    Payment
-</h2>
-
-
-<hr />
-
-
-<p>
-    Rental Amount:
-
-    @Model.TotalAmount
-</p>
+@{
+    ViewData["Title"] = "Payment";
+}
 
 
 
 
-<form method="post">
 
 
-    <input type="hidden"
-           name="RentalId"
-           value="@Model.RentalId" />
+<div class="container mt-5">
 
 
-
-    <label>
-        Transaction ID
-    </label>
+    <div class="row justify-content-center">
 
 
-    <input type="text"
-           name="TransactionId" />
+        <div class="col-md-6">
 
 
 
-    <br /><br />
-
-
-    <button type="submit">
-        Confirm Payment
-    </button>
+            <div class="card shadow p-4">
 
 
 
-</form>
+
+
+                <h2 class="text-center mb-4">
+
+                    Payment 💳
+
+                </h2>
+
+
+
+
+
+
+
+                <div class="alert alert-info text-center">
+
+
+                    <h5>
+
+                        Rental Amount
+
+                    </h5>
+
+
+
+                    <h3 class="text-success">
+
+                        ৳ @Model.TotalAmount
+
+                    </h3>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <div class="mb-3">
+
+
+                    <p>
+
+                        <strong>
+                            Rental ID:
+                        </strong>
+
+                        @Model.RentalId
+
+
+                    </p>
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Rental Days:
+                        </strong>
+
+                        @Model.RentalDays
+
+
+                    </p>
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Start Date:
+                        </strong>
+
+                        @Model.StartDate.ToShortDateString()
+
+
+                    </p>
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            End Date:
+                        </strong>
+
+                        @Model.EndDate.ToShortDateString()
+
+
+                    </p>
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+
+
+                <form method="post">
+
+
+
+                    @Html.AntiForgeryToken()
+
+
+
+
+
+                    <input type="hidden"
+                           name="RentalId"
+                           value="@Model.RentalId" />
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Transaction ID
+
+                        </label>
+
+
+
+                        <input type="text"
+                               name="TransactionId"
+                               class="form-control"
+                               placeholder="Enter transaction ID"
+                               required />
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <button type="submit"
+                            class="btn btn-success w-100">
+
+
+                        Confirm Payment
+
+
+                    </button>
+
+
+
+
+
+                </form>
+
+
+
+
+
+
+
+
+
+                <div class="text-center mt-3">
+
+
+                    <a href="/Rental/MyRentals"
+                       class="btn btn-outline-secondary">
+
+
+                        Back To Rentals
+
+
+                    </a>
+
+
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
