@@ -1,131 +1,365 @@
 ﻿@model StudentRentalSystem.Models.Student
 
 
-<h2>
-    My Profile
-</h2>
-
-
-<hr />
-
-
-
-<h3>
-    Personal Information
-</h3>
-
-
-
-<p>
-    Name:
-
-    @Model.FullName
-</p>
-
-
-
-<p>
-    Mobile:
-
-    @Model.Mobile
-</p>
-
-
-
-<p>
-    Email:
-
-    @Model.Email
-</p>
-
-
-
-<p>
-    Account Status:
-
-    @if (Model.IsApproved)
-    {
-        <span>
-            Approved
-        </span>
-    }
-    else
-    {
-        <span>
-            Pending
-        </span>
-    }
-
-</p>
-
-
-
-<hr />
-
-
-
-<h3>
-    Student Activity
-</h3>
-
-
-
-<p>
-    Posted Items:
-
-    @ViewBag.PostedItems
-</p>
-
-
-
-<p>
-    Rented Items:
-
-    @ViewBag.RentedItems
-</p>
-
-
-
-<p>
-    Total Payments:
-
-    @ViewBag.Payments
-</p>
-
-
-
-<p>
-    Extra Charges:
-
-    @ViewBag.ExtraCharges
-</p>
-
-
-
-<hr />
-
-
-
-<h3>
-    Student ID Card
-</h3>
-
-
-@if (Model.StudentIdCardImage != null)
-{
-
-    <img src="@Model.StudentIdCardImage"
-         width="300" />
-
+@{
+    ViewData["Title"] = "My Profile";
 }
 
 
 
-<br />
-<br />
+
+
+<div class="container mt-4">
 
 
 
-<a href="/Account/Dashboard">
-    Back Dashboard
-</a>
+
+
+    <h2 class="mb-4">
+
+        My Profile
+
+    </h2>
+
+
+
+
+
+
+
+
+    <div class="row">
+
+
+
+
+
+        <div class="col-md-6">
+
+
+
+            <div class="card shadow p-4 mb-4">
+
+
+
+                <h4 class="mb-3">
+
+                    Personal Information
+
+                </h4>
+
+
+
+
+
+                <p>
+
+                    <strong>Name:</strong>
+
+                    @Model.FullName
+
+                </p>
+
+
+
+
+
+                <p>
+
+                    <strong>Mobile:</strong>
+
+                    @Model.Mobile
+
+                </p>
+
+
+
+
+
+                <p>
+
+                    <strong>Email:</strong>
+
+                    @Model.Email
+
+                </p>
+
+
+
+
+
+
+
+                <p>
+
+
+                    <strong>
+                        Account Status:
+                    </strong>
+
+
+
+                    @if (Model.IsApproved)
+                    {
+
+                        <span class="badge bg-success">
+
+                            Approved
+
+                        </span>
+
+                    }
+
+                    else
+                    {
+
+                        <span class="badge bg-warning text-dark">
+
+                            Pending
+
+                        </span>
+
+                    }
+
+
+
+                </p>
+
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-md-6">
+
+
+
+            <div class="card shadow p-4 mb-4">
+
+
+
+                <h4 class="mb-3">
+
+                    Student Activity
+
+                </h4>
+
+
+
+
+
+
+
+                <div class="row text-center">
+
+
+
+                    <div class="col-6 mb-3">
+
+
+                        <div class="card border-primary p-3">
+
+
+                            <h5>
+
+                                @ViewBag.PostedItems
+
+                            </h5>
+
+
+                            <small>
+                                Posted Items
+                            </small>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="col-6 mb-3">
+
+
+                        <div class="card border-success p-3">
+
+
+                            <h5>
+
+                                @ViewBag.RentedItems
+
+                            </h5>
+
+
+                            <small>
+                                Rented Items
+                            </small>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="col-6 mb-3">
+
+
+                        <div class="card border-info p-3">
+
+
+                            <h5>
+
+                                @ViewBag.Payments
+
+                            </h5>
+
+
+                            <small>
+                                Payments
+                            </small>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="col-6 mb-3">
+
+
+                        <div class="card border-danger p-3">
+
+
+                            <h5>
+
+                                @ViewBag.ExtraCharges
+
+                            </h5>
+
+
+                            <small>
+                                Extra Charges
+                            </small>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="card shadow p-4 mb-4 text-center">
+
+
+
+        <h4 class="mb-3">
+
+            Student ID Card
+
+        </h4>
+
+
+
+
+
+
+        @if (!string.IsNullOrEmpty(Model.StudentIdCardImage))
+        {
+
+            <img src="@Model.StudentIdCardImage"
+                 class="img-fluid rounded shadow mx-auto"
+                 style="max-width:350px;" />
+
+        }
+
+        else
+        {
+
+            <p class="text-muted">
+
+                No ID Card Uploaded
+
+            </p>
+
+        }
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <a href="/Account/Dashboard"
+       class="btn btn-primary">
+
+
+        Back To Dashboard
+
+
+    </a>
+
+
+
+
+
+</div>
