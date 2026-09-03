@@ -1,69 +1,253 @@
 ﻿@model StudentRentalSystem.Models.Item
 
 
-<h2>
-    Post New Item
-</h2>
+@{
+    ViewData["Title"] = "Post New Item";
+}
 
 
 
-<form method="post"
-      enctype="multipart/form-data">
 
 
-    <label>
-        Item Name
-    </label>
-
-    <input asp-for="ItemName" />
-
-    <br />
+<div class="container mt-5">
 
 
-    <label>
-        Category
-    </label>
-
-    <input asp-for="Category" />
+    <div class="row justify-content-center">
 
 
-    <br />
+        <div class="col-md-7">
 
 
-    <label>
-        Description
-    </label>
-
-    <textarea asp-for="Description"></textarea>
+            <div class="card shadow p-4">
 
 
-    <br />
 
 
-    <label>
-        Image
-    </label>
 
-    <input type="file"
-           name="Image" />
+                <h2 class="text-center mb-4">
 
+                    Post New Item
 
-    <br />
+                </h2>
 
 
-    <label>
-        Price Per Day
-    </label>
-
-    <input asp-for="PricePerDay" />
 
 
-    <br />
 
 
-    <button type="submit">
-        Post Item
-    </button>
+
+                <form method="post"
+                      enctype="multipart/form-data">
 
 
-</form>
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Item Name
+
+                        </label>
+
+
+                        <input asp-for="ItemName"
+                               class="form-control"
+                               placeholder="Enter item name" />
+
+
+
+                        <span asp-validation-for="ItemName"
+                              class="text-danger">
+                        </span>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Category
+
+                        </label>
+
+
+
+                        <input asp-for="Category"
+                               class="form-control"
+                               placeholder="Example: Book, Electronics" />
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Description
+
+                        </label>
+
+
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Write item details"></textarea>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Item Image
+
+                        </label>
+
+
+
+                        <input type="file"
+                               name="Image"
+                               class="form-control" />
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Price Per Day
+
+                        </label>
+
+
+
+                        <input asp-for="PricePerDay"
+                               type="number"
+                               step="0.01"
+                               class="form-control"
+                               placeholder="Enter daily rent price" />
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <button type="submit"
+                            class="btn btn-success w-100">
+
+
+                        Post Item
+
+
+                    </button>
+
+
+
+
+
+
+                </form>
+
+
+
+
+
+
+
+                <div class="text-center mt-3">
+
+
+                    <a href="/Item/MyItems"
+                       class="btn btn-outline-secondary">
+
+
+                        Back To My Items
+
+
+                    </a>
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+@section Scripts
+{
+
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial"
+        );
+    }
+
+}
