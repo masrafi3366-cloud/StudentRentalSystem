@@ -1,0 +1,282 @@
+﻿@model StudentRentalSystem.Models.ExtraCharge
+
+
+@{
+    ViewData["Title"] = "Charge Payment Successful";
+}
+
+
+
+
+
+
+<div class="container mt-5">
+
+
+
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-md-6">
+
+
+
+
+
+            <div class="card shadow p-4 text-center">
+
+
+
+
+
+                <h2 class="text-success mb-3">
+
+                    Payment Successful 🎉
+
+                </h2>
+
+
+
+
+
+
+
+                <p class="text-muted">
+
+                    Your extra charge payment has been completed successfully.
+
+                </p>
+
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+
+                <div class="alert alert-success">
+
+
+                    <h4>
+
+                        ৳ @Model.Amount
+
+                    </h4>
+
+
+
+                    <p class="mb-0">
+
+                        Extra Charge Paid
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <div class="text-start">
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Charge ID:
+                        </strong>
+
+
+                        @Model.ChargeId
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Rental ID:
+                        </strong>
+
+
+                        @Model.RentalId
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Late Days:
+                        </strong>
+
+
+                        @Model.LateDays Days
+
+
+                    </p>
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Status:
+                        </strong>
+
+
+
+                        @if (Model.PaidStatus)
+                        {
+
+                            <span class="badge bg-success">
+
+                                Paid
+
+                            </span>
+
+                        }
+                        else
+                        {
+
+                            <span class="badge bg-danger">
+
+                                Unpaid
+
+                            </span>
+
+                        }
+
+
+
+                    </p>
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+
+
+                <a href="/ExtraCharge/MyCharges"
+                   class="btn btn-primary w-100 mb-2">
+
+
+                    View My Charges
+
+
+                </a>
+
+
+
+
+
+
+
+
+                <a href="/Rental/MyRentals"
+                   class="btn btn-outline-success w-100 mb-2">
+
+
+                    View My Rentals
+
+
+                </a>
+
+
+
+
+
+
+
+
+                <a href="/Account/Dashboard"
+                   class="btn btn-outline-secondary w-100">
+
+
+                    Go Dashboard
+
+
+                </a>
+
+
+
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+</div>

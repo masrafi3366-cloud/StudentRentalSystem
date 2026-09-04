@@ -1,19 +1,63 @@
 ﻿@model IEnumerable<StudentRentalSystem.Models.ExtraCharge>
 
 
-
 @{
     ViewData["Title"] = "My Charges";
 }
 
 
 
+
+
 <div class="container mt-4">
 
 
+
+
+
+    @if (TempData["Success"] != null)
+    {
+
+        <div class="alert alert-success shadow">
+
+            @TempData["Success"]
+
+        </div>
+
+    }
+
+
+
+
+
+
+
+
+    @if (TempData["Error"] != null)
+    {
+
+        <div class="alert alert-danger shadow">
+
+            @TempData["Error"]
+
+        </div>
+
+    }
+
+
+
+
+
+
+
+
     <h2 class="mb-4">
-        My Extra Charges
+
+        My Extra Charges 💰
+
     </h2>
+
+
 
 
 
@@ -28,7 +72,6 @@
         <div class="card shadow p-5 text-center">
 
 
-
             <h4 class="text-muted">
 
                 No Extra Charges
@@ -38,13 +81,14 @@
 
 
 
+
             <p>
 
-                You don't have any extra charges.
-
-                Late return charges will appear here if applicable.
+                You don't have any late return charges.
 
             </p>
+
+
 
 
 
@@ -53,7 +97,9 @@
             <a href="/Rental/MyRentals"
                class="btn btn-primary">
 
+
                 View My Rentals
+
 
             </a>
 
@@ -62,14 +108,7 @@
         </div>
 
 
-
     }
-
-
-
-
-
-
 
     else
     {
@@ -79,7 +118,8 @@
         <div class="table-responsive">
 
 
-            <table class="table table-bordered table-hover shadow">
+
+            <table class="table table-bordered table-hover shadow align-middle">
 
 
 
@@ -114,6 +154,11 @@
                         </th>
 
 
+                        <th>
+                            Action
+                        </th>
+
+
                     </tr>
 
 
@@ -137,27 +182,58 @@
                         <tr>
 
 
+
                             <td>
+
                                 @charge.ChargeId
+
                             </td>
 
 
 
+
+
+
+
+
                             <td>
+
                                 @charge.RentalId
+
                             </td>
+
+
+
+
+
 
 
 
                             <td>
-                                @charge.LateDays
+
+                                @charge.LateDays Days
+
                             </td>
+
+
+
+
+
 
 
 
                             <td>
-                                @charge.Amount
+
+
+                                <strong class="text-danger">
+
+                                    ৳ @charge.Amount
+
+                                </strong>
+
+
                             </td>
+
 
 
 
@@ -172,16 +248,18 @@
                                 @if (charge.PaidStatus)
                                 {
 
+
                                     <span class="badge bg-success">
 
                                         Paid
 
                                     </span>
 
-                                }
 
+                                }
                                 else
                                 {
+
 
                                     <span class="badge bg-danger">
 
@@ -189,11 +267,57 @@
 
                                     </span>
 
+
                                 }
 
 
 
                             </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+
+
+                                @if (!charge.PaidStatus)
+                                {
+
+
+                                    <a href="/ExtraCharge/Pay/@charge.ChargeId"
+                                       class="btn btn-success btn-sm">
+
+
+                                        Pay Now 💳
+
+
+                                    </a>
+
+
+                                }
+                                else
+                                {
+
+
+                                    <span class="badge bg-success">
+
+                                        Completed
+
+                                    </span>
+
+
+                                }
+
+
+
+                            </td>
+
+
 
 
 
@@ -209,6 +333,7 @@
 
 
             </table>
+
 
 
         </div>
