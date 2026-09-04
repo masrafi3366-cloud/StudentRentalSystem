@@ -374,7 +374,8 @@ namespace StudentRentalSystem.Controllers
 
 
             return RedirectToAction(
-                "Dashboard"
+                "Index",
+                "Home"
             );
 
 
