@@ -1,0 +1,420 @@
+﻿@model StudentRentalSystem.Models.Rental
+
+
+@{
+    ViewData["Title"] = "Rental Details";
+}
+
+
+
+
+<div class="container mt-4">
+
+
+    <div class="card shadow">
+
+
+        <div class="card-body">
+
+
+
+            <h2 class="mb-4">
+
+                Rental Details 🔄
+
+            </h2>
+
+
+
+            <hr />
+
+
+
+
+
+
+
+            <h4 class="text-primary">
+
+                Rental Information
+
+            </h4>
+
+
+
+            <p>
+
+                <strong>
+                    Rental ID:
+                </strong>
+
+                @Model.RentalId
+
+            </p>
+
+
+
+
+            <p>
+
+                <strong>
+                    Start Date:
+                </strong>
+
+                @Model.StartDate.ToShortDateString()
+
+            </p>
+
+
+
+
+            <p>
+
+                <strong>
+                    End Date:
+                </strong>
+
+                @Model.EndDate.ToShortDateString()
+
+            </p>
+
+
+
+
+            <p>
+
+                <strong>
+                    Rental Days:
+                </strong>
+
+                @Model.RentalDays
+
+            </p>
+
+
+
+
+            <p>
+
+                <strong>
+                    Total Amount:
+                </strong>
+
+                ৳ @Model.TotalAmount
+
+            </p>
+
+
+
+
+            <p>
+
+                <strong>
+                    Status:
+                </strong>
+
+
+                @if (Model.Status == "Returned")
+                {
+
+                    <span class="badge bg-secondary">
+
+                        Returned
+
+                    </span>
+
+                }
+                else
+                {
+
+                    <span class="badge bg-success">
+
+                        @Model.Status
+
+                    </span>
+
+                }
+
+
+            </p>
+
+
+
+
+
+
+
+            <hr />
+
+
+
+
+
+
+
+            <h4 class="text-success">
+
+                Student Information 👤
+
+            </h4>
+
+
+
+            @if (ViewBag.Student != null)
+            {
+
+
+                <p>
+
+                    <strong>
+                        Name:
+                    </strong>
+
+                    @ViewBag.Student.FullName
+
+                </p>
+
+
+
+                <p>
+
+                    <strong>
+                        Mobile:
+                    </strong>
+
+                    @ViewBag.Student.Mobile
+
+                </p>
+
+
+
+
+                <p>
+
+                    <strong>
+                        Email:
+                    </strong>
+
+                    @ViewBag.Student.Email
+
+                </p>
+
+
+            }
+            else
+            {
+
+                <p class="text-muted">
+
+                    Student information not found.
+
+                </p>
+
+            }
+
+
+
+
+
+
+
+            <hr />
+
+
+
+
+
+
+
+            <h4 class="text-info">
+
+                Item Information 📦
+
+            </h4>
+
+
+
+
+            @if (ViewBag.Item != null)
+            {
+
+
+                <p>
+
+                    <strong>
+                        Item Name:
+                    </strong>
+
+                    @ViewBag.Item.ItemName
+
+                </p>
+
+
+
+
+                <p>
+
+                    <strong>
+                        Category:
+                    </strong>
+
+                    @ViewBag.Item.Category
+
+                </p>
+
+
+
+
+                <p>
+
+                    <strong>
+                        Price Per Day:
+                    </strong>
+
+                    ৳ @ViewBag.Item.PricePerDay
+
+                </p>
+
+
+
+
+                @if (!string.IsNullOrEmpty(ViewBag.Item.Image))
+                {
+
+                    <img src="@ViewBag.Item.Image"
+                         width="250"
+                         height="180"
+                         class="rounded shadow"
+                         style="object-fit:cover;" />
+
+                }
+
+
+
+            }
+            else
+            {
+
+                <p class="text-muted">
+
+                    Item information not found.
+
+                </p>
+
+            }
+
+
+
+
+
+
+
+
+            <hr />
+
+
+
+
+
+
+
+
+            <h4 class="text-warning">
+
+                Payment Information 💳
+
+            </h4>
+
+
+
+
+            @if (ViewBag.Payment != null)
+            {
+
+
+                <p>
+
+                    <strong>
+                        Payment Status:
+                    </strong>
+
+
+                    <span class="badge bg-success">
+
+                        @ViewBag.Payment.PaymentStatus
+
+                    </span>
+
+
+                </p>
+
+
+
+
+                <p>
+
+                    <strong>
+                        Transaction ID:
+                    </strong>
+
+                    @ViewBag.Payment.TransactionId
+
+                </p>
+
+
+
+
+                <p>
+
+                    <strong>
+                        Payment Date:
+                    </strong>
+
+                    @ViewBag.Payment.PaymentDate
+
+                </p>
+
+
+            }
+            else
+            {
+
+
+                <span class="badge bg-warning text-dark">
+
+                    Payment Pending
+
+                </span>
+
+
+            }
+
+
+
+
+
+
+
+
+            <br /><br />
+
+
+
+            <a href="/Admin/Dashboard/Rentals"
+               class="btn btn-secondary">
+
+
+                Back To Rentals
+
+
+            </a>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</div>

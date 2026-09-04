@@ -23,220 +23,277 @@
 
 
 
-    <table class="table table-bordered table-hover shadow">
+    <div class="table-responsive">
 
 
-        <thead class="table-dark">
+        <table class="table table-bordered table-hover shadow">
 
 
-            <tr>
-
-
-                <th>
-                    Rental ID
-                </th>
-
-
-                <th>
-                    Student
-                </th>
-
-
-                <th>
-                    Item
-                </th>
-
-
-                <th>
-                    Date
-                </th>
-
-
-                <th>
-                    Days
-                </th>
-
-
-                <th>
-                    Amount
-                </th>
-
-
-                <th>
-                    Rental Status
-                </th>
-
-
-                <th>
-                    Payment
-                </th>
-
-
-            </tr>
-
-
-        </thead>
-
-
-
-
-
-        <tbody>
-
-
-
-            @foreach (var rental in Model)
-            {
+            <thead class="table-dark">
 
 
                 <tr>
 
 
-                    <td>
+                    <th>
+                        Rental ID
+                    </th>
 
-                        @rental.RentalId
 
-                    </td>
+                    <th>
+                        Student
+                    </th>
 
 
+                    <th>
+                        Item
+                    </th>
 
 
+                    <th>
+                        Date
+                    </th>
 
-                    <td>
 
-                        @rental.StudentName
+                    <th>
+                        Days
+                    </th>
 
-                    </td>
 
+                    <th>
+                        Amount
+                    </th>
 
 
+                    <th>
+                        Rental Status
+                    </th>
 
 
+                    <th>
+                        Payment
+                    </th>
 
-                    <td>
 
-                        @rental.ItemName
-
-                    </td>
-
-
-
-
-
-
-                    <td>
-
-                        @rental.StartDate.ToShortDateString()
-
-                        <br />
-
-                        @rental.EndDate.ToShortDateString()
-
-                    </td>
-
-
-
-
-
-
-                    <td>
-
-                        @rental.RentalDays
-
-                    </td>
-
-
-
-
-
-
-                    <td>
-
-                        ৳ @rental.TotalAmount
-
-                    </td>
-
-
-
-
-
-
-
-                    <td>
-
-
-                        <span class="badge bg-info">
-
-                            @rental.RentalStatus
-
-                        </span>
-
-
-                    </td>
-
-
-
-
-
-
-
-                    <td>
-
-
-
-                        @if (rental.PaymentStatus == "Completed")
-                        {
-
-                            <span class="badge bg-success">
-
-                                Paid
-
-                            </span>
-
-
-                            <br />
-
-
-                            <small>
-
-                                @rental.TransactionId
-
-                            </small>
-
-
-                        }
-
-                        else
-                        {
-
-                            <span class="badge bg-warning text-dark">
-
-                                Pending
-
-                            </span>
-
-                        }
-
-
-
-                    </td>
-
-
-
+                    <th>
+                        Action
+                    </th>
 
 
                 </tr>
 
 
-            }
+            </thead>
 
 
 
-        </tbody>
+
+
+            <tbody>
 
 
 
-    </table>
+                @foreach (var rental in Model)
+                {
+
+
+                    <tr>
+
+
+                        <td>
+
+                            @rental.RentalId
+
+                        </td>
+
+
+
+
+
+                        <td>
+
+                            @rental.StudentName
+
+                        </td>
+
+
+
+
+
+
+                        <td>
+
+                            @rental.ItemName
+
+                        </td>
+
+
+
+
+
+
+                        <td>
+
+                            @rental.StartDate.ToShortDateString()
+
+                            <br />
+
+                            @rental.EndDate.ToShortDateString()
+
+                        </td>
+
+
+
+
+
+
+                        <td>
+
+                            @rental.RentalDays
+
+                        </td>
+
+
+
+
+
+
+                        <td>
+
+                            ৳ @rental.TotalAmount
+
+                        </td>
+
+
+
+
+
+
+
+                        <td>
+
+
+                            @if (rental.RentalStatus == "Returned")
+                            {
+
+                                <span class="badge bg-secondary">
+
+                                    Returned
+
+                                </span>
+
+                            }
+                            else if (rental.RentalStatus == "Active")
+                            {
+
+                                <span class="badge bg-success">
+
+                                    Active
+
+                                </span>
+
+                            }
+                            else
+                            {
+
+                                <span class="badge bg-info">
+
+                                    @rental.RentalStatus
+
+                                </span>
+
+                            }
+
+
+                        </td>
+
+
+
+
+
+
+
+                        <td>
+
+
+
+                            @if (rental.PaymentStatus == "Completed")
+                            {
+
+                                <span class="badge bg-success">
+
+                                    Paid
+
+                                </span>
+
+
+                                <br />
+
+
+                                <small>
+
+                                    @rental.TransactionId
+
+                                </small>
+
+
+                            }
+
+                            else
+                            {
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Pending
+
+                                </span>
+
+                            }
+
+
+
+                        </td>
+
+
+
+
+
+
+
+                        <td>
+
+
+                            <a href="/Admin/Dashboard/RentalDetails/@rental.RentalId"
+                               class="btn btn-primary btn-sm">
+
+
+                                Details
+
+
+                            </a>
+
+
+                        </td>
+
+
+
+
+
+                    </tr>
+
+
+                }
+
+
+
+            </tbody>
+
+
+
+        </table>
+
+
+    </div>
 
 
 
