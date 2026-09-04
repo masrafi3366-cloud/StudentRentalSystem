@@ -13,6 +13,9 @@
 <div class="container mt-4">
 
 
+
+
+
     <h2 class="mb-4">
 
         Rental & Payment Monitoring 💳
@@ -23,277 +26,446 @@
 
 
 
-    <div class="table-responsive">
 
 
-        <table class="table table-bordered table-hover shadow">
+
+    <!-- SEARCH + FILTER -->
 
 
-            <thead class="table-dark">
+
+    <div class="card shadow mb-4">
 
 
-                <tr>
+        <div class="card-body">
 
 
-                    <th>
-                        Rental ID
-                    </th>
+
+            <form method="get"
+                  action="/Admin/Dashboard/Rentals">
 
 
-                    <th>
-                        Student
-                    </th>
 
-
-                    <th>
-                        Item
-                    </th>
-
-
-                    <th>
-                        Date
-                    </th>
-
-
-                    <th>
-                        Days
-                    </th>
-
-
-                    <th>
-                        Amount
-                    </th>
-
-
-                    <th>
-                        Rental Status
-                    </th>
-
-
-                    <th>
-                        Payment
-                    </th>
-
-
-                    <th>
-                        Action
-                    </th>
-
-
-                </tr>
-
-
-            </thead>
+                <div class="row">
 
 
 
 
 
-            <tbody>
+                    <div class="col-md-6 mb-2">
+
+
+                        <input type="text"
+                               name="search"
+                               class="form-control"
+                               placeholder="Search student name or item name..." />
+
+
+                    </div>
 
 
 
-                @foreach (var rental in Model)
-                {
+
+
+
+
+
+                    <div class="col-md-4 mb-2">
+
+
+                        <select name="status"
+                                class="form-control">
+
+
+                            <option value="">
+                                All Status
+                            </option>
+
+
+
+                            @if (ViewBag.StatusList != null)
+                            {
+
+
+                                foreach (var status in ViewBag.StatusList)
+                                {
+
+
+                                    <option value="@status">
+
+                                        @status
+
+                                    </option>
+
+
+                                }
+
+
+                            }
+
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="col-md-2 mb-2">
+
+
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+
+
+                            Search
+
+
+                        </button>
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+
+            </form>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    @if (Model == null || !Model.Any())
+    {
+
+
+        <div class="alert alert-info text-center">
+
+
+            No rental found.
+
+
+        </div>
+
+
+    }
+
+    else
+    {
+
+
+
+
+
+        <div class="table-responsive">
+
+
+            <table class="table table-bordered table-hover shadow">
+
+
+                <thead class="table-dark">
 
 
                     <tr>
 
 
-                        <td>
+                        <th>
+                            Rental ID
+                        </th>
 
-                            @rental.RentalId
 
-                        </td>
+                        <th>
+                            Student
+                        </th>
 
 
+                        <th>
+                            Item
+                        </th>
 
 
+                        <th>
+                            Date
+                        </th>
 
-                        <td>
 
-                            @rental.StudentName
+                        <th>
+                            Days
+                        </th>
 
-                        </td>
 
+                        <th>
+                            Amount
+                        </th>
 
 
+                        <th>
+                            Rental Status
+                        </th>
 
 
+                        <th>
+                            Payment
+                        </th>
 
-                        <td>
 
-                            @rental.ItemName
-
-                        </td>
-
-
-
-
-
-
-                        <td>
-
-                            @rental.StartDate.ToShortDateString()
-
-                            <br />
-
-                            @rental.EndDate.ToShortDateString()
-
-                        </td>
-
-
-
-
-
-
-                        <td>
-
-                            @rental.RentalDays
-
-                        </td>
-
-
-
-
-
-
-                        <td>
-
-                            ৳ @rental.TotalAmount
-
-                        </td>
-
-
-
-
-
-
-
-                        <td>
-
-
-                            @if (rental.RentalStatus == "Returned")
-                            {
-
-                                <span class="badge bg-secondary">
-
-                                    Returned
-
-                                </span>
-
-                            }
-                            else if (rental.RentalStatus == "Active")
-                            {
-
-                                <span class="badge bg-success">
-
-                                    Active
-
-                                </span>
-
-                            }
-                            else
-                            {
-
-                                <span class="badge bg-info">
-
-                                    @rental.RentalStatus
-
-                                </span>
-
-                            }
-
-
-                        </td>
-
-
-
-
-
-
-
-                        <td>
-
-
-
-                            @if (rental.PaymentStatus == "Completed")
-                            {
-
-                                <span class="badge bg-success">
-
-                                    Paid
-
-                                </span>
-
-
-                                <br />
-
-
-                                <small>
-
-                                    @rental.TransactionId
-
-                                </small>
-
-
-                            }
-
-                            else
-                            {
-
-                                <span class="badge bg-warning text-dark">
-
-                                    Pending
-
-                                </span>
-
-                            }
-
-
-
-                        </td>
-
-
-
-
-
-
-
-                        <td>
-
-
-                            <a href="/Admin/Dashboard/RentalDetails/@rental.RentalId"
-                               class="btn btn-primary btn-sm">
-
-
-                                Details
-
-
-                            </a>
-
-
-                        </td>
-
-
-
+                        <th>
+                            Action
+                        </th>
 
 
                     </tr>
 
 
-                }
+                </thead>
 
 
 
-            </tbody>
+
+
+                <tbody>
 
 
 
-        </table>
+                    @foreach (var rental in Model)
+                    {
 
 
-    </div>
+                        <tr>
+
+
+                            <td>
+
+                                @rental.RentalId
+
+                            </td>
+
+
+
+
+
+                            <td>
+
+                                @rental.StudentName
+
+                            </td>
+
+
+
+
+
+
+                            <td>
+
+                                @rental.ItemName
+
+                            </td>
+
+
+
+
+
+
+                            <td>
+
+                                @rental.StartDate.ToShortDateString()
+
+                                <br />
+
+                                @rental.EndDate.ToShortDateString()
+
+                            </td>
+
+
+
+
+
+
+                            <td>
+
+                                @rental.RentalDays
+
+                            </td>
+
+
+
+
+
+
+                            <td>
+
+                                ৳ @rental.TotalAmount
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+                                @if (rental.RentalStatus == "Returned")
+                                {
+
+                                    <span class="badge bg-secondary">
+
+                                        Returned
+
+                                    </span>
+
+                                }
+
+                                else if (rental.RentalStatus == "Active")
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        Active
+
+                                    </span>
+
+                                }
+
+                                else if (rental.RentalStatus == "Late")
+                                {
+
+                                    <span class="badge bg-danger">
+
+                                        Late
+
+                                    </span>
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="badge bg-info">
+
+                                        @rental.RentalStatus
+
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+
+                                @if (rental.PaymentStatus == "Completed")
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        Paid
+
+                                    </span>
+
+
+                                    <br />
+
+
+                                    <small>
+
+                                        @rental.TransactionId
+
+                                    </small>
+
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Pending
+
+                                    </span>
+
+                                }
+
+
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+                                <a href="/Admin/Dashboard/RentalDetails/@rental.RentalId"
+                                   class="btn btn-primary btn-sm">
+
+
+                                    Details
+
+
+                                </a>
+
+
+                            </td>
+
+
+
+
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+
+            </table>
+
+
+        </div>
+
+
+    }
 
 
 

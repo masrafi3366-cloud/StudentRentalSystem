@@ -9,6 +9,8 @@
 
 
 
+
+
 <div class="container mt-4">
 
 
@@ -20,6 +22,7 @@
         Admin Dashboard 🛠️
 
     </h2>
+
 
 
 
@@ -399,6 +402,77 @@
 
 
 
+    <!-- STUDENT SEARCH -->
+
+
+
+    <div class="card shadow mb-4">
+
+
+        <div class="card-body">
+
+
+
+            <h5 class="mb-3">
+
+                Search Students 🔍
+
+            </h5>
+
+
+
+
+
+
+            <form method="get"
+                  action="/Admin/Dashboard/Index">
+
+
+                <div class="input-group">
+
+
+
+                    <input type="text"
+                           name="search"
+                           class="form-control"
+                           placeholder="Search by name, email or mobile..." />
+
+
+
+
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+
+                        Search
+
+
+                    </button>
+
+
+
+                </div>
+
+
+
+            </form>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
     <!-- ADMIN MANAGEMENT MENU -->
 
 
@@ -508,12 +582,6 @@
 
 
 
-
-
-
-
-
-
     <!-- STUDENT VERIFICATION -->
 
 
@@ -540,11 +608,15 @@
             @if (Model == null || !Model.Any())
             {
 
+
                 <div class="alert alert-info text-center">
 
-                    No student registration request available.
+
+                    No student found.
+
 
                 </div>
+
 
             }
 
@@ -552,10 +624,13 @@
             {
 
 
+
                 <div class="table-responsive">
 
 
+
                     <table class="table table-bordered table-hover align-middle">
+
 
 
                         <thead class="table-dark">
@@ -563,17 +638,36 @@
 
                             <tr>
 
-                                <th>ID</th>
 
-                                <th>Name</th>
+                                <th>
+                                    ID
+                                </th>
 
-                                <th>Mobile</th>
 
-                                <th>Email</th>
+                                <th>
+                                    Name
+                                </th>
 
-                                <th>Status</th>
 
-                                <th>Action</th>
+                                <th>
+                                    Mobile
+                                </th>
+
+
+                                <th>
+                                    Email
+                                </th>
+
+
+                                <th>
+                                    Status
+                                </th>
+
+
+                                <th>
+                                    Action
+                                </th>
+
 
                             </tr>
 
@@ -584,7 +678,10 @@
 
 
 
+
+
                         <tbody>
+
 
 
                             @foreach (var student in Model)
@@ -594,31 +691,59 @@
                                 <tr>
 
 
+
                                     <td>
+
                                         @student.StudentId
+
                                     </td>
 
 
+
+
+
+
                                     <td>
+
                                         @student.FullName
+
                                     </td>
 
 
+
+
+
+
                                     <td>
+
                                         @student.Mobile
+
                                     </td>
 
 
+
+
+
+
                                     <td>
+
                                         @student.Email
+
                                     </td>
 
 
+
+
+
+
                                     <td>
+
+
 
 
                                         @if (student.IsApproved)
                                         {
+
 
                                             <span class="badge bg-success">
 
@@ -626,9 +751,12 @@
 
                                             </span>
 
+
                                         }
+
                                         else
                                         {
+
 
                                             <span class="badge bg-warning text-dark">
 
@@ -636,21 +764,36 @@
 
                                             </span>
 
+
                                         }
+
 
 
                                     </td>
 
 
+
+
+
+
+
+
                                     <td>
 
 
+
+
                                         <a href="/Admin/Dashboard/StudentDetails/@student.StudentId"
-                                           class="btn btn-primary btn-sm">
+                                           class="btn btn-primary btn-sm mb-1">
+
 
                                             Details
 
+
                                         </a>
+
+
+
 
 
 
@@ -659,25 +802,58 @@
                                         @if (!student.IsApproved)
                                         {
 
+
+
                                             <a href="/Admin/Dashboard/Approve/@student.StudentId"
-                                               class="btn btn-success btn-sm">
+                                               class="btn btn-success btn-sm mb-1"
+                                               onclick="return confirm('Approve this student?');">
+
 
                                                 Approve
 
+
                                             </a>
+
+
+
+
+
+
 
 
                                             <a href="/Admin/Dashboard/Reject/@student.StudentId"
-                                               class="btn btn-danger btn-sm">
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Reject this student?');">
+
 
                                                 Reject
 
+
                                             </a>
+
+
+                                        }
+
+                                        else
+                                        {
+
+
+                                            <span class="badge bg-success">
+
+                                                Verified
+
+                                            </span>
+
 
                                         }
 
 
+
                                     </td>
+
+
+
+
 
 
                                 </tr>
@@ -686,10 +862,13 @@
                             }
 
 
+
                         </tbody>
 
 
+
                     </table>
+
 
 
                 </div>
@@ -699,10 +878,14 @@
 
 
 
+
+
         </div>
 
 
     </div>
+
+
 
 
 

@@ -7,7 +7,11 @@
 
 
 
+
 <div class="container mt-4">
+
+
+
 
 
     <h2 class="mb-4">
@@ -15,6 +19,128 @@
         Item Approval Management 📦
 
     </h2>
+
+
+
+
+
+
+
+
+    <!-- SEARCH + FILTER -->
+
+
+
+    <div class="card shadow mb-4">
+
+
+        <div class="card-body">
+
+
+            <form method="get"
+                  action="/Admin/Dashboard/Items">
+
+
+
+                <div class="row">
+
+
+
+                    <div class="col-md-6 mb-2">
+
+
+                        <input type="text"
+                               name="search"
+                               class="form-control"
+                               placeholder="Search item name..." />
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="col-md-4 mb-2">
+
+
+                        <select name="category"
+                                class="form-control">
+
+
+                            <option value="">
+                                All Categories
+                            </option>
+
+
+
+                            @if (ViewBag.Categories != null)
+                            {
+
+
+                                foreach (var cat in ViewBag.Categories)
+                                {
+
+
+                                    <option value="@cat">
+
+                                        @cat
+
+                                    </option>
+
+
+                                }
+
+
+                            }
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="col-md-2 mb-2">
+
+
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+
+
+                            Search
+
+
+                        </button>
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
 
 
 
@@ -37,6 +163,7 @@
 
     else
     {
+
 
 
 
@@ -237,6 +364,7 @@
                                 @if (item.IsRented)
                                 {
 
+
                                     <span class="badge bg-danger">
 
                                         Rented
@@ -249,6 +377,7 @@
                                 else if (item.AdminApproved)
                                 {
 
+
                                     <span class="badge bg-success">
 
                                         Available
@@ -260,6 +389,7 @@
 
                                 else
                                 {
+
 
                                     <span class="badge bg-warning text-dark">
 
@@ -310,6 +440,7 @@
                                     <br />
 
 
+
                                     <a href="/Admin/Dashboard/ApproveItem/@item.ItemId"
                                        class="btn btn-success btn-sm mb-1"
                                        onclick="return confirm('Approve this item?');">
@@ -319,6 +450,8 @@
 
 
                                     </a>
+
+
 
 
 
@@ -341,7 +474,9 @@
                                 else
                                 {
 
+
                                     <br />
+
 
 
                                     <span class="badge bg-success">
