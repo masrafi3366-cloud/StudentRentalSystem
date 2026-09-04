@@ -1,10 +1,69 @@
 ﻿@model IEnumerable<StudentRentalSystem.Models.Student>
 
 
-
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
+
+
+
+<style>
+
+
+    .admin-title {
+        color: #20B2AA;
+        font-weight: 700;
+    }
+
+
+
+    .stat-card {
+        border: none;
+        border-radius: 15px;
+        transition: .3s;
+    }
+
+
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(32,178,170,.25) !important;
+        }
+
+
+
+    .stat-number {
+        color: #20B2AA;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+
+
+    .sea-btn {
+        background: #20B2AA;
+        border-color: #20B2AA;
+        color: white;
+    }
+
+
+
+        .sea-btn:hover {
+            background: #178F89;
+            color: white;
+        }
+
+
+
+    .table thead {
+        background: #20B2AA;
+        color: white;
+    }
+
+</style>
+
+
+
 
 
 
@@ -17,13 +76,24 @@
 
 
 
-    <h2 class="mb-4">
-
-        Admin Dashboard 🛠️
-
-    </h2>
+    <div class="text-center mb-4">
 
 
+        <h2 class="admin-title">
+
+            🛠️ Admin Dashboard
+
+        </h2>
+
+
+        <p class="text-muted">
+
+            Student Rental System Management Panel
+
+        </p>
+
+
+    </div>
 
 
 
@@ -31,42 +101,38 @@
 
 
 
-    <!-- STATISTICS SECTION -->
 
+
+    <!-- STUDENT STATS -->
 
 
     <div class="row mb-4">
 
 
-
-
-
         <div class="col-md-4 mb-3">
 
-
-            <div class="card shadow text-center">
-
+            <div class="card shadow stat-card text-center">
 
                 <div class="card-body">
 
 
-                    <h5>
+                    <h6>
+
                         Total Students
-                    </h5>
+
+                    </h6>
 
 
-                    <h2 class="text-primary">
+                    <div class="stat-number">
 
                         @ViewBag.TotalStudents
 
-                    </h2>
+                    </div>
 
 
                 </div>
 
-
             </div>
-
 
         </div>
 
@@ -76,33 +142,30 @@
 
 
 
-
         <div class="col-md-4 mb-3">
 
-
-            <div class="card shadow text-center">
-
+            <div class="card shadow stat-card text-center">
 
                 <div class="card-body">
 
 
-                    <h5>
+                    <h6>
+
                         Approved Students
-                    </h5>
+
+                    </h6>
 
 
-                    <h2 class="text-success">
+                    <div class="stat-number">
 
                         @ViewBag.ApprovedStudents
 
-                    </h2>
+                    </div>
 
 
                 </div>
 
-
             </div>
-
 
         </div>
 
@@ -112,36 +175,32 @@
 
 
 
-
         <div class="col-md-4 mb-3">
 
-
-            <div class="card shadow text-center">
-
+            <div class="card shadow stat-card text-center">
 
                 <div class="card-body">
 
 
-                    <h5>
+                    <h6>
+
                         Pending Students
-                    </h5>
+
+                    </h6>
 
 
-                    <h2 class="text-warning">
+                    <div class="stat-number">
 
                         @ViewBag.PendingStudents
 
-                    </h2>
+                    </div>
 
 
                 </div>
 
-
             </div>
 
-
         </div>
-
 
 
     </div>
@@ -154,42 +213,33 @@
 
 
 
-    <!-- ITEM STATISTICS -->
-
+    <!-- ITEM RENTAL PAYMENT -->
 
 
     <div class="row mb-4">
 
 
-
-
-
         <div class="col-md-4 mb-3">
 
-
-            <div class="card shadow text-center">
-
+            <div class="card shadow stat-card text-center">
 
                 <div class="card-body">
 
+                    <h6>
+                        📦 Total Items
+                    </h6>
 
-                    <h5>
-                        Total Items 📦
-                    </h5>
 
-
-                    <h2 class="text-primary">
+                    <div class="stat-number">
 
                         @ViewBag.TotalItems
 
-                    </h2>
+                    </div>
 
 
                 </div>
 
-
             </div>
-
 
         </div>
 
@@ -199,36 +249,29 @@
 
 
 
-
         <div class="col-md-4 mb-3">
 
-
-            <div class="card shadow text-center">
-
+            <div class="card shadow stat-card text-center">
 
                 <div class="card-body">
 
-
-                    <h5>
+                    <h6>
                         Available Items
-                    </h5>
+                    </h6>
 
 
-                    <h2 class="text-success">
+                    <div class="stat-number">
 
                         @ViewBag.AvailableItems
 
-                    </h2>
+                    </div>
 
 
                 </div>
 
-
             </div>
 
-
         </div>
-
 
 
 
@@ -238,34 +281,27 @@
 
         <div class="col-md-4 mb-3">
 
-
-            <div class="card shadow text-center">
-
+            <div class="card shadow stat-card text-center">
 
                 <div class="card-body">
 
-
-                    <h5>
+                    <h6>
                         Rented Items
-                    </h5>
+                    </h6>
 
 
-                    <h2 class="text-danger">
+                    <div class="stat-number">
 
                         @ViewBag.RentedItems
 
-                    </h2>
+                    </div>
 
 
                 </div>
 
-
             </div>
 
-
         </div>
-
-
 
 
     </div>
@@ -275,38 +311,31 @@
 
 
 
-
-
-
-    <!-- RENTAL PAYMENT STATISTICS -->
 
 
 
     <div class="row mb-4">
 
 
-
-
-
         <div class="col-md-4 mb-3">
 
 
-            <div class="card shadow text-center">
+            <div class="card shadow stat-card text-center">
 
 
                 <div class="card-body">
 
 
-                    <h5>
-                        Total Rentals 🔄
-                    </h5>
+                    <h6>
+                        🔄 Total Rentals
+                    </h6>
 
 
-                    <h2 class="text-info">
+                    <div class="stat-number">
 
                         @ViewBag.TotalRentals
 
-                    </h2>
+                    </div>
 
 
                 </div>
@@ -323,26 +352,25 @@
 
 
 
-
         <div class="col-md-4 mb-3">
 
 
-            <div class="card shadow text-center">
+            <div class="card shadow stat-card text-center">
 
 
                 <div class="card-body">
 
 
-                    <h5>
-                        Completed Payments 💳
-                    </h5>
+                    <h6>
+                        💳 Payments
+                    </h6>
 
 
-                    <h2 class="text-success">
+                    <div class="stat-number">
 
                         @ViewBag.CompletedPayments
 
-                    </h2>
+                    </div>
 
 
                 </div>
@@ -352,7 +380,6 @@
 
 
         </div>
-
 
 
 
@@ -363,22 +390,22 @@
         <div class="col-md-4 mb-3">
 
 
-            <div class="card shadow text-center">
+            <div class="card shadow stat-card text-center">
 
 
                 <div class="card-body">
 
 
-                    <h5>
-                        Total Revenue 💰
-                    </h5>
+                    <h6>
+                        💰 Revenue
+                    </h6>
 
 
-                    <h2 class="text-primary">
+                    <div class="stat-number">
 
                         ৳ @ViewBag.TotalRevenue
 
-                    </h2>
+                    </div>
 
 
                 </div>
@@ -388,8 +415,6 @@
 
 
         </div>
-
-
 
 
     </div>
@@ -402,8 +427,7 @@
 
 
 
-    <!-- STUDENT SEARCH -->
-
+    <!-- SEARCH -->
 
 
     <div class="card shadow mb-4">
@@ -412,15 +436,11 @@
         <div class="card-body">
 
 
+            <h5>
 
-            <h5 class="mb-3">
-
-                Search Students 🔍
+                🔍 Search Students
 
             </h5>
-
-
-
 
 
 
@@ -431,29 +451,21 @@
                 <div class="input-group">
 
 
-
                     <input type="text"
                            name="search"
                            class="form-control"
-                           placeholder="Search by name, email or mobile..." />
+                           placeholder="Search student..." />
 
 
 
-
-
-                    <button type="submit"
-                            class="btn btn-primary">
-
+                    <button class="btn sea-btn">
 
                         Search
-
 
                     </button>
 
 
-
                 </div>
-
 
 
             </form>
@@ -473,47 +485,37 @@
 
 
 
-    <!-- ADMIN MANAGEMENT MENU -->
-
+    <!-- MANAGEMENT -->
 
 
     <div class="row mb-4">
 
 
-
-
-
         <div class="col-md-6 mb-3">
 
 
-            <div class="card shadow h-100">
+            <div class="card shadow">
 
 
                 <div class="card-body">
 
 
                     <h5>
-
-                        Item Management 📦
-
+                        📦 Item Management
                     </h5>
-
 
 
                     <p>
 
-                        Review posted items and manage approval.
+                        Manage student posted items.
 
                     </p>
 
 
-
                     <a href="/Admin/Dashboard/Items"
-                       class="btn btn-primary">
-
+                       class="btn sea-btn">
 
                         Manage Items
-
 
                     </a>
 
@@ -536,34 +538,28 @@
         <div class="col-md-6 mb-3">
 
 
-            <div class="card shadow h-100">
+            <div class="card shadow">
 
 
                 <div class="card-body">
 
 
                     <h5>
-
-                        Rental Monitoring 📋
-
+                        📋 Rental Monitoring
                     </h5>
-
 
 
                     <p>
 
-                        Monitor rental and payment activities.
+                        Monitor rentals and payments.
 
                     </p>
-
 
 
                     <a href="/Admin/Dashboard/Rentals"
                        class="btn btn-info">
 
-
                         View Rentals
-
 
                     </a>
 
@@ -575,15 +571,19 @@
 
 
         </div>
-
 
 
     </div>
 
 
 
-    <!-- STUDENT VERIFICATION -->
 
+
+
+
+
+
+    <!-- STUDENT TABLE -->
 
 
     <div class="card shadow">
@@ -592,10 +592,9 @@
         <div class="card-body">
 
 
-
             <h4 class="mb-3">
 
-                Student Verification Requests
+                Student Verification
 
             </h4>
 
@@ -603,280 +602,148 @@
 
 
 
+            <div class="table-responsive">
 
 
-            @if (Model == null || !Model.Any())
-            {
+                <table class="table table-bordered table-hover align-middle">
 
 
-                <div class="alert alert-info text-center">
+                    <thead>
 
 
-                    No student found.
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Name</th>
+
+                            <th>Mobile</th>
+
+                            <th>Email</th>
+
+                            <th>Status</th>
+
+                            <th>Action</th>
 
 
-                </div>
+                        </tr>
 
 
-            }
-
-            else
-            {
+                    </thead>
 
 
 
-                <div class="table-responsive">
+                    <tbody>
 
 
-
-                    <table class="table table-bordered table-hover align-middle">
-
-
-
-                        <thead class="table-dark">
+                        @foreach (var student in Model)
+                        {
 
 
                             <tr>
 
 
-                                <th>
-                                    ID
-                                </th>
+                                <td>
+                                    @student.StudentId
+                                </td>
 
 
-                                <th>
-                                    Name
-                                </th>
+                                <td>
+                                    @student.FullName
+                                </td>
 
 
-                                <th>
-                                    Mobile
-                                </th>
+                                <td>
+                                    @student.Mobile
+                                </td>
 
 
-                                <th>
-                                    Email
-                                </th>
+                                <td>
+                                    @student.Email
+                                </td>
 
 
-                                <th>
-                                    Status
-                                </th>
+                                <td>
 
 
-                                <th>
-                                    Action
-                                </th>
+                                    @if (student.IsApproved)
+                                    {
+
+                                        <span class="badge bg-success">
+
+                                            Approved
+
+                                        </span>
+
+                                    }
+                                    else
+                                    {
+
+                                        <span class="badge bg-warning text-dark">
+
+                                            Pending
+
+                                        </span>
+
+                                    }
+
+
+                                </td>
+
+
+                                <td>
+
+
+                                    <a href="/Admin/Dashboard/StudentDetails/@student.StudentId"
+                                       class="btn btn-primary btn-sm">
+
+                                        Details
+
+                                    </a>
+
+
+
+                                    @if (!student.IsApproved)
+                                    {
+
+
+                                        <a href="/Admin/Dashboard/Approve/@student.StudentId"
+                                           class="btn btn-success btn-sm">
+
+                                            Approve
+
+                                        </a>
+
+
+                                        <a href="/Admin/Dashboard/Reject/@student.StudentId"
+                                           class="btn btn-danger btn-sm">
+
+                                            Reject
+
+                                        </a>
+
+
+                                    }
+
+
+
+                                </td>
 
 
                             </tr>
 
 
-                        </thead>
+                        }
 
 
 
+                    </tbody>
 
 
+                </table>
 
 
-                        <tbody>
-
-
-
-                            @foreach (var student in Model)
-                            {
-
-
-                                <tr>
-
-
-
-                                    <td>
-
-                                        @student.StudentId
-
-                                    </td>
-
-
-
-
-
-
-                                    <td>
-
-                                        @student.FullName
-
-                                    </td>
-
-
-
-
-
-
-                                    <td>
-
-                                        @student.Mobile
-
-                                    </td>
-
-
-
-
-
-
-                                    <td>
-
-                                        @student.Email
-
-                                    </td>
-
-
-
-
-
-
-                                    <td>
-
-
-
-
-                                        @if (student.IsApproved)
-                                        {
-
-
-                                            <span class="badge bg-success">
-
-                                                Approved
-
-                                            </span>
-
-
-                                        }
-
-                                        else
-                                        {
-
-
-                                            <span class="badge bg-warning text-dark">
-
-                                                Pending
-
-                                            </span>
-
-
-                                        }
-
-
-
-                                    </td>
-
-
-
-
-
-
-
-
-                                    <td>
-
-
-
-
-                                        <a href="/Admin/Dashboard/StudentDetails/@student.StudentId"
-                                           class="btn btn-primary btn-sm mb-1">
-
-
-                                            Details
-
-
-                                        </a>
-
-
-
-
-
-
-
-
-                                        @if (!student.IsApproved)
-                                        {
-
-
-
-                                            <a href="/Admin/Dashboard/Approve/@student.StudentId"
-                                               class="btn btn-success btn-sm mb-1"
-                                               onclick="return confirm('Approve this student?');">
-
-
-                                                Approve
-
-
-                                            </a>
-
-
-
-
-
-
-
-
-                                            <a href="/Admin/Dashboard/Reject/@student.StudentId"
-                                               class="btn btn-danger btn-sm"
-                                               onclick="return confirm('Reject this student?');">
-
-
-                                                Reject
-
-
-                                            </a>
-
-
-                                        }
-
-                                        else
-                                        {
-
-
-                                            <span class="badge bg-success">
-
-                                                Verified
-
-                                            </span>
-
-
-                                        }
-
-
-
-                                    </td>
-
-
-
-
-
-
-                                </tr>
-
-
-                            }
-
-
-
-                        </tbody>
-
-
-
-                    </table>
-
-
-
-                </div>
-
-
-            }
-
-
+            </div>
 
 
 
@@ -884,7 +751,6 @@
 
 
     </div>
-
 
 
 

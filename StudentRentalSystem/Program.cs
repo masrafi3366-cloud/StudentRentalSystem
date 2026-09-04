@@ -6,14 +6,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-// MVC Service
+
+// =========================
+// MVC SERVICE
+// =========================
 
 builder.Services.AddControllersWithViews();
 
 
 
 
-// Database Connection
+// =========================
+// DATABASE CONNECTION
+// =========================
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
@@ -26,13 +31,25 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 
-// Session
+// =========================
+// SESSION
+// =========================
 
 builder.Services.AddSession();
 
 
 
+
+
 var app = builder.Build();
+
+
+
+
+
+// =========================
+// DATABASE INITIALIZER
+// =========================
 
 using (var scope = app.Services.CreateScope())
 {
@@ -48,7 +65,12 @@ using (var scope = app.Services.CreateScope())
 
 
 
-// Error Handling
+
+
+
+// =========================
+// ERROR HANDLING
+// =========================
 
 if (!app.Environment.IsDevelopment())
 {
@@ -64,6 +86,9 @@ if (!app.Environment.IsDevelopment())
 
 
 
+
+
+
 app.UseHttpsRedirection();
 
 
@@ -76,7 +101,15 @@ app.UseRouting();
 
 
 
+
+
+// =========================
+// SESSION
+// =========================
+
 app.UseSession();
+
+
 
 
 
@@ -86,11 +119,15 @@ app.UseAuthorization();
 
 
 
-// Area Route
+
+
+// =========================
+// ADMIN AREA ROUTING
+// =========================
 
 app.MapControllerRoute(
     name: "areas",
-    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 );
 
 
@@ -98,12 +135,18 @@ app.MapControllerRoute(
 
 
 
-// Default Route
+
+
+// =========================
+// DEFAULT ROUTING
+// =========================
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
+
+
 
 
 

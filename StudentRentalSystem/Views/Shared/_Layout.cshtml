@@ -10,11 +10,9 @@
           content="width=device-width, initial-scale=1.0" />
 
 
-
     <title>
         Student Rental System
     </title>
-
 
 
 
@@ -39,15 +37,19 @@
 
 
 
-            html, body {
-                min-height: 100%;
+            html,
+            body {
+                height: 100%;
             }
 
 
 
 
 
+
+
             body {
+                min-height: 100vh;
                 display: flex;
                 flex-direction: column;
                 background-color: var(--light-bg);
@@ -96,7 +98,7 @@
             .nav-link {
                 color: white !important;
                 margin-left: 8px;
-                transition: 0.3s;
+                transition: .3s;
             }
 
 
@@ -121,7 +123,7 @@
             .card {
                 border-radius: 15px;
                 border: none;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+                box-shadow: 0 5px 15px rgba(0,0,0,.08);
             }
 
 
@@ -142,30 +144,7 @@
 
 
 
-            .btn-primary {
-                background-color: var(--sea-green);
-                border-color: var(--sea-green);
-            }
-
-
-
-
-
-
-
-
-                .btn-primary:hover {
-                    background-color: var(--sea-green-dark);
-                    border-color: var(--sea-green-dark);
-                }
-
-
-
-
-
-
-
-
+            .btn-primary,
             .btn-success {
                 background-color: var(--sea-green);
                 border-color: var(--sea-green);
@@ -178,8 +157,10 @@
 
 
 
+                .btn-primary:hover,
                 .btn-success:hover {
                     background-color: var(--sea-green-dark);
+                    border-color: var(--sea-green-dark);
                 }
 
 
@@ -203,18 +184,10 @@
 
             footer {
                 margin-top: auto;
+                width: 100%;
                 background-color: var(--sea-green);
             }
 
-
-
-
-
-
-
-                footer h5 {
-                    font-weight: bold;
-                }
 
 
 
@@ -249,8 +222,6 @@
 
 
         <div class="container">
-
-
 
 
 
@@ -291,9 +262,8 @@
 
 
 
-
-
                 <ul class="navbar-nav ms-auto">
+
 
 
 
@@ -301,14 +271,19 @@
 
                     <li class="nav-item">
 
+
                         <a class="nav-link"
                            href="/Item/Browse">
 
+
                             Browse Items
+
 
                         </a>
 
+
                     </li>
+
 
 
 
@@ -322,12 +297,16 @@
 
                         <li class="nav-item">
 
+
                             <a class="nav-link"
                                href="/Admin/Dashboard">
 
+
                                 Admin Dashboard
 
+
                             </a>
+
 
                         </li>
 
@@ -335,14 +314,22 @@
 
 
 
+
+
                         <li class="nav-item">
 
+
                             <a class="nav-link"
-                               href="/Admin/Logout">
+                               asp-area="Admin"
+                               asp-controller="Admin"
+                               asp-action="Logout">
+
 
                                 Logout
 
+
                             </a>
+
 
                         </li>
 
@@ -362,12 +349,16 @@
 
                         <li class="nav-item">
 
+
                             <a class="nav-link"
                                href="/Account/Dashboard">
 
+
                                 Dashboard
 
+
                             </a>
+
 
                         </li>
 
@@ -377,14 +368,19 @@
 
 
 
+
                         <li class="nav-item">
+
 
                             <a class="nav-link"
                                href="/Item/MyItems">
 
+
                                 My Items
 
+
                             </a>
+
 
                         </li>
 
@@ -394,14 +390,19 @@
 
 
 
+
                         <li class="nav-item">
+
 
                             <a class="nav-link"
                                href="/Rental/MyRentals">
 
+
                                 My Rentals
 
+
                             </a>
+
 
                         </li>
 
@@ -411,14 +412,19 @@
 
 
 
+
                         <li class="nav-item">
+
 
                             <a class="nav-link"
                                href="/Payment/MyPayments">
 
+
                                 Payments
 
+
                             </a>
+
 
                         </li>
 
@@ -428,14 +434,19 @@
 
 
 
+
                         <li class="nav-item">
+
 
                             <a class="nav-link"
                                href="/ExtraCharge/MyCharges">
 
+
                                 Charges
 
+
                             </a>
+
 
                         </li>
 
@@ -445,14 +456,19 @@
 
 
 
+
                         <li class="nav-item">
+
 
                             <a class="nav-link"
                                href="/Account/Profile">
 
+
                                 Profile
 
+
                             </a>
+
 
                         </li>
 
@@ -462,14 +478,19 @@
 
 
 
+
                         <li class="nav-item">
+
 
                             <a class="nav-link"
                                href="/Account/Logout">
 
+
                                 Logout
 
+
                             </a>
+
 
                         </li>
 
@@ -488,12 +509,16 @@
 
                         <li class="nav-item">
 
+
                             <a class="nav-link"
                                href="/Account/Login">
 
+
                                 Login
 
+
                             </a>
+
 
                         </li>
 
@@ -501,14 +526,21 @@
 
 
 
+
+
+
                         <li class="nav-item">
+
 
                             <a class="nav-link"
                                href="/Account/Register">
 
+
                                 Register
 
+
                             </a>
+
 
                         </li>
 
@@ -522,7 +554,9 @@
                 </ul>
 
 
+
             </div>
+
 
 
         </div>
@@ -538,7 +572,7 @@
 
 
 
-    <main>
+    <main class="flex-grow-1">
 
 
         <div class="container mt-4">

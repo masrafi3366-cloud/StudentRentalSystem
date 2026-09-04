@@ -1,50 +1,58 @@
-﻿@{
+﻿@model IEnumerable<StudentRentalSystem.Models.Item>
+
+
+@{
     ViewData["Title"] = "Home";
 }
 
 
-<div class="container mt-5">
+
+<div class="container mt-4">
 
 
-    <div class="p-5 mb-4 bg-light rounded-3">
+
+    <!-- HERO SECTION -->
+
+    <div class="card shadow p-5 text-center mb-5">
 
 
-        <div class="container-fluid py-5">
+        <h1 class="fw-bold">
+
+            Welcome
+            @(ViewBag.StudentName ?? "to Student Rental System")
+            👋
+
+        </h1>
 
 
-            <h1 class="display-4 fw-bold">
-                Student Rental System
-            </h1>
+
+        <p class="fs-4 text-muted">
+
+            Student Rental System
+
+        </p>
 
 
-            <p class="fs-4">
-                Rent, Share and Manage Items Easily
-                Among Students.
-            </p>
+
+
+        <div class="mt-4">
+
+
+            <a href="/Item/Create"
+               class="btn btn-success btn-lg me-2">
+
+                📦 Post Items
+
+            </a>
+
+
+
 
 
             <a href="/Item/Browse"
                class="btn btn-primary btn-lg">
 
-                Browse Items
-
-            </a>
-
-
-
-            <a href="/Account/Register"
-               class="btn btn-success btn-lg ms-2">
-
-                Register
-
-            </a>
-
-            
-            
-            <a href="/Account/Login"
-               class="btn btn-dark btn-lg ms-2">
-
-                Login
+                🔍 Browse Items
 
             </a>
 
@@ -58,23 +66,33 @@
 
 
 
-    <div class="row text-center">
 
 
-        <div class="col-md-4">
+
+    <!-- FEATURES -->
 
 
-            <div class="card shadow p-3">
+    <div class="row text-center mb-5">
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow p-4 h-100">
 
 
                 <h3>
-                    Post Items
+
+                    📦 Post Items
+
                 </h3>
 
 
                 <p>
-                    Students can post their
-                    unused items for rent.
+
+                    Students can post their unused
+                    items for rent.
+
                 </p>
 
 
@@ -87,20 +105,26 @@
 
 
 
-        <div class="col-md-4">
 
 
-            <div class="card shadow p-3">
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow p-4 h-100">
 
 
                 <h3>
-                    Rent Items
+
+                    🛒 Rent Items
+
                 </h3>
 
 
                 <p>
+
                     Find useful items from
                     other students.
+
                 </p>
 
 
@@ -114,20 +138,25 @@
 
 
 
-        <div class="col-md-4">
+
+        <div class="col-md-4 mb-3">
 
 
-            <div class="card shadow p-3">
+            <div class="card shadow p-4 h-100">
 
 
                 <h3>
-                    Secure System
+
+                    🔐 Secure System
+
                 </h3>
 
 
                 <p>
-                    Admin verification and
+
+                    Safe rental system with
                     payment tracking.
+
                 </p>
 
 
@@ -137,7 +166,169 @@
         </div>
 
 
+
     </div>
+
+
+
+
+
+
+
+
+
+    <!-- PRODUCTS -->
+
+
+    <h2 class="text-center mb-4">
+
+        Featured Items 🛍️
+
+    </h2>
+
+
+
+
+
+    <div class="row">
+
+
+
+        @if (Model != null && Model.Any())
+        {
+
+
+            foreach (var item in Model)
+            {
+
+
+                <div class="col-md-3 mb-4">
+
+
+                    <div class="card shadow h-100">
+
+
+
+
+
+                        @if (!string.IsNullOrEmpty(item.Image))
+                        {
+
+
+                            <img src="@item.Image"
+                                 class="card-img-top"
+                                 style="height:180px;object-fit:cover;" />
+
+                        }
+                        else
+                        {
+
+                            <div class="bg-secondary text-white text-center p-5">
+
+                                No Image
+
+                            </div>
+
+                        }
+
+
+
+
+
+
+
+                        <div class="card-body">
+
+
+                            <h5 class="fw-bold">
+
+                                @item.ItemName
+
+                            </h5>
+
+
+
+
+                            <p>
+
+                                <span class="badge bg-info">
+
+                                    @item.Category
+
+                                </span>
+
+                            </p>
+
+
+
+
+                            <p>
+
+                                ৳ @item.PricePerDay / day
+
+                            </p>
+
+
+
+
+
+                            <a href="/Item/Details/@item.ItemId"
+                               class="btn btn-primary w-100">
+
+
+                                View Details
+
+
+                            </a>
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+            }
+
+
+        }
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- MORE BUTTON -->
+
+
+    <div class="text-center mt-4 mb-5">
+
+
+        <a href="/Item/Browse"
+           class="btn btn-outline-primary btn-lg">
+
+
+            Browse More Items
+
+
+        </a>
+
+
+    </div>
+
+
 
 
 

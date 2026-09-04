@@ -2,6 +2,7 @@
 using StudentRentalSystem.Data;
 
 
+
 namespace StudentRentalSystem.Areas.Admin.Controllers
 {
 
@@ -36,6 +37,8 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         // =========================
 
 
+        [HttpGet]
+        [Route("Admin/Login")]
         public IActionResult Login()
         {
 
@@ -50,18 +53,20 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
         // =========================
         // ADMIN LOGIN POST
         // =========================
 
 
         [HttpPost]
+        [Route("Admin/Login")]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(
             string email,
             string password
         )
         {
-
 
 
             var admin =
@@ -78,10 +83,8 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             if (admin == null)
             {
-
 
                 ViewBag.Error =
                 "Invalid admin email or password";
@@ -90,7 +93,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                 return View();
 
             }
-
 
 
 
@@ -109,12 +111,14 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             return RedirectToAction(
                 "Index",
-                "Dashboard"
+                "Dashboard",
+                new
+                {
+                    area = "Admin"
+                }
             );
-
 
 
         }
@@ -131,28 +135,26 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         // ADMIN LOGOUT
         // =========================
 
-
+        [HttpGet]
         public IActionResult Logout()
         {
 
-
-            HttpContext.Session.Remove(
-                "Admin"
-            );
-
+            HttpContext.Session.Remove("Admin");
 
 
             return RedirectToAction(
-                "Login"
+                "Login",
+                "Admin",
+                new
+                {
+                    area = "Admin"
+                }
             );
-
 
         }
 
 
 
-
     }
-
 
 }

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using StudentRentalSystem.Data;
 using StudentRentalSystem.Models;
 using System.Diagnostics;
+
 
 
 namespace StudentRentalSystem.Controllers
@@ -12,17 +14,23 @@ namespace StudentRentalSystem.Controllers
 
         private readonly ILogger<HomeController> _logger;
 
+        private readonly ApplicationDbContext _context;
+
 
 
 
         public HomeController(
-            ILogger<HomeController> logger
+            ILogger<HomeController> logger,
+            ApplicationDbContext context
         )
         {
 
             _logger = logger;
 
+            _context = context;
+
         }
+
 
 
 
@@ -39,7 +47,31 @@ namespace StudentRentalSystem.Controllers
         public IActionResult Index()
         {
 
-            return View();
+
+            ViewBag.StudentName =
+            HttpContext.Session.GetString(
+                "StudentName"
+            );
+
+
+
+
+
+            var items =
+            _context.Items
+            .OrderByDescending(
+                x => x.ItemId
+            )
+            .Take(12)
+            .ToList();
+
+
+
+
+
+
+            return View(items);
+
 
         }
 
