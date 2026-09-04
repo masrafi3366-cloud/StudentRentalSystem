@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using StudentRentalSystem.Data;
-using StudentRentalSystem.Models;
 using StudentRentalSystem.Models.ViewModels;
-
 
 
 namespace StudentRentalSystem.Areas.Admin.Controllers
@@ -34,6 +31,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
         // =========================
         // ADMIN DASHBOARD
         // =========================
@@ -43,10 +41,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         {
 
 
-            if (
-                HttpContext.Session.GetString("Admin")
-                == null
-            )
+            if (HttpContext.Session.GetString("Admin") == null)
             {
 
                 return RedirectToAction(
@@ -59,16 +54,12 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
             var students =
             _context.Students
             .OrderByDescending(
                 x => x.RegistrationDate
             )
             .ToList();
-
-
 
 
 
@@ -104,12 +95,10 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             if (student != null)
             {
 
                 student.IsApproved = true;
-
 
                 _context.SaveChanges();
 
@@ -118,12 +107,9 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
             return RedirectToAction(
                 "Index"
             );
-
 
         }
 
@@ -153,19 +139,14 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
             if (student != null)
             {
 
                 _context.Students.Remove(student);
 
-
                 _context.SaveChanges();
 
             }
-
-
 
 
 
@@ -203,16 +184,12 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
             if (student == null)
             {
 
                 return NotFound();
 
             }
-
-
 
 
 
@@ -249,10 +226,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         {
 
 
-            if (
-                HttpContext.Session.GetString("Admin")
-                == null
-            )
+            if (HttpContext.Session.GetString("Admin") == null)
             {
 
                 return RedirectToAction(
@@ -261,7 +235,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                 );
 
             }
-
 
 
 
@@ -281,7 +254,129 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+            // OWNER DATA LOAD
+
+
+            foreach (var item in items)
+            {
+
+
+                var owner =
+                _context.Students
+                .FirstOrDefault(
+                    x => x.StudentId == item.StudentId
+                );
+
+
+
+                if (owner != null)
+                {
+
+                    ViewData[
+                        "Owner_" + item.ItemId
+                    ] =
+                    owner.FullName
+                    +
+                    " | "
+                    +
+                    owner.Mobile;
+
+                }
+                else
+                {
+
+                    ViewData[
+                        "Owner_" + item.ItemId
+                    ] =
+                    "Unknown";
+
+                }
+
+
+
+            }
+
+
+
+
+
+
+
             return View(items);
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // ITEM DETAILS
+        // =========================
+
+
+        public IActionResult ItemDetails(int id)
+        {
+
+
+            if (HttpContext.Session.GetString("Admin") == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Admin"
+                );
+
+            }
+
+
+
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x => x.ItemId == id
+            );
+
+
+
+
+
+            if (item == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
+            var owner =
+            _context.Students
+            .FirstOrDefault(
+                x => x.StudentId == item.StudentId
+            );
+
+
+
+
+
+            ViewBag.Owner =
+            owner;
+
+
+
+
+
+            return View(item);
 
 
         }
@@ -313,7 +408,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             if (item != null)
             {
 
@@ -323,7 +417,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                 _context.SaveChanges();
 
             }
-
 
 
 
@@ -363,7 +456,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
             if (item != null)
             {
 
@@ -373,7 +465,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                 _context.SaveChanges();
 
             }
-
 
 
 
@@ -399,15 +490,11 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
         // ==================================================
 
 
-
         public IActionResult Rentals()
         {
 
 
-            if (
-                HttpContext.Session.GetString("Admin")
-                == null
-            )
+            if (HttpContext.Session.GetString("Admin") == null)
             {
 
                 return RedirectToAction(
@@ -421,17 +508,12 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
-
-
             var rentals =
             _context.Rentals
             .OrderByDescending(
                 x => x.RentalId
             )
             .ToList();
-
 
 
 
@@ -451,8 +533,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
                     StudentName =
                     _context.Students
                     .Where(
@@ -465,8 +545,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                     .FirstOrDefault()
                     ??
                     "Unknown",
-
-
 
 
 
@@ -489,12 +567,8 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
                     StartDate =
                     rental.StartDate,
-
-
 
 
 
@@ -505,12 +579,8 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
                     RentalDays =
                     rental.RentalDays,
-
-
 
 
 
@@ -521,12 +591,8 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
                     RentalStatus =
                     rental.Status,
-
-
 
 
 
@@ -549,8 +615,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
-
                     TransactionId =
                     _context.Payments
                     .Where(
@@ -563,8 +627,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                     .FirstOrDefault()
                     ??
                     "N/A",
-
-
 
 
 
