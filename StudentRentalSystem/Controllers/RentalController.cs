@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StudentRentalSystem.Data;
 using StudentRentalSystem.Models;
 
@@ -94,9 +95,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // ITEM ALREADY RENTED CHECK
-
-
             if (item.IsRented)
             {
 
@@ -119,9 +117,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-            // SELF ITEM RENT CHECK
 
 
             if (item.StudentId == studentId.Value)
@@ -233,9 +228,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // OWNER CHECK
-
-
             if (item.StudentId == studentId.Value)
             {
 
@@ -260,9 +252,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // AVAILABLE CHECK
-
-
             if (item.IsRented)
             {
 
@@ -285,9 +274,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-            // DATE VALIDATION
 
 
             if (StartDate.Date < DateTime.Now.Date)
@@ -460,9 +446,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // LOCK ITEM
-
-
             item.IsRented =
             true;
 
@@ -521,6 +504,7 @@ namespace StudentRentalSystem.Controllers
         // =========================
         // CONFIRMATION PAGE
         // =========================
+
 
         public IActionResult Confirmation(int id)
         {
@@ -590,9 +574,26 @@ namespace StudentRentalSystem.Controllers
 
             var item =
             _context.Items
+            .Include(
+                x => x.PaymentMethods
+            )
             .FirstOrDefault(
                 x => x.ItemId == rental.ItemId
             );
+
+
+
+
+
+
+
+
+            if (item == null)
+            {
+
+                return NotFound();
+
+            }
 
 
 
@@ -640,11 +641,7 @@ namespace StudentRentalSystem.Controllers
 
 
                 ItemName =
-                item != null
-                ?
-                item.ItemName
-                :
-                "Unknown",
+                item.ItemName,
 
 
                 OwnerName =
@@ -688,7 +685,13 @@ namespace StudentRentalSystem.Controllers
                 ?
                 payment.PaymentStatus
                 :
-                "Pending"
+                "Pending",
+
+
+
+                PaymentMethods =
+                item.PaymentMethods.ToList()
+
 
             };
 
@@ -703,14 +706,6 @@ namespace StudentRentalSystem.Controllers
 
 
         }
-
-
-
-
-
-
-
-
 
         // =========================
         // MY RENTALS
@@ -772,6 +767,14 @@ namespace StudentRentalSystem.Controllers
 
 
         }
+
+
+
+
+
+
+
+
 
         // =========================
         // MY RENTED ITEMS
@@ -992,7 +995,8 @@ namespace StudentRentalSystem.Controllers
                 var rentalItem =
                 _context.Items
                 .FirstOrDefault(
-                    x => x.ItemId == rental.ItemId
+                    x =>
+                    x.ItemId == rental.ItemId
                 );
 
 
@@ -1000,7 +1004,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-                decimal totalCharge = 0;
+                decimal totalCharge =
+                0;
 
 
 
@@ -1249,8 +1254,6 @@ namespace StudentRentalSystem.Controllers
 
 
         }
-
-
 
 
 

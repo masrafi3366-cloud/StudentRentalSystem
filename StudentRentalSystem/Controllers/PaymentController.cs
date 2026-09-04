@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StudentRentalSystem.Data;
 using StudentRentalSystem.Models;
 
@@ -96,9 +97,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // USER SECURITY CHECK
-
-
             if (rental.StudentId != studentId.Value)
             {
 
@@ -111,9 +109,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-            // RETURNED RENTAL BLOCK
 
 
             if (rental.IsReturned)
@@ -132,6 +127,36 @@ namespace StudentRentalSystem.Controllers
                 );
 
             }
+
+
+
+
+
+
+
+
+            // LOAD ITEM PAYMENT METHODS
+
+
+            var item =
+            _context.Items
+            .Include(
+                x => x.PaymentMethods
+            )
+            .FirstOrDefault(
+                x =>
+                x.ItemId == rental.ItemId
+            );
+
+
+
+
+
+
+
+
+            ViewBag.PaymentMethods =
+            item?.PaymentMethods;
 
 
 
@@ -162,7 +187,9 @@ namespace StudentRentalSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(
             int RentalId,
-            string TransactionId
+            string TransactionId,
+            string PaymentMethod,
+            string PaymentDetails
         )
         {
 
@@ -200,7 +227,8 @@ namespace StudentRentalSystem.Controllers
             var rental =
             _context.Rentals
             .FirstOrDefault(
-                x => x.RentalId == RentalId
+                x =>
+                x.RentalId == RentalId
             );
 
 
@@ -238,7 +266,28 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // TRANSACTION VALIDATION
+            if (rental.IsReturned)
+            {
+
+                TempData["Error"] =
+                "This rental is already returned.";
+
+
+
+
+
+                return RedirectToAction(
+                    "MyRentals",
+                    "Rental"
+                );
+
+            }
+
+
+
+
+
+
 
 
             if (string.IsNullOrWhiteSpace(TransactionId))
@@ -268,7 +317,31 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // DUPLICATE PAYMENT CHECK
+            if (string.IsNullOrWhiteSpace(PaymentMethod))
+            {
+
+                TempData["Error"] =
+                "Please select payment method.";
+
+
+
+
+
+                return RedirectToAction(
+                    "Create",
+                    new
+                    {
+                        id = RentalId
+                    }
+                );
+
+            }
+
+
+
+
+
+
 
 
             var existingPayment =
@@ -298,61 +371,6 @@ namespace StudentRentalSystem.Controllers
                         existingPayment.PaymentId
                     }
                 );
-
-            }
-
-
-
-
-
-
-
-
-            // RETURN CHECK
-
-
-            if (rental.IsReturned)
-            {
-
-                TempData["Error"] =
-                "This rental is already returned.";
-
-
-
-
-
-                return RedirectToAction(
-                    "MyRentals",
-                    "Rental"
-                );
-
-            }
-
-
-
-
-
-
-
-
-            var item =
-            _context.Items
-            .FirstOrDefault(
-                x =>
-                x.ItemId == rental.ItemId
-            );
-
-
-
-
-
-
-
-
-            if (item == null)
-            {
-
-                return NotFound();
 
             }
 
@@ -423,6 +441,26 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            payment.PaymentMethod =
+            PaymentMethod;
+
+
+
+
+
+
+
+
+            payment.PaymentDetails =
+            PaymentDetails;
+
+
+
+
+
+
+
+
             _context.Payments.Add(
                 payment
             );
@@ -432,9 +470,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-            // CONFIRM RENTAL
 
 
             rental.Status =
@@ -447,11 +482,28 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // ITEM LOCK
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x =>
+                x.ItemId ==
+                rental.ItemId
+            );
 
 
-            item.IsRented =
-            true;
+
+
+
+
+
+
+            if (item != null)
+            {
+
+                item.IsRented =
+                true;
+
+            }
 
 
 
@@ -480,6 +532,14 @@ namespace StudentRentalSystem.Controllers
 
 
         }
+
+
+
+
+
+
+
+
 
         // =========================
         // PAYMENT SUCCESS
@@ -522,7 +582,8 @@ namespace StudentRentalSystem.Controllers
             var payment =
             _context.Payments
             .FirstOrDefault(
-                x => x.PaymentId == id
+                x =>
+                x.PaymentId == id
             );
 
 
@@ -550,7 +611,8 @@ namespace StudentRentalSystem.Controllers
             _context.Rentals
             .FirstOrDefault(
                 x =>
-                x.RentalId == payment.RentalId
+                x.RentalId ==
+                payment.RentalId
             );
 
 
@@ -572,9 +634,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-            // USER SECURITY CHECK
 
 
             if (rental.StudentId != studentId.Value)
@@ -658,13 +717,16 @@ namespace StudentRentalSystem.Controllers
                 x =>
                 _context.Rentals.Any(
                     r =>
-                    r.RentalId == x.RentalId
+                    r.RentalId ==
+                    x.RentalId
                     &&
-                    r.StudentId == studentId.Value
+                    r.StudentId ==
+                    studentId.Value
                 )
             )
             .OrderByDescending(
-                x => x.PaymentDate
+                x =>
+                x.PaymentDate
             )
             .ToList();
 

@@ -48,7 +48,7 @@ namespace StudentRentalSystem.Data
 
 
 
-
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
 
 

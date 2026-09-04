@@ -50,6 +50,15 @@ namespace StudentRentalSystem.Models.ViewModels
         public string PaymentStatus { get; set; } = "Pending";
 
 
+
+
+
+        // Owner payment methods
+
+        public List<PaymentMethod> PaymentMethods { get; set; }
+        = new List<PaymentMethod>();
+
+
     }
 
 }

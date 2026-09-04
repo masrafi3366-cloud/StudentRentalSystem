@@ -198,6 +198,87 @@
 
 
 
+                <!-- OWNER PAYMENT METHODS -->
+
+
+                <h5 class="mb-3">
+
+                    Send Money To 💰
+
+                </h5>
+
+
+
+
+
+                @if (ViewBag.PaymentMethods != null)
+                {
+
+
+                    foreach (var method in ViewBag.PaymentMethods)
+                    {
+
+
+                        <div class="card bg-light p-3 mb-2">
+
+
+                            <h6 class="fw-bold text-success">
+
+                                @method.MethodName
+
+                            </h6>
+
+
+                            <p class="mb-0">
+
+                                Account Number:
+
+                                <strong>
+
+                                    @method.AccountNumber
+
+                                </strong>
+
+                            </p>
+
+
+                        </div>
+
+
+                    }
+
+
+                }
+
+                else
+                {
+
+
+                    <div class="alert alert-warning">
+
+                        Owner has not added any payment method.
+
+                    </div>
+
+
+                }
+
+
+
+
+
+
+
+
+                <hr />
+
+
+
+
+
+
+
+
                 <form method="post">
 
 
@@ -211,6 +292,66 @@
                     <input type="hidden"
                            name="RentalId"
                            value="@Model.RentalId" />
+
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label fw-bold">
+
+                            Select Payment Method
+
+                        </label>
+
+
+
+
+                        <select name="PaymentMethod"
+                                class="form-select"
+                                required>
+
+
+                            <option value="">
+
+                                Select Method
+
+                            </option>
+
+
+
+                            @if (ViewBag.PaymentMethods != null)
+                            {
+
+
+                                foreach (var method in ViewBag.PaymentMethods)
+                                {
+
+
+                                    <option value="@method.MethodName">
+
+                                        @method.MethodName
+
+                                    </option>
+
+
+                                }
+
+
+                            }
+
+
+                        </select>
+
+
+
+                    </div>
+
 
 
 
@@ -239,11 +380,32 @@
 
 
 
-                        <small class="text-muted">
+                    </div>
 
-                            Enter your mobile banking transaction ID.
 
-                        </small>
+
+
+
+
+
+
+
+                    <div class="mb-3">
+
+
+                        <label class="form-label fw-bold">
+
+                            Payment Details
+
+                        </label>
+
+
+
+                        <textarea name="PaymentDetails"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Example: Sent money from my bKash account"></textarea>
+
 
 
                     </div>

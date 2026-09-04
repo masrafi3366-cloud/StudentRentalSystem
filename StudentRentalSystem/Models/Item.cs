@@ -79,6 +79,11 @@ namespace StudentRentalSystem.Models
         public bool IsRented { get; set; }
 
 
+
+        public ICollection<PaymentMethod> PaymentMethods { get; set; }
+= new List<PaymentMethod>();
+
+
     }
 
 }

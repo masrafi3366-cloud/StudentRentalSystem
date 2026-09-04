@@ -1,4 +1,4 @@
-﻿@model StudentRentalSystem.Models.Item
+﻿@model StudentRentalSystem.Models.ViewModels.ItemCreateViewModel
 
 
 @{
@@ -99,13 +99,13 @@
 
 
 
-                        <input asp-for="ItemName"
+                        <input asp-for="Item.ItemName"
                                class="form-control"
                                placeholder="Enter item name" />
 
 
 
-                        <span asp-validation-for="ItemName"
+                        <span asp-validation-for="Item.ItemName"
                               class="text-danger">
                         </span>
 
@@ -131,13 +131,13 @@
 
 
 
-                        <input asp-for="Category"
+                        <input asp-for="Item.Category"
                                class="form-control"
                                placeholder="Example: Book, Electronics, Furniture" />
 
 
 
-                        <span asp-validation-for="Category"
+                        <span asp-validation-for="Item.Category"
                               class="text-danger">
                         </span>
 
@@ -163,14 +163,14 @@
 
 
 
-                        <textarea asp-for="Description"
+                        <textarea asp-for="Item.Description"
                                   class="form-control"
                                   rows="4"
                                   placeholder="Write item details"></textarea>
 
 
 
-                        <span asp-validation-for="Description"
+                        <span asp-validation-for="Item.Description"
                               class="text-danger">
                         </span>
 
@@ -196,8 +196,8 @@
 
 
 
-                        <input type="file"
-                               name="Image"
+                        <input asp-for="Image"
+                               type="file"
                                class="form-control" />
 
 
@@ -222,7 +222,7 @@
 
 
 
-                        <input asp-for="PricePerDay"
+                        <input asp-for="Item.PricePerDay"
                                type="number"
                                step="0.01"
                                class="form-control"
@@ -230,12 +230,88 @@
 
 
 
-                        <span asp-validation-for="PricePerDay"
+                        <span asp-validation-for="Item.PricePerDay"
                               class="text-danger">
                         </span>
 
 
                     </div>
+
+
+
+
+
+
+
+
+
+                    <!-- PAYMENT METHODS -->
+
+
+                    <hr />
+
+
+                    <h4 class="mb-3">
+
+                        Payment Methods 💳
+
+                    </h4>
+
+
+
+
+
+                    <div id="paymentMethods">
+
+
+                        <div class="row mb-3">
+
+
+                            <div class="col-md-5">
+
+
+                                <input name="PaymentMethods[0].MethodName"
+                                       class="form-control"
+                                       placeholder="bKash / Nagad / Bank" />
+
+
+                            </div>
+
+
+
+
+                            <div class="col-md-5">
+
+
+                                <input name="PaymentMethods[0].AccountNumber"
+                                       class="form-control"
+                                       placeholder="Account Number" />
+
+
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <button type="button"
+                            class="btn btn-outline-success mb-3"
+                            onclick="addPaymentMethod()">
+
+
+                        + Add Method
+
+
+                    </button>
 
 
 
@@ -313,5 +389,72 @@
             "_ValidationScriptsPartial"
         );
     }
+
+
+
+
+
+    <script>
+
+
+        let paymentIndex = 1;
+
+
+
+        function addPaymentMethod() {
+
+
+            let html = `
+
+                <div class="row mb-3">
+
+
+                    <div class="col-md-5">
+
+
+                        <input name="PaymentMethods[${paymentIndex}].MethodName"
+                               class="form-control"
+                               placeholder="bKash / Nagad / Bank" />
+
+
+                    </div>
+
+
+
+
+                    <div class="col-md-5">
+
+
+                        <input name="PaymentMethods[${paymentIndex}].AccountNumber"
+                               class="form-control"
+                               placeholder="Account Number" />
+
+
+                    </div>
+
+
+
+                </div>
+
+                `;
+
+
+
+            document
+                .getElementById("paymentMethods")
+                .insertAdjacentHTML(
+                    "beforeend",
+                    html
+                );
+
+
+
+            paymentIndex++;
+
+        }
+
+
+    </script>
+
 
 }

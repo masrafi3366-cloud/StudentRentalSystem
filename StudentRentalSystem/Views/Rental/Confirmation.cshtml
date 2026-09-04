@@ -9,7 +9,6 @@
 
 
 
-
 <div class="container mt-5">
 
 
@@ -248,6 +247,85 @@
 
 
                 </div>
+
+
+
+
+
+
+
+
+
+                <!-- PAYMENT METHODS -->
+
+
+                <hr />
+
+
+
+                <h4 class="text-start mb-3">
+
+                    Payment Methods 💳
+
+                </h4>
+
+
+
+
+
+                @if (Model.PaymentMethods != null
+                    &&
+                    Model.PaymentMethods.Any())
+                {
+
+
+                    foreach (var method in Model.PaymentMethods)
+                    {
+
+
+                        <div class="card shadow-sm p-3 mb-3 text-start">
+
+
+                            <h5 class="fw-bold text-success">
+
+                                @method.MethodName
+
+                            </h5>
+
+
+                            <p class="mb-0">
+
+                                Account Number:
+
+                                <strong>
+
+                                    @method.AccountNumber
+
+                                </strong>
+
+                            </p>
+
+
+                        </div>
+
+
+                    }
+
+
+                }
+
+                else
+                {
+
+
+                    <div class="alert alert-warning">
+
+                        Payment method not added by owner.
+
+                    </div>
+
+
+                }
 
 
 

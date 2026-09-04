@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentRentalSystem.Data;
 using StudentRentalSystem.Models;
+using StudentRentalSystem.Models.ViewModels;
+
 
 
 namespace StudentRentalSystem.Controllers
@@ -14,13 +16,14 @@ namespace StudentRentalSystem.Controllers
 
 
 
-        public ItemController(ApplicationDbContext context)
+        public ItemController(
+            ApplicationDbContext context
+        )
         {
 
             _context = context;
 
         }
-
 
 
 
@@ -39,7 +42,9 @@ namespace StudentRentalSystem.Controllers
 
 
             int? studentId =
-            HttpContext.Session.GetInt32("StudentId");
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
 
 
 
@@ -55,7 +60,20 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            return View(new Item());
+
+
+            ItemCreateViewModel model =
+            new ItemCreateViewModel();
+
+
+            model.Item =
+            new Item();
+
+
+
+
+            return View(model);
+
 
         }
 
@@ -75,8 +93,7 @@ namespace StudentRentalSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(
-            Item item,
-            IFormFile Image
+            ItemCreateViewModel model
         )
         {
 
@@ -86,7 +103,9 @@ namespace StudentRentalSystem.Controllers
 
 
                 int? studentId =
-                HttpContext.Session.GetInt32("StudentId");
+                HttpContext.Session.GetInt32(
+                    "StudentId"
+                );
 
 
 
@@ -108,25 +127,22 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
                 if (!ModelState.IsValid)
                 {
 
-
-                    foreach (var error in ModelState.Values.SelectMany(x => x.Errors))
-                    {
-
-                        Console.WriteLine(
-                            error.ErrorMessage
-                        );
-
-                    }
-
-
-
-                    return View(item);
+                    return View(model);
 
                 }
 
+
+
+
+
+
+
+                Item item =
+                model.Item;
 
 
 
@@ -138,7 +154,8 @@ namespace StudentRentalSystem.Controllers
                 // IMAGE UPLOAD
 
 
-                if (Image != null && Image.Length > 0)
+                if (model.Image != null &&
+                    model.Image.Length > 0)
                 {
 
 
@@ -169,7 +186,7 @@ namespace StudentRentalSystem.Controllers
                     Guid.NewGuid().ToString()
                     +
                     Path.GetExtension(
-                        Image.FileName
+                        model.Image.FileName
                     );
 
 
@@ -197,7 +214,7 @@ namespace StudentRentalSystem.Controllers
                     ))
                     {
 
-                        Image.CopyTo(stream);
+                        model.Image.CopyTo(stream);
 
                     }
 
@@ -256,6 +273,72 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+                // PAYMENT METHODS SAVE
+
+
+                if (model.PaymentMethods != null)
+                {
+
+
+                    foreach (var payment in model.PaymentMethods)
+                    {
+
+
+                        if (!string.IsNullOrEmpty(payment.MethodName)
+                           &&
+                           !string.IsNullOrEmpty(payment.AccountNumber))
+                        {
+
+
+                            PaymentMethod method =
+                            new PaymentMethod
+                            {
+
+
+                                ItemId =
+                                item.ItemId,
+
+
+                                MethodName =
+                                payment.MethodName,
+
+
+                                AccountNumber =
+                                payment.AccountNumber
+
+
+                            };
+
+
+
+
+                            _context.PaymentMethods.Add(
+                                method
+                            );
+
+
+                        }
+
+
+                    }
+
+
+
+                    _context.SaveChanges();
+
+
+                }
+
+
+
+
+
+
+
+
+
                 TempData["Success"] =
                 "Item posted successfully.";
 
@@ -270,7 +353,9 @@ namespace StudentRentalSystem.Controllers
                 );
 
 
+
             }
+
 
             catch (Exception ex)
             {
@@ -283,17 +368,16 @@ namespace StudentRentalSystem.Controllers
 
 
                 TempData["Error"] =
-                "Item posting failed. Please try again.";
+                "Item posting failed.";
 
 
 
 
 
-                return View(item);
+                return View(model);
 
 
             }
-
 
 
         }
@@ -342,10 +426,13 @@ namespace StudentRentalSystem.Controllers
             var items =
             _context.Items
             .Where(
-                x => x.StudentId == studentId.Value
+                x =>
+                x.StudentId ==
+                studentId.Value
             )
             .OrderByDescending(
-                x => x.CreatedDate
+                x =>
+                x.CreatedDate
             )
             .ToList();
 
@@ -356,7 +443,6 @@ namespace StudentRentalSystem.Controllers
 
 
             return View(items);
-
 
 
         }
@@ -370,8 +456,7 @@ namespace StudentRentalSystem.Controllers
 
 
         // =========================
-        // BROWSE AVAILABLE ITEMS
-        // SEARCH + CATEGORY FILTER
+        // BROWSE ITEMS
         // =========================
 
 
@@ -382,14 +467,13 @@ namespace StudentRentalSystem.Controllers
         {
 
 
-
             var items =
             _context.Items
             .Where(
                 x =>
-                x.AdminApproved == true
+                x.AdminApproved
                 &&
-                x.IsRented == false
+                !x.IsRented
             )
             .AsQueryable();
 
@@ -399,14 +483,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-            // SEARCH FILTER
-
-
             if (!string.IsNullOrEmpty(search))
             {
-
 
                 items =
                 items.Where(
@@ -416,7 +494,6 @@ namespace StudentRentalSystem.Controllers
                     x.Description.Contains(search)
                 );
 
-
             }
 
 
@@ -425,14 +502,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
-            // CATEGORY FILTER
-
-
             if (!string.IsNullOrEmpty(category))
             {
-
 
                 items =
                 items.Where(
@@ -440,7 +511,6 @@ namespace StudentRentalSystem.Controllers
                     x.Category == category
                 );
 
-
             }
 
 
@@ -450,22 +520,18 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-            // CATEGORY LIST
-
-
             ViewBag.Categories =
             _context.Items
             .Where(
                 x =>
-                x.AdminApproved == true
+                x.AdminApproved
             )
             .Select(
-                x => x.Category
+                x =>
+                x.Category
             )
             .Distinct()
             .ToList();
-
 
 
 
@@ -479,12 +545,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
-
             ViewBag.SelectedCategory =
             category;
-
-
 
 
 
@@ -495,25 +557,19 @@ namespace StudentRentalSystem.Controllers
             return View(
                 items
                 .OrderByDescending(
-                    x => x.CreatedDate
+                    x =>
+                    x.CreatedDate
                 )
                 .ToList()
             );
 
 
-
         }
-
-
-
-
-
-
-
 
         // =========================
         // EDIT ITEM GET
         // =========================
+
 
         public IActionResult Edit(int id)
         {
@@ -557,12 +613,14 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             if (item == null)
             {
 
                 return Unauthorized();
 
             }
+
 
 
 
@@ -582,9 +640,11 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
         // =========================
         // EDIT ITEM POST
         // =========================
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -599,6 +659,7 @@ namespace StudentRentalSystem.Controllers
             HttpContext.Session.GetInt32(
                 "StudentId"
             );
+
 
 
 
@@ -652,7 +713,6 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             item.ItemName =
             model.ItemName;
 
@@ -679,7 +739,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            if (Image != null && Image.Length > 0)
+            if (Image != null &&
+               Image.Length > 0)
             {
 
 
@@ -704,6 +765,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
                 string fileName =
                 Guid.NewGuid().ToString()
                 +
@@ -716,11 +778,13 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
                 string filePath =
                 Path.Combine(
                     folder,
                     fileName
                 );
+
 
 
 
@@ -756,9 +820,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
-
             _context.SaveChanges();
-
 
 
 
@@ -795,6 +857,7 @@ namespace StudentRentalSystem.Controllers
         // DELETE ITEM
         // =========================
 
+
         public IActionResult Delete(int id)
         {
 
@@ -803,7 +866,6 @@ namespace StudentRentalSystem.Controllers
             HttpContext.Session.GetInt32(
                 "StudentId"
             );
-
 
 
 
@@ -864,6 +926,7 @@ namespace StudentRentalSystem.Controllers
                 TempData["Error"] =
                 "Rented item cannot be deleted.";
 
+
                 return RedirectToAction(
                     "MyItems"
                 );
@@ -910,6 +973,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+
+
         // =========================
         // ITEM DETAILS
         // =========================
@@ -922,7 +989,8 @@ namespace StudentRentalSystem.Controllers
             var item =
             _context.Items
             .FirstOrDefault(
-                x => x.ItemId == id
+                x =>
+                x.ItemId == id
             );
 
 
@@ -949,7 +1017,8 @@ namespace StudentRentalSystem.Controllers
             var owner =
             _context.Students
             .FirstOrDefault(
-                x => x.StudentId == item.StudentId
+                x =>
+                x.StudentId == item.StudentId
             );
 
 
@@ -966,14 +1035,18 @@ namespace StudentRentalSystem.Controllers
                 owner.FullName;
 
 
+
                 ViewBag.OwnerMobile =
                 owner.Mobile;
+
 
 
                 ViewBag.OwnerEmail =
                 owner.Email;
 
+
             }
+
 
 
 
@@ -996,7 +1069,8 @@ namespace StudentRentalSystem.Controllers
 
             if (currentStudentId != null
                &&
-               item.StudentId == currentStudentId.Value)
+               item.StudentId ==
+               currentStudentId.Value)
             {
 
                 ViewBag.IsOwner =
@@ -1029,7 +1103,6 @@ namespace StudentRentalSystem.Controllers
 
 
             return View(item);
-
 
 
         }
