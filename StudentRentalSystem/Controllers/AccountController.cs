@@ -4,19 +4,31 @@ using StudentRentalSystem.Models;
 using StudentRentalSystem.Helpers;
 
 
+
 namespace StudentRentalSystem.Controllers
 {
 
     public class AccountController : Controller
     {
 
+
         private readonly ApplicationDbContext _context;
 
 
-        public AccountController(ApplicationDbContext context)
+
+        public AccountController(
+            ApplicationDbContext context
+        )
         {
+
             _context = context;
+
         }
+
+
+
+
+
 
 
 
@@ -24,10 +36,17 @@ namespace StudentRentalSystem.Controllers
         // REGISTER GET
         // =========================
 
+
         public IActionResult Register()
         {
+
             return View();
+
         }
+
+
+
+
 
 
 
@@ -37,9 +56,15 @@ namespace StudentRentalSystem.Controllers
         // REGISTER POST
         // =========================
 
+
         [HttpPost]
-        public IActionResult Register(Student student, IFormFile StudentIdCardImage)
+        public IActionResult Register(
+            Student student,
+            IFormFile StudentIdCardImage
+        )
         {
+
+
 
             if (ModelState.IsValid)
             {
@@ -48,42 +73,75 @@ namespace StudentRentalSystem.Controllers
                 if (StudentIdCardImage != null)
                 {
 
+
                     string folder =
                     Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot/uploads"
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot/uploads"
                     );
+
+
+
 
 
                     if (!Directory.Exists(folder))
                     {
+
                         Directory.CreateDirectory(folder);
+
                     }
+
+
+
+
 
 
 
                     string fileName =
                     Guid.NewGuid().ToString()
                     +
-                    Path.GetExtension(StudentIdCardImage.FileName);
+                    Path.GetExtension(
+                        StudentIdCardImage.FileName
+                    );
+
+
+
+
 
 
 
                     string filePath =
-                    Path.Combine(folder, fileName);
+                    Path.Combine(
+                        folder,
+                        fileName
+                    );
+
+
+
+
 
 
 
                     using (var stream =
-                    new FileStream(filePath, FileMode.Create))
+                    new FileStream(
+                        filePath,
+                        FileMode.Create
+                    ))
                     {
+
                         StudentIdCardImage.CopyTo(stream);
+
                     }
+
+
+
+
 
 
 
                     student.StudentIdCardImage =
                     "/uploads/" + fileName;
+
 
                 }
 
@@ -91,7 +149,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
-                // Password Hashing Added
+
+
 
                 student.Password =
                 PasswordHelper.HashPassword(
@@ -103,11 +162,24 @@ namespace StudentRentalSystem.Controllers
 
 
 
-                student.IsApproved = false;
+
+
+                student.IsApproved =
+                false;
+
+
+
+
+
 
 
                 student.RegistrationDate =
                 DateTime.Now;
+
+
+
+
+
 
 
 
@@ -118,17 +190,32 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+
+
+
                 return RedirectToAction(
                     "RegisterSuccess"
                 );
 
 
+
             }
+
+
+
+
 
 
             return View(student);
 
+
         }
+
+
+
+
 
 
 
@@ -136,8 +223,13 @@ namespace StudentRentalSystem.Controllers
 
         public IActionResult RegisterSuccess()
         {
+
             return View();
+
         }
+
+
+
 
 
 
@@ -148,10 +240,16 @@ namespace StudentRentalSystem.Controllers
         // LOGIN GET
         // =========================
 
+
         public IActionResult Login()
         {
+
             return View();
+
         }
+
+
+
 
 
 
@@ -164,16 +262,22 @@ namespace StudentRentalSystem.Controllers
 
 
         [HttpPost]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login(
+            string email,
+            string password
+        )
         {
-
 
 
             var student =
             _context.Students
             .FirstOrDefault(
-                x => x.Email == email
+                x =>
+                x.Email == email
             );
+
+
+
 
 
 
@@ -189,6 +293,9 @@ namespace StudentRentalSystem.Controllers
                 return View();
 
             }
+
+
+
 
 
 
@@ -204,7 +311,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            if (passwordMatch == false)
+
+
+
+            if (!passwordMatch)
             {
 
                 ViewBag.Error =
@@ -219,7 +329,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            if (student.IsApproved == false)
+
+
+
+            if (!student.IsApproved)
             {
 
                 ViewBag.Error =
@@ -234,6 +347,9 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+
             HttpContext.Session.SetInt32(
                 "StudentId",
                 student.StudentId
@@ -241,10 +357,19 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+
+
             HttpContext.Session.SetString(
                 "StudentName",
                 student.FullName
             );
+
+
+
+
+
 
 
 
@@ -260,6 +385,9 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+
         // =========================
         // DASHBOARD
         // =========================
@@ -268,6 +396,7 @@ namespace StudentRentalSystem.Controllers
         public IActionResult Dashboard()
         {
 
+
             int? studentId =
             HttpContext.Session.GetInt32(
                 "StudentId"
@@ -275,12 +404,23 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+
+
+
             if (studentId == null)
             {
+
                 return RedirectToAction(
                     "Login"
                 );
+
             }
+
+
+
+
 
 
 
@@ -288,19 +428,33 @@ namespace StudentRentalSystem.Controllers
             var student =
             _context.Students
             .FirstOrDefault(
-                x => x.StudentId == studentId
+                x =>
+                x.StudentId == studentId.Value
             );
+
+
+
+
+
 
 
 
             if (student == null)
             {
+
                 return NotFound();
+
             }
 
 
 
+
+
+
+
+
             return View(student);
+
 
         }
 
@@ -311,13 +465,15 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
         // =========================
-        // PROFILE ENHANCED
+        // PROFILE
         // =========================
 
 
         public IActionResult Profile()
         {
+
 
             int? studentId =
             HttpContext.Session.GetInt32(
@@ -326,12 +482,22 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
+
+
+
             if (studentId == null)
             {
+
                 return RedirectToAction(
                     "Login"
                 );
+
             }
+
+
+
 
 
 
@@ -340,15 +506,24 @@ namespace StudentRentalSystem.Controllers
             var student =
             _context.Students
             .FirstOrDefault(
-                x => x.StudentId == studentId
+                x =>
+                x.StudentId == studentId.Value
             );
+
+
+
+
+
 
 
 
             if (student == null)
             {
+
                 return NotFound();
+
             }
+
 
 
 
@@ -359,7 +534,8 @@ namespace StudentRentalSystem.Controllers
             ViewBag.PostedItems =
             _context.Items
             .Count(
-                x => x.StudentId == studentId
+                x =>
+                x.StudentId == studentId.Value
             );
 
 
@@ -372,7 +548,8 @@ namespace StudentRentalSystem.Controllers
             ViewBag.RentedItems =
             _context.Rentals
             .Count(
-                x => x.StudentId == studentId
+                x =>
+                x.StudentId == studentId.Value
             );
 
 
@@ -390,7 +567,7 @@ namespace StudentRentalSystem.Controllers
                     r =>
                     r.RentalId == x.RentalId
                     &&
-                    r.StudentId == studentId
+                    r.StudentId == studentId.Value
                 )
             );
 
@@ -409,7 +586,7 @@ namespace StudentRentalSystem.Controllers
                     r =>
                     r.RentalId == x.RentalId
                     &&
-                    r.StudentId == studentId
+                    r.StudentId == studentId.Value
                 )
             );
 
@@ -419,9 +596,524 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             return View(student);
 
+
         }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // EDIT PROFILE GET
+        // =========================
+
+
+        public IActionResult EditProfile()
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var student =
+            _context.Students
+            .FirstOrDefault(
+                x =>
+                x.StudentId == studentId.Value
+            );
+
+
+
+
+
+
+
+
+            if (student == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
+
+
+
+            return View(student);
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // EDIT PROFILE POST
+        // =========================
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditProfile(
+            Student model,
+            IFormFile StudentIdCardImage
+        )
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var student =
+            _context.Students
+            .FirstOrDefault(
+                x =>
+                x.StudentId == studentId.Value
+            );
+
+
+
+
+
+
+
+
+            if (student == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
+
+
+
+            student.FullName =
+            model.FullName;
+
+
+
+
+
+
+
+            student.Mobile =
+            model.Mobile;
+
+
+
+
+
+
+
+            student.FathersNumber =
+            model.FathersNumber;
+
+
+
+
+
+
+
+            student.MothersNumber =
+            model.MothersNumber;
+
+
+
+
+
+
+
+            student.Email =
+            model.Email;
+
+
+
+
+
+
+
+
+            if (StudentIdCardImage != null)
+            {
+
+
+                string folder =
+                Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot/uploads"
+                );
+
+
+
+
+
+                if (!Directory.Exists(folder))
+                {
+
+                    Directory.CreateDirectory(folder);
+
+                }
+
+
+
+
+
+                string fileName =
+                Guid.NewGuid().ToString()
+                +
+                Path.GetExtension(
+                    StudentIdCardImage.FileName
+                );
+
+
+
+
+
+                string filePath =
+                Path.Combine(
+                    folder,
+                    fileName
+                );
+
+
+
+
+
+                using (var stream =
+                new FileStream(
+                    filePath,
+                    FileMode.Create
+                ))
+                {
+
+                    StudentIdCardImage.CopyTo(stream);
+
+                }
+
+
+
+
+
+                student.StudentIdCardImage =
+                "/uploads/" + fileName;
+
+
+            }
+
+
+
+            _context.SaveChanges();
+
+
+
+
+
+
+
+            HttpContext.Session.SetString(
+                "StudentName",
+                student.FullName
+            );
+
+
+
+
+
+
+
+
+            return RedirectToAction(
+                "Profile"
+            );
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // CHANGE PASSWORD GET
+        // =========================
+
+
+        public IActionResult ChangePassword()
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            return View();
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // CHANGE PASSWORD POST
+        // =========================
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ChangePassword(
+            string CurrentPassword,
+            string NewPassword,
+            string ConfirmPassword
+        )
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var student =
+            _context.Students
+            .FirstOrDefault(
+                x =>
+                x.StudentId == studentId.Value
+            );
+
+
+
+
+
+
+
+
+            if (student == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
+
+
+
+            bool passwordMatch =
+            PasswordHelper.VerifyPassword(
+                CurrentPassword,
+                student.Password
+            );
+
+
+
+
+
+
+
+
+            if (!passwordMatch)
+            {
+
+                ViewBag.Error =
+                "Current password is incorrect";
+
+
+                return View();
+
+            }
+
+
+
+
+
+
+
+
+            if (NewPassword != ConfirmPassword)
+            {
+
+                ViewBag.Error =
+                "New password and confirm password do not match";
+
+
+                return View();
+
+            }
+
+
+
+
+
+
+
+
+            student.Password =
+            PasswordHelper.HashPassword(
+                NewPassword
+            );
+
+
+
+
+
+
+
+
+            _context.SaveChanges();
+
+
+
+
+
+
+
+
+            ViewBag.Success =
+            "Password changed successfully";
+
+
+
+
+
+
+
+
+            return View();
+
+
+        }
+
 
 
 
@@ -438,14 +1130,22 @@ namespace StudentRentalSystem.Controllers
         public IActionResult Logout()
         {
 
+
             HttpContext.Session.Clear();
+
+
 
 
             return RedirectToAction(
                 "Login"
             );
 
+
         }
+
+
+
+
 
 
 

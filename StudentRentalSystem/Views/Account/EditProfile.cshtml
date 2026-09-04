@@ -1,0 +1,325 @@
+﻿@model StudentRentalSystem.Models.Student
+
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+
+
+
+
+<div class="container mt-4">
+
+
+
+
+
+    <h2 class="mb-4">
+
+        Edit Profile 👤
+
+    </h2>
+
+
+
+
+
+
+
+
+
+    <div class="card shadow p-4">
+
+
+
+
+
+        <form asp-action="EditProfile"
+              method="post"
+              enctype="multipart/form-data">
+
+
+
+
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+
+
+
+
+
+
+
+            <!-- CURRENT IMAGE -->
+
+
+            <div class="text-center mb-4">
+
+
+                @if (!string.IsNullOrEmpty(Model.StudentIdCardImage))
+                {
+
+
+                    <img src="@Model.StudentIdCardImage"
+                         class="rounded shadow"
+                         style="width:200px;height:200px;object-fit:cover;" />
+
+
+                }
+                else
+                {
+
+
+                    <p class="text-muted">
+
+                        No Image Available
+
+                    </p>
+
+
+                }
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Full Name
+
+                </label>
+
+
+                <input asp-for="FullName"
+                       class="form-control" />
+
+
+                <span asp-validation-for="FullName"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Mobile
+
+                </label>
+
+
+                <input asp-for="Mobile"
+                       class="form-control" />
+
+
+                <span asp-validation-for="Mobile"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Email
+
+                </label>
+
+
+                <input asp-for="Email"
+                       class="form-control" />
+
+
+                <span asp-validation-for="Email"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Father's Number
+
+                </label>
+
+
+                <input asp-for="FathersNumber"
+                       class="form-control" />
+
+
+                <span asp-validation-for="FathersNumber"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Mother's Number
+
+                </label>
+
+
+                <input asp-for="MothersNumber"
+                       class="form-control" />
+
+
+                <span asp-validation-for="MothersNumber"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Update Profile Image
+
+                </label>
+
+
+                <input type="file"
+                       name="StudentIdCardImage"
+                       class="form-control" />
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <button type="submit"
+                    class="btn btn-success">
+
+
+                Save Changes
+
+
+            </button>
+
+
+
+
+
+
+
+            <a href="/Account/Profile"
+               class="btn btn-secondary">
+
+
+                Cancel
+
+
+            </a>
+
+
+
+
+
+        </form>
+
+
+
+    </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+@section Scripts
+{
+
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial"
+        );
+    }
+
+}

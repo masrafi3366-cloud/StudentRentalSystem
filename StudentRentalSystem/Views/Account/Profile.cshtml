@@ -9,6 +9,7 @@
 
 
 
+
 <div class="container mt-4">
 
 
@@ -17,9 +18,10 @@
 
     <h2 class="mb-4">
 
-        My Profile
+        My Profile 👤
 
     </h2>
+
 
 
 
@@ -37,9 +39,7 @@
         <div class="col-md-6">
 
 
-
             <div class="card shadow p-4 mb-4">
-
 
 
                 <h4 class="mb-3">
@@ -47,6 +47,8 @@
                     Personal Information
 
                 </h4>
+
+
 
 
 
@@ -64,6 +66,9 @@
 
 
 
+
+
+
                 <p>
 
                     <strong>Mobile:</strong>
@@ -76,6 +81,9 @@
 
 
 
+
+
+
                 <p>
 
                     <strong>Email:</strong>
@@ -83,6 +91,37 @@
                     @Model.Email
 
                 </p>
+
+
+
+
+
+
+
+
+                <p>
+
+                    <strong>Father Number:</strong>
+
+                    @Model.FathersNumber
+
+                </p>
+
+
+
+
+
+
+
+
+                <p>
+
+                    <strong>Mother Number:</strong>
+
+                    @Model.MothersNumber
+
+                </p>
+
 
 
 
@@ -108,8 +147,8 @@
 
                         </span>
 
-                    }
 
+                    }
                     else
                     {
 
@@ -119,12 +158,12 @@
 
                         </span>
 
+
                     }
 
 
 
                 </p>
-
 
 
 
@@ -142,12 +181,11 @@
 
 
 
+
         <div class="col-md-6">
 
 
-
             <div class="card shadow p-4 mb-4">
-
 
 
                 <h4 class="mb-3">
@@ -162,7 +200,10 @@
 
 
 
+
                 <div class="row text-center">
+
+
 
 
 
@@ -180,7 +221,9 @@
 
 
                             <small>
+
                                 Posted Items
+
                             </small>
 
 
@@ -188,6 +231,7 @@
 
 
                     </div>
+
 
 
 
@@ -209,7 +253,9 @@
 
 
                             <small>
+
                                 Rented Items
+
                             </small>
 
 
@@ -217,6 +263,7 @@
 
 
                     </div>
+
 
 
 
@@ -238,7 +285,9 @@
 
 
                             <small>
+
                                 Payments
+
                             </small>
 
 
@@ -268,7 +317,9 @@
 
 
                             <small>
+
                                 Extra Charges
+
                             </small>
 
 
@@ -293,6 +344,7 @@
 
 
 
+
     </div>
 
 
@@ -300,6 +352,10 @@
 
 
 
+
+
+
+    <!-- ID CARD -->
 
 
 
@@ -318,23 +374,27 @@
 
 
 
+
         @if (!string.IsNullOrEmpty(Model.StudentIdCardImage))
         {
+
 
             <img src="@Model.StudentIdCardImage"
                  class="img-fluid rounded shadow mx-auto"
                  style="max-width:350px;" />
 
-        }
 
+        }
         else
         {
+
 
             <p class="text-muted">
 
                 No ID Card Uploaded
 
             </p>
+
 
         }
 
@@ -349,8 +409,61 @@
 
 
 
+
+    <!-- PROFILE ACTIONS -->
+
+
+    <div class="card shadow p-4 mb-4 text-center">
+
+
+        <h4 class="mb-3">
+
+            Account Settings
+
+        </h4>
+
+
+
+
+
+        <a href="/Account/EditProfile"
+           class="btn btn-primary me-2">
+
+
+            Edit Profile
+
+
+        </a>
+
+
+
+
+
+
+
+        <a href="/Account/ChangePassword"
+           class="btn btn-warning">
+
+
+            Change Password
+
+
+        </a>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
     <a href="/Account/Dashboard"
-       class="btn btn-primary">
+       class="btn btn-dark">
 
 
         Back To Dashboard
