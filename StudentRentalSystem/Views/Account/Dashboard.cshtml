@@ -7,21 +7,29 @@
 
 
 
+
+
+
 <div class="container mt-4">
 
 
 
 
 
-    <!-- USER INFO CARD -->
+
+
+
+    <!-- WELCOME CARD -->
+
 
     <div class="card shadow mb-4">
 
 
-        <div class="card-body">
+        <div class="card-body text-center">
 
 
-            <h2 class="card-title">
+
+            <h2 class="fw-bold">
 
                 Welcome, @Model.FullName 👋
 
@@ -29,65 +37,97 @@
 
 
 
+            <p class="text-muted">
+
+                Student Rental System Dashboard
+
+            </p>
+
+
+
+
             <hr />
 
 
 
-            <p>
-                <strong>
-                    Mobile:
-                </strong>
 
-                @Model.Mobile
-            </p>
+
+            <div class="row text-start">
 
 
 
+                <div class="col-md-4 mb-2">
 
+                    <strong>
+                        Mobile:
+                    </strong>
 
-            <p>
-                <strong>
-                    Email:
-                </strong>
+                    <br />
 
-                @Model.Email
-            </p>
+                    @Model.Mobile
+
+                </div>
 
 
 
 
 
-            <p>
 
-                <strong>
-                    Account Status:
-                </strong>
+                <div class="col-md-4 mb-2">
 
+                    <strong>
+                        Email:
+                    </strong>
 
+                    <br />
 
-                @if (Model.IsApproved)
-                {
+                    @Model.Email
 
-                    <span class="badge bg-success">
-
-                        Approved
-
-                    </span>
-
-                }
-                else
-                {
-
-                    <span class="badge bg-warning text-dark">
-
-                        Pending Approval
-
-                    </span>
-
-                }
+                </div>
 
 
-            </p>
+
+
+
+
+                <div class="col-md-4 mb-2">
+
+                    <strong>
+                        Status:
+                    </strong>
+
+                    <br />
+
+
+
+                    @if (Model.IsApproved)
+                    {
+
+                        <span class="badge bg-success">
+
+                            Approved
+
+                        </span>
+
+                    }
+                    else
+                    {
+
+                        <span class="badge bg-warning text-dark">
+
+                            Pending Approval
+
+                        </span>
+
+                    }
+
+
+
+                </div>
+
+
+
+            </div>
 
 
 
@@ -104,9 +144,9 @@
 
 
 
-    <h3 class="mb-3">
+    <h3 class="mb-4 fw-bold">
 
-        Student Dashboard
+        Student Dashboard 📚
 
     </h3>
 
@@ -128,18 +168,18 @@
         <!-- PROFILE -->
 
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-4">
 
 
             <div class="card shadow h-100">
 
 
-                <div class="card-body">
+                <div class="card-body text-center">
 
 
-                    <h5 class="card-title">
+                    <h5>
 
-                        Profile
+                        👤 Profile
 
                     </h5>
 
@@ -147,7 +187,7 @@
 
                     <p>
 
-                        View your personal information.
+                        Manage your personal information.
 
                     </p>
 
@@ -180,21 +220,21 @@
 
 
 
-        <!-- ITEM MANAGEMENT -->
+        <!-- ITEMS -->
 
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-4">
 
 
             <div class="card shadow h-100">
 
 
-                <div class="card-body">
+                <div class="card-body text-center">
 
 
-                    <h5 class="card-title">
+                    <h5>
 
-                        My Items
+                        📦 My Items
 
                     </h5>
 
@@ -202,24 +242,23 @@
 
                     <p>
 
-                        Post and manage your items.
+                        Post and manage your rental items.
 
                     </p>
 
 
 
                     <a href="/Item/Create"
-                       class="btn btn-success">
+                       class="btn btn-success mb-2">
 
 
-                        Post New Item
+                        + Post Item
 
 
                     </a>
 
 
 
-                    <br />
                     <br />
 
 
@@ -228,7 +267,7 @@
                        class="btn btn-outline-success">
 
 
-                        View My Items
+                        My Items
 
 
                     </a>
@@ -254,18 +293,18 @@
         <!-- RENTAL -->
 
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-4">
 
 
             <div class="card shadow h-100">
 
 
-                <div class="card-body">
+                <div class="card-body text-center">
 
 
-                    <h5 class="card-title">
+                    <h5>
 
-                        Rental System
+                        🔄 Rental System
 
                     </h5>
 
@@ -279,8 +318,9 @@
 
 
 
+
                     <a href="/Item/Browse"
-                       class="btn btn-info">
+                       class="btn btn-primary mb-2">
 
 
                         Browse Items
@@ -290,13 +330,14 @@
 
 
 
+
                     <br />
-                    <br />
+
 
 
 
                     <a href="/Rental/MyRentals"
-                       class="btn btn-outline-info">
+                       class="btn btn-outline-primary mb-2">
 
 
                         My Rentals
@@ -307,15 +348,15 @@
 
 
                     <br />
-                    <br />
+
 
 
 
                     <a href="/Rental/MyRentedItems"
-                       class="btn btn-warning">
+                       class="btn btn-outline-success">
 
 
-                        My Rented Items 🔄
+                        Rented Items
 
 
                     </a>
@@ -344,7 +385,8 @@
 
 
 
-    <div class="row mt-3">
+    <div class="row">
+
 
 
 
@@ -355,18 +397,18 @@
         <!-- PAYMENT -->
 
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-4">
 
 
             <div class="card shadow h-100">
 
 
-                <div class="card-body">
+                <div class="card-body text-center">
 
 
                     <h5>
 
-                        Payments
+                        💳 Payments
 
                     </h5>
 
@@ -374,9 +416,10 @@
 
                     <p>
 
-                        Check your payment history.
+                        View payment history.
 
                     </p>
+
 
 
 
@@ -388,6 +431,7 @@
 
 
                     </a>
+
 
 
                 </div>
@@ -407,21 +451,21 @@
 
 
 
-        <!-- EXTRA CHARGES -->
+        <!-- CHARGES -->
 
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-4">
 
 
             <div class="card shadow h-100">
 
 
-                <div class="card-body">
+                <div class="card-body text-center">
 
 
                     <h5>
 
-                        Extra Charges
+                        💰 Extra Charges
 
                     </h5>
 
@@ -429,9 +473,10 @@
 
                     <p>
 
-                        Check late return charges.
+                        Manage late return charges.
 
                     </p>
+
 
 
 
@@ -443,6 +488,7 @@
 
 
                     </a>
+
 
 
                 </div>
@@ -465,18 +511,18 @@
         <!-- ACCOUNT -->
 
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-4">
 
 
             <div class="card shadow h-100">
 
 
-                <div class="card-body">
+                <div class="card-body text-center">
 
 
                     <h5>
 
-                        Account
+                        ⚙️ Account
 
                     </h5>
 
@@ -484,9 +530,10 @@
 
                     <p>
 
-                        Logout from your account.
+                        Logout safely.
 
                     </p>
+
 
 
 
@@ -498,6 +545,7 @@
 
 
                     </a>
+
 
 
                 </div>
@@ -513,7 +561,6 @@
 
 
     </div>
-
 
 
 

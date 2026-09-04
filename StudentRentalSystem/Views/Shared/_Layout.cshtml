@@ -4,9 +4,7 @@
 
 <head>
 
-
     <meta charset="utf-8" />
-
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0" />
@@ -16,7 +14,6 @@
     <title>
         Student Rental System
     </title>
-
 
 
 
@@ -31,16 +28,34 @@
     <style>
 
 
+            :root {
+                --sea-green: #20B2AA;
+                --sea-green-dark: #178F89;
+                --light-bg: #f5ffff;
+            }
+
+
+
+
+
+
             html, body {
                 min-height: 100%;
             }
 
 
 
+
+
             body {
                 display: flex;
                 flex-direction: column;
+                background-color: var(--light-bg);
             }
+
+
+
+
 
 
 
@@ -51,9 +66,68 @@
 
 
 
+
+
+
+
+            .navbar {
+                background-color: var(--sea-green) !important;
+            }
+
+
+
+
+
+
+
+
+            .navbar-brand {
+                color: white !important;
+                font-size: 22px;
+            }
+
+
+
+
+
+
+
+
+            .nav-link {
+                color: white !important;
+                margin-left: 8px;
+                transition: 0.3s;
+            }
+
+
+
+
+
+
+
+
+                .nav-link:hover {
+                    color: #e0ffff !important;
+                    transform: translateY(-2px);
+                }
+
+
+
+
+
+
+
+
             .card {
                 border-radius: 15px;
+                border: none;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             }
+
+
+
+
+
 
 
 
@@ -63,8 +137,94 @@
 
 
 
+
+
+
+
+
+            .btn-primary {
+                background-color: var(--sea-green);
+                border-color: var(--sea-green);
+            }
+
+
+
+
+
+
+
+
+                .btn-primary:hover {
+                    background-color: var(--sea-green-dark);
+                    border-color: var(--sea-green-dark);
+                }
+
+
+
+
+
+
+
+
+            .btn-success {
+                background-color: var(--sea-green);
+                border-color: var(--sea-green);
+            }
+
+
+
+
+
+
+
+
+                .btn-success:hover {
+                    background-color: var(--sea-green-dark);
+                }
+
+
+
+
+
+
+
+
+            .table thead {
+                background-color: var(--sea-green);
+                color: white;
+            }
+
+
+
+
+
+
+
+
             footer {
                 margin-top: auto;
+                background-color: var(--sea-green);
+            }
+
+
+
+
+
+
+
+                footer h5 {
+                    font-weight: bold;
+                }
+
+
+
+
+
+
+
+            .badge {
+                padding: 8px;
+                border-radius: 8px;
             }
 
     </style>
@@ -85,9 +245,7 @@
 
 
 
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-
+    <nav class="navbar navbar-expand-lg shadow">
 
 
         <div class="container">
@@ -141,11 +299,6 @@
 
 
 
-
-
-                    <!-- COMMON MENU -->
-
-
                     <li class="nav-item">
 
                         <a class="nav-link"
@@ -163,15 +316,8 @@
 
 
 
-
-
-
                     @if (Context.Session.GetString("Admin") != null)
                     {
-
-
-
-                        <!-- ADMIN MENU -->
 
 
                         <li class="nav-item">
@@ -179,15 +325,11 @@
                             <a class="nav-link"
                                href="/Admin/Dashboard">
 
-
                                 Admin Dashboard
-
 
                             </a>
 
-
                         </li>
-
 
 
 
@@ -195,18 +337,14 @@
 
                         <li class="nav-item">
 
-                            <a class="nav-link text-danger"
+                            <a class="nav-link"
                                href="/Admin/Logout">
-
 
                                 Logout
 
-
                             </a>
 
-
                         </li>
-
 
 
                     }
@@ -222,21 +360,14 @@
 
 
 
-                        <!-- STUDENT MENU -->
-
-
-
                         <li class="nav-item">
 
                             <a class="nav-link"
                                href="/Account/Dashboard">
 
-
                                 Dashboard
 
-
                             </a>
-
 
                         </li>
 
@@ -251,12 +382,9 @@
                             <a class="nav-link"
                                href="/Item/MyItems">
 
-
                                 My Items
 
-
                             </a>
-
 
                         </li>
 
@@ -271,36 +399,11 @@
                             <a class="nav-link"
                                href="/Rental/MyRentals">
 
-
                                 My Rentals
 
-
                             </a>
 
-
                         </li>
-
-
-
-
-
-
-
-
-                        <li class="nav-item">
-
-                            <a class="nav-link text-warning"
-                               href="/Rental/MyRentedItems">
-
-
-                                My Rented Items 🔄
-
-
-                            </a>
-
-
-                        </li>
-
 
 
 
@@ -313,12 +416,26 @@
                             <a class="nav-link"
                                href="/Payment/MyPayments">
 
-
-                                My Payments
-
+                                Payments
 
                             </a>
 
+                        </li>
+
+
+
+
+
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               href="/ExtraCharge/MyCharges">
+
+                                Charges
+
+                            </a>
 
                         </li>
 
@@ -333,12 +450,9 @@
                             <a class="nav-link"
                                href="/Account/Profile">
 
-
                                 Profile
 
-
                             </a>
-
 
                         </li>
 
@@ -350,22 +464,18 @@
 
                         <li class="nav-item">
 
-
-                            <a class="nav-link text-danger"
+                            <a class="nav-link"
                                href="/Account/Logout">
-
 
                                 Logout
 
-
                             </a>
-
 
                         </li>
 
 
-
                     }
+
 
 
 
@@ -376,25 +486,16 @@
                     {
 
 
-
-                        <!-- GUEST MENU -->
-
-
-
                         <li class="nav-item">
 
                             <a class="nav-link"
                                href="/Account/Login">
 
-
                                 Login
-
 
                             </a>
 
-
                         </li>
-
 
 
 
@@ -402,19 +503,14 @@
 
                         <li class="nav-item">
 
-
                             <a class="nav-link"
                                href="/Account/Register">
 
-
                                 Register
-
 
                             </a>
 
-
                         </li>
-
 
 
                     }
@@ -423,18 +519,10 @@
 
 
 
-
-
                 </ul>
 
 
-
-
-
             </div>
-
-
-
 
 
         </div>
@@ -472,7 +560,7 @@
 
 
 
-    <footer class="bg-dark text-white text-center p-4">
+    <footer class="text-white text-center p-4">
 
 
         <h5>
@@ -518,8 +606,8 @@
 
 
     @await RenderSectionAsync(
-    "Scripts",
-    required: false
+        "Scripts",
+        required: false
     )
 
 
