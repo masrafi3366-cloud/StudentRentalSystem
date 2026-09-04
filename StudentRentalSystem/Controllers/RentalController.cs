@@ -3,6 +3,7 @@ using StudentRentalSystem.Data;
 using StudentRentalSystem.Models;
 
 
+
 namespace StudentRentalSystem.Controllers
 {
 
@@ -14,9 +15,13 @@ namespace StudentRentalSystem.Controllers
 
 
 
-        public RentalController(ApplicationDbContext context)
+        public RentalController(
+            ApplicationDbContext context
+        )
         {
+
             _context = context;
+
         }
 
 
@@ -40,6 +45,8 @@ namespace StudentRentalSystem.Controllers
             HttpContext.Session.GetInt32(
                 "StudentId"
             );
+
+
 
 
 
@@ -87,11 +94,41 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            // ITEM ALREADY RENTED CHECK
+
+
             if (item.IsRented)
             {
 
                 TempData["Error"] =
                 "This item is already rented.";
+
+
+
+
+
+                return RedirectToAction(
+                    "Browse",
+                    "Item"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            // SELF ITEM RENT CHECK
+
+
+            if (item.StudentId == studentId.Value)
+            {
+
+                TempData["Error"] =
+                "You cannot rent your own item.";
 
 
 
@@ -150,6 +187,8 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
             if (studentId == null)
             {
 
@@ -194,11 +233,14 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            if (item.IsRented)
+            // OWNER CHECK
+
+
+            if (item.StudentId == studentId.Value)
             {
 
                 TempData["Error"] =
-                "Item already rented.";
+                "You cannot rent your own item.";
 
 
 
@@ -218,8 +260,94 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            // AVAILABLE CHECK
+
+
+            if (item.IsRented)
+            {
+
+                TempData["Error"] =
+                "Item is already rented.";
+
+
+
+
+
+                return RedirectToAction(
+                    "Browse",
+                    "Item"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            // DATE VALIDATION
+
+
+            if (StartDate.Date < DateTime.Now.Date)
+            {
+
+                TempData["Error"] =
+                "Start date cannot be in the past.";
+
+
+
+
+
+                return RedirectToAction(
+                    "Details",
+                    "Item",
+                    new
+                    {
+                        id = ItemId
+                    }
+                );
+
+            }
+
+
+
+
+
+
+
+
+            if (EndDate <= StartDate)
+            {
+
+                TempData["Error"] =
+                "End date must be after start date.";
+
+
+
+
+
+                return RedirectToAction(
+                    "Details",
+                    "Item",
+                    new
+                    {
+                        id = ItemId
+                    }
+                );
+
+            }
+
+
+
+
+
+
+
+
             int rentalDays =
-            (EndDate - StartDate).Days;
+            (EndDate.Date - StartDate.Date).Days;
 
 
 
@@ -261,8 +389,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             rental.ItemId =
             ItemId;
+
 
 
 
@@ -279,8 +409,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             rental.StartDate =
             StartDate;
+
 
 
 
@@ -297,6 +429,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             rental.TotalAmount =
             rentalDays * item.PricePerDay;
 
@@ -306,8 +439,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             rental.Status =
-            "Pending";
+            "Confirmed";
+
 
 
 
@@ -325,7 +460,34 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            _context.Rentals.Add(rental);
+            // LOCK ITEM
+
+
+            item.IsRented =
+            true;
+
+
+
+
+
+
+
+
+            _context.Rentals.Add(
+                rental
+            );
+
+
+
+            _context.Items.Update(
+                item
+            );
+
+
+
+
+
+
 
 
             _context.SaveChanges();
@@ -360,9 +522,31 @@ namespace StudentRentalSystem.Controllers
         // CONFIRMATION PAGE
         // =========================
 
-
         public IActionResult Confirmation(int id)
         {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+
+            }
+
+
+
+
+
 
 
             var rental =
@@ -370,6 +554,7 @@ namespace StudentRentalSystem.Controllers
             .FirstOrDefault(
                 x => x.RentalId == id
             );
+
 
 
 
@@ -389,7 +574,132 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            return View(rental);
+            if (rental.StudentId != studentId.Value)
+            {
+
+                return Unauthorized();
+
+            }
+
+
+
+
+
+
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x => x.ItemId == rental.ItemId
+            );
+
+
+
+
+
+
+
+
+            var owner =
+            _context.Students
+            .FirstOrDefault(
+                x => x.StudentId == item.StudentId
+            );
+
+
+
+
+
+
+
+
+            var payment =
+            _context.Payments
+            .FirstOrDefault(
+                x => x.RentalId == rental.RentalId
+            );
+
+
+
+
+
+
+
+
+            var data =
+            new StudentRentalSystem.Models.ViewModels.RentalConfirmationViewModel
+            {
+
+                RentalId =
+                rental.RentalId,
+
+
+                ItemId =
+                rental.ItemId,
+
+
+                ItemName =
+                item != null
+                ?
+                item.ItemName
+                :
+                "Unknown",
+
+
+                OwnerName =
+                owner != null
+                ?
+                owner.FullName
+                :
+                "Unknown",
+
+
+                OwnerMobile =
+                owner != null
+                ?
+                owner.Mobile
+                :
+                "N/A",
+
+
+                StartDate =
+                rental.StartDate,
+
+
+                EndDate =
+                rental.EndDate,
+
+
+                RentalDays =
+                rental.RentalDays,
+
+
+                TotalAmount =
+                rental.TotalAmount,
+
+
+                Status =
+                rental.Status,
+
+
+                PaymentStatus =
+                payment != null
+                ?
+                payment.PaymentStatus
+                :
+                "Pending"
+
+            };
+
+
+
+
+
+
+
+
+            return View(data);
 
 
         }
@@ -463,7 +773,6 @@ namespace StudentRentalSystem.Controllers
 
         }
 
-
         // =========================
         // MY RENTED ITEMS
         // =========================
@@ -477,6 +786,8 @@ namespace StudentRentalSystem.Controllers
             HttpContext.Session.GetInt32(
                 "StudentId"
             );
+
+
 
 
 
@@ -496,6 +807,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             var rentedItems =
             _context.Rentals
             .Where(
@@ -503,8 +815,6 @@ namespace StudentRentalSystem.Controllers
                 x.StudentId == studentId.Value
                 &&
                 x.IsReturned == false
-                &&
-                x.Status == "Confirmed"
             )
             .OrderByDescending(
                 x => x.StartDate
@@ -517,10 +827,13 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             return View(rentedItems);
 
 
         }
+
+
 
 
 
@@ -599,6 +912,13 @@ namespace StudentRentalSystem.Controllers
             if (rental.IsReturned)
             {
 
+                TempData["Error"] =
+                "Item already returned.";
+
+
+
+
+
                 return RedirectToAction(
                     "MyRentals"
                 );
@@ -621,6 +941,7 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             rental.IsReturned =
             true;
 
@@ -630,8 +951,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             rental.Status =
             "Returned";
+
 
 
 
@@ -650,15 +973,19 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            // =========================
             // LATE RETURN CHECK
+            // =========================
 
 
-            if (today > rental.EndDate)
+            if (today.Date > rental.EndDate.Date)
             {
 
 
                 int lateDays =
-                (today - rental.EndDate).Days;
+                (today.Date - rental.EndDate.Date).Days;
+
+
 
 
 
@@ -673,8 +1000,12 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
                 charge.RentalId =
                 rental.RentalId;
+
+
 
 
 
@@ -689,8 +1020,12 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
                 charge.Amount =
                 lateDays * 50;
+
+
 
 
 
@@ -705,7 +1040,11 @@ namespace StudentRentalSystem.Controllers
 
 
 
-                _context.ExtraCharges.Add(charge);
+
+
+                _context.ExtraCharges.Add(
+                    charge
+                );
 
 
             }
@@ -717,7 +1056,10 @@ namespace StudentRentalSystem.Controllers
 
 
 
-            // AVAILABLE AGAIN
+
+            // =========================
+            // UNLOCK ITEM
+            // =========================
 
 
             var item =
@@ -758,6 +1100,16 @@ namespace StudentRentalSystem.Controllers
 
 
 
+            TempData["Success"] =
+            "Item returned successfully.";
+
+
+
+
+
+
+
+
             return RedirectToAction(
                 "ReturnSuccess",
                 new
@@ -786,10 +1138,40 @@ namespace StudentRentalSystem.Controllers
         {
 
 
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+
+            }
+
+
+
+
+
+
+
+
             var rental =
             _context.Rentals
             .FirstOrDefault(
-                x => x.RentalId == id
+                x =>
+                x.RentalId == id
             );
 
 
@@ -812,10 +1194,27 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+            if (rental.StudentId != studentId.Value)
+            {
+
+                return Unauthorized();
+
+            }
+
+
+
+
+
+
+
+
             return View(rental);
 
 
         }
+
+
 
 
 

@@ -1,4 +1,4 @@
-﻿@model StudentRentalSystem.Models.Rental
+﻿@model StudentRentalSystem.Models.ViewModels.RentalConfirmationViewModel
 
 
 @{
@@ -9,13 +9,19 @@
 
 
 
+
 <div class="container mt-5">
+
+
+
 
 
     <div class="row justify-content-center">
 
 
-        <div class="col-md-6">
+        <div class="col-md-7">
+
+
 
 
 
@@ -25,17 +31,24 @@
 
 
 
-                <div class="mb-3">
+                <h2 class="text-success mb-3">
+
+                    Rental Confirmed Successfully 🎉
+
+                </h2>
 
 
-                    <h2 class="text-success">
-
-                        Rental Created Successfully 🎉
-
-                    </h2>
 
 
-                </div>
+
+
+
+                <p class="text-muted">
+
+                    Your rental request has been created.
+
+                </p>
+
 
 
 
@@ -51,7 +64,11 @@
 
 
 
+
+
                 <div class="text-start">
+
+
 
 
 
@@ -61,11 +78,31 @@
                             Rental ID:
                         </strong>
 
-
                         @Model.RentalId
 
 
                     </p>
+
+
+
+
+
+
+
+
+
+                    <p>
+
+                        <strong>
+                            Item ID:
+                        </strong>
+
+                        @Model.ItemId
+
+
+                    </p>
+
+
 
 
 
@@ -84,6 +121,8 @@
 
 
                     </p>
+
+
 
 
 
@@ -110,17 +149,19 @@
 
 
 
+
                     <p>
 
                         <strong>
-                            Rental Days:
+                            Rental Duration:
                         </strong>
 
 
-                        @Model.RentalDays
+                        @Model.RentalDays Days
 
 
                     </p>
+
 
 
 
@@ -136,7 +177,11 @@
                         </strong>
 
 
-                        ৳ @Model.TotalAmount
+                        <span class="text-success fw-bold">
+
+                            ৳ @Model.TotalAmount
+
+                        </span>
 
 
                     </p>
@@ -148,8 +193,8 @@
 
 
 
-                    <p>
 
+                    <p>
 
                         <strong>
                             Status:
@@ -158,15 +203,15 @@
 
 
 
-
-                        @if (Model.Status == "Active")
+                        @if (Model.Status == "Confirmed")
                         {
 
                             <span class="badge bg-success">
 
-                                Active
+                                Confirmed
 
                             </span>
+
 
                         }
 
@@ -179,6 +224,7 @@
 
                             </span>
 
+
                         }
 
                         else
@@ -190,11 +236,13 @@
 
                             </span>
 
+
                         }
 
 
 
                     </p>
+
 
 
 
@@ -218,31 +266,21 @@
 
 
 
-                <a href="/Payment/Create/@Model.RentalId"
-                   class="btn btn-success w-100 mb-3">
 
-
-                    Proceed To Payment 💳
-
-
-                </a>
+                <div class="d-grid gap-2">
 
 
 
 
 
+                    <a href="/Payment/Create/@Model.RentalId"
+                       class="btn btn-success">
 
 
+                        Proceed To Payment 💳
 
 
-                <a href="/Rental/MyRentals"
-                   class="btn btn-outline-primary w-100 mb-2">
-
-
-                    View My Rentals
-
-
-                </a>
+                    </a>
 
 
 
@@ -251,15 +289,37 @@
 
 
 
-
-                <a href="/Item/Browse"
-                   class="btn btn-outline-secondary w-100">
-
-
-                    Browse More Items
+                    <a href="/Rental/MyRentals"
+                       class="btn btn-outline-primary">
 
 
-                </a>
+                        View My Rentals
+
+
+                    </a>
+
+
+
+
+
+
+
+
+                    <a href="/Item/Browse"
+                       class="btn btn-outline-secondary">
+
+
+                        Browse More Items
+
+
+                    </a>
+
+
+
+
+
+                </div>
+
 
 
 
@@ -269,10 +329,21 @@
             </div>
 
 
+
+
+
         </div>
 
 
+
+
+
     </div>
+
+
+
+
+
 
 
 </div>
