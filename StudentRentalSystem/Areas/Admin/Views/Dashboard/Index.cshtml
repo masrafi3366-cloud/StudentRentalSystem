@@ -9,8 +9,6 @@
 
 
 
-
-
 <div class="container mt-4">
 
 
@@ -29,7 +27,9 @@
 
 
 
-    <!-- STATISTICS CARDS -->
+
+    <!-- STATISTICS SECTION -->
+
 
 
     <div class="row mb-4">
@@ -48,19 +48,15 @@
 
 
                     <h5>
-
                         Total Students
-
                     </h5>
-
 
 
                     <h2 class="text-primary">
 
-                        @Model.Count()
+                        @ViewBag.TotalStudents
 
                     </h2>
-
 
 
                 </div>
@@ -88,59 +84,15 @@
 
 
                     <h5>
-
-                        Pending Approval
-
-                    </h5>
-
-
-
-                    <h2 class="text-warning">
-
-                        @Model.Count(x => !x.IsApproved)
-
-                    </h2>
-
-
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-
-
-
-
-
-
-        <div class="col-md-4 mb-3">
-
-
-            <div class="card shadow text-center">
-
-
-                <div class="card-body">
-
-
-                    <h5>
-
                         Approved Students
-
                     </h5>
-
 
 
                     <h2 class="text-success">
 
-                        @Model.Count(x => x.IsApproved)
+                        @ViewBag.ApprovedStudents
 
                     </h2>
-
 
 
                 </div>
@@ -152,6 +104,287 @@
         </div>
 
 
+
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Pending Students
+                    </h5>
+
+
+                    <h2 class="text-warning">
+
+                        @ViewBag.PendingStudents
+
+                    </h2>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- ITEM STATISTICS -->
+
+
+
+    <div class="row mb-4">
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Total Items 📦
+                    </h5>
+
+
+                    <h2 class="text-primary">
+
+                        @ViewBag.TotalItems
+
+                    </h2>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Available Items
+                    </h5>
+
+
+                    <h2 class="text-success">
+
+                        @ViewBag.AvailableItems
+
+                    </h2>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Rented Items
+                    </h5>
+
+
+                    <h2 class="text-danger">
+
+                        @ViewBag.RentedItems
+
+                    </h2>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- RENTAL PAYMENT STATISTICS -->
+
+
+
+    <div class="row mb-4">
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Total Rentals 🔄
+                    </h5>
+
+
+                    <h2 class="text-info">
+
+                        @ViewBag.TotalRentals
+
+                    </h2>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Completed Payments 💳
+                    </h5>
+
+
+                    <h2 class="text-success">
+
+                        @ViewBag.CompletedPayments
+
+                    </h2>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+
+
+            <div class="card shadow text-center">
+
+
+                <div class="card-body">
+
+
+                    <h5>
+                        Total Revenue 💰
+                    </h5>
+
+
+                    <h2 class="text-primary">
+
+                        ৳ @ViewBag.TotalRevenue
+
+                    </h2>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
 
 
 
@@ -169,6 +402,7 @@
     <!-- ADMIN MANAGEMENT MENU -->
 
 
+
     <div class="row mb-4">
 
 
@@ -184,7 +418,7 @@
                 <div class="card-body">
 
 
-                    <h5 class="card-title">
+                    <h5>
 
                         Item Management 📦
 
@@ -192,14 +426,11 @@
 
 
 
-
                     <p>
 
-                        Review student posted items and approve or reject them.
+                        Review posted items and manage approval.
 
                     </p>
-
-
 
 
 
@@ -211,7 +442,6 @@
 
 
                     </a>
-
 
 
                 </div>
@@ -238,7 +468,7 @@
                 <div class="card-body">
 
 
-                    <h5 class="card-title">
+                    <h5>
 
                         Rental Monitoring 📋
 
@@ -246,14 +476,11 @@
 
 
 
-
                     <p>
 
-                        Monitor all rental activities.
+                        Monitor rental and payment activities.
 
                     </p>
-
-
 
 
 
@@ -267,7 +494,6 @@
                     </a>
 
 
-
                 </div>
 
 
@@ -275,8 +501,6 @@
 
 
         </div>
-
-
 
 
 
@@ -291,6 +515,7 @@
 
 
     <!-- STUDENT VERIFICATION -->
+
 
 
     <div class="card shadow">
@@ -312,39 +537,25 @@
 
 
 
-
             @if (Model == null || !Model.Any())
             {
 
-
                 <div class="alert alert-info text-center">
-
 
                     No student registration request available.
 
-
                 </div>
 
-
             }
-
-
-
-
-
-
 
             else
             {
 
 
-
                 <div class="table-responsive">
 
 
-
                     <table class="table table-bordered table-hover align-middle">
-
 
 
                         <thead class="table-dark">
@@ -352,36 +563,17 @@
 
                             <tr>
 
+                                <th>ID</th>
 
-                                <th>
-                                    ID
-                                </th>
+                                <th>Name</th>
 
+                                <th>Mobile</th>
 
-                                <th>
-                                    Name
-                                </th>
+                                <th>Email</th>
 
+                                <th>Status</th>
 
-                                <th>
-                                    Mobile
-                                </th>
-
-
-                                <th>
-                                    Email
-                                </th>
-
-
-                                <th>
-                                    Status
-                                </th>
-
-
-                                <th>
-                                    Action
-                                </th>
-
+                                <th>Action</th>
 
                             </tr>
 
@@ -392,11 +584,7 @@
 
 
 
-
-
-
                         <tbody>
-
 
 
                             @foreach (var student in Model)
@@ -407,56 +595,30 @@
 
 
                                     <td>
-
                                         @student.StudentId
-
                                     </td>
 
 
-
-
-
-
                                     <td>
-
                                         @student.FullName
-
                                     </td>
 
 
-
-
-
-
                                     <td>
-
                                         @student.Mobile
-
                                     </td>
 
 
-
-
-
-
                                     <td>
-
                                         @student.Email
-
                                     </td>
 
 
-
-
-
-
                                     <td>
-
 
 
                                         @if (student.IsApproved)
                                         {
-
 
                                             <span class="badge bg-success">
 
@@ -464,12 +626,9 @@
 
                                             </span>
 
-
                                         }
-
                                         else
                                         {
-
 
                                             <span class="badge bg-warning text-dark">
 
@@ -477,36 +636,21 @@
 
                                             </span>
 
-
                                         }
-
 
 
                                     </td>
 
 
-
-
-
-
-
-
                                     <td>
 
 
-
-
                                         <a href="/Admin/Dashboard/StudentDetails/@student.StudentId"
-                                           class="btn btn-primary btn-sm mb-1">
-
+                                           class="btn btn-primary btn-sm">
 
                                             Details
 
-
                                         </a>
-
-
-
 
 
 
@@ -515,75 +659,37 @@
                                         @if (!student.IsApproved)
                                         {
 
-
                                             <a href="/Admin/Dashboard/Approve/@student.StudentId"
-                                               class="btn btn-success btn-sm mb-1"
-                                               onclick="return confirm('Approve this student?');">
-
+                                               class="btn btn-success btn-sm">
 
                                                 Approve
 
-
                                             </a>
-
-
-
-
-
 
 
                                             <a href="/Admin/Dashboard/Reject/@student.StudentId"
-                                               class="btn btn-danger btn-sm"
-                                               onclick="return confirm('Reject this student?');">
-
+                                               class="btn btn-danger btn-sm">
 
                                                 Reject
 
-
                                             </a>
 
-
-
                                         }
-
-                                        else
-                                        {
-
-
-                                            <span class="badge bg-success">
-
-                                                Verified
-
-                                            </span>
-
-
-                                        }
-
 
 
                                     </td>
 
 
-
-
-
-
                                 </tr>
-
 
 
                             }
 
 
-
                         </tbody>
 
 
-
-
                     </table>
-
-
 
 
                 </div>
@@ -593,14 +699,10 @@
 
 
 
-
-
         </div>
 
 
     </div>
-
-
 
 
 
