@@ -1,0 +1,316 @@
+﻿@model StudentRentalSystem.Models.Item
+
+
+
+@{
+    ViewData["Title"] = "Edit Item";
+}
+
+
+
+
+
+
+<div class="container mt-4">
+
+
+
+
+
+    <h2 class="mb-4">
+
+        Edit Item ✏️
+
+    </h2>
+
+
+
+
+
+
+
+
+
+    <div class="card shadow p-4">
+
+
+
+
+
+        <form asp-action="Edit"
+              method="post"
+              enctype="multipart/form-data">
+
+
+
+
+
+            <input type="hidden"
+                   asp-for="ItemId" />
+
+
+
+
+
+
+
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+
+
+
+
+
+
+
+
+            <!-- CURRENT IMAGE -->
+
+
+
+            <div class="text-center mb-4">
+
+
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+
+
+                    <img src="@Model.Image"
+                         class="rounded shadow"
+                         style="width:250px;height:180px;object-fit:cover;" />
+
+
+                }
+                else
+                {
+
+
+                    <p class="text-muted">
+
+                        No Image Available
+
+                    </p>
+
+
+                }
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Item Name
+
+                </label>
+
+
+
+                <input asp-for="ItemName"
+                       class="form-control" />
+
+
+                <span asp-validation-for="ItemName"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Category
+
+                </label>
+
+
+
+                <input asp-for="Category"
+                       class="form-control" />
+
+
+                <span asp-validation-for="Category"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Description
+
+                </label>
+
+
+
+                <textarea asp-for="Description"
+                          class="form-control"
+                          rows="4"></textarea>
+
+
+                <span asp-validation-for="Description"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Price Per Day
+
+                </label>
+
+
+
+                <input asp-for="PricePerDay"
+                       class="form-control" />
+
+
+                <span asp-validation-for="PricePerDay"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+
+                    Update Image
+
+                </label>
+
+
+
+                <input type="file"
+                       name="Image"
+                       class="form-control" />
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <button type="submit"
+                    class="btn btn-success">
+
+
+                Save Changes
+
+
+            </button>
+
+
+
+
+
+
+
+            <a href="/Item/MyItems"
+               class="btn btn-secondary">
+
+
+                Cancel
+
+
+            </a>
+
+
+
+
+
+        </form>
+
+
+
+    </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+@section Scripts
+{
+
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial"
+        );
+    }
+
+}

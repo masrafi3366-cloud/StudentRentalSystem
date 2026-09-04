@@ -511,6 +511,404 @@ namespace StudentRentalSystem.Controllers
 
 
 
+        // =========================
+        // EDIT ITEM GET
+        // =========================
+
+        public IActionResult Edit(int id)
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+
+            }
+
+
+
+
+
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x =>
+                x.ItemId == id
+                &&
+                x.StudentId == studentId.Value
+            );
+
+
+
+
+
+
+
+            if (item == null)
+            {
+
+                return Unauthorized();
+
+            }
+
+
+
+
+
+
+
+            return View(item);
+
+
+        }
+
+
+
+
+
+
+
+
+        // =========================
+        // EDIT ITEM POST
+        // =========================
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(
+            Item model,
+            IFormFile Image
+        )
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x =>
+                x.ItemId == model.ItemId
+                &&
+                x.StudentId == studentId.Value
+            );
+
+
+
+
+
+
+
+
+            if (item == null)
+            {
+
+                return Unauthorized();
+
+            }
+
+
+
+
+
+
+
+
+
+            item.ItemName =
+            model.ItemName;
+
+
+
+            item.Category =
+            model.Category;
+
+
+
+            item.Description =
+            model.Description;
+
+
+
+            item.PricePerDay =
+            model.PricePerDay;
+
+
+
+
+
+
+
+
+
+            if (Image != null && Image.Length > 0)
+            {
+
+
+                string folder =
+                Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot/uploads/items"
+                );
+
+
+
+
+                if (!Directory.Exists(folder))
+                {
+
+                    Directory.CreateDirectory(folder);
+
+                }
+
+
+
+
+
+
+                string fileName =
+                Guid.NewGuid().ToString()
+                +
+                Path.GetExtension(
+                    Image.FileName
+                );
+
+
+
+
+
+
+                string filePath =
+                Path.Combine(
+                    folder,
+                    fileName
+                );
+
+
+
+
+
+
+                using (var stream =
+                new FileStream(
+                    filePath,
+                    FileMode.Create
+                ))
+                {
+
+                    Image.CopyTo(stream);
+
+                }
+
+
+
+
+
+
+
+                item.Image =
+                "/uploads/items/" + fileName;
+
+
+            }
+
+
+
+
+
+
+
+
+            _context.SaveChanges();
+
+
+
+
+
+
+
+
+            TempData["Success"] =
+            "Item updated successfully.";
+
+
+
+
+
+
+
+
+            return RedirectToAction(
+                "MyItems"
+            );
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // DELETE ITEM
+        // =========================
+
+        public IActionResult Delete(int id)
+        {
+
+
+            int? studentId =
+            HttpContext.Session.GetInt32(
+                "StudentId"
+            );
+
+
+
+
+
+
+
+
+            if (studentId == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Account"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var item =
+            _context.Items
+            .FirstOrDefault(
+                x =>
+                x.ItemId == id
+                &&
+                x.StudentId == studentId.Value
+            );
+
+
+
+
+
+
+
+
+            if (item == null)
+            {
+
+                return Unauthorized();
+
+            }
+
+
+
+
+
+
+
+
+            if (item.IsRented)
+            {
+
+                TempData["Error"] =
+                "Rented item cannot be deleted.";
+
+                return RedirectToAction(
+                    "MyItems"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            _context.Items.Remove(item);
+
+
+            _context.SaveChanges();
+
+
+
+
+
+
+
+
+            TempData["Success"] =
+            "Item deleted successfully.";
+
+
+
+
+
+
+
+
+            return RedirectToAction(
+                "MyItems"
+            );
+
+
+        }
+
+
+
+
 
         // =========================
         // ITEM DETAILS
