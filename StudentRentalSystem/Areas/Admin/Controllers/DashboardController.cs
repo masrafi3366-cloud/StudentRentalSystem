@@ -31,13 +31,13 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-
         // =========================
         // ADMIN DASHBOARD
+        // STUDENT SEARCH
         // =========================
 
 
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
 
 
@@ -54,8 +54,46 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
             var students =
             _context.Students
+            .AsQueryable();
+
+
+
+
+
+
+
+
+            if (!string.IsNullOrEmpty(search))
+            {
+
+
+                students =
+                students.Where(
+                    x =>
+                    x.FullName.Contains(search)
+                    ||
+                    x.Email.Contains(search)
+                    ||
+                    x.Mobile.Contains(search)
+                );
+
+
+            }
+
+
+
+
+
+
+
+
+            var data =
+            students
             .OrderByDescending(
                 x => x.RegistrationDate
             )
@@ -64,7 +102,101 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-            return View(students);
+
+
+
+
+            // DASHBOARD STATISTICS
+
+
+
+            ViewBag.TotalStudents =
+            _context.Students.Count();
+
+
+
+
+            ViewBag.ApprovedStudents =
+            _context.Students.Count(
+                x => x.IsApproved
+            );
+
+
+
+
+            ViewBag.PendingStudents =
+            _context.Students.Count(
+                x => !x.IsApproved
+            );
+
+
+
+
+
+
+            ViewBag.TotalItems =
+            _context.Items.Count();
+
+
+
+
+
+            ViewBag.AvailableItems =
+            _context.Items.Count(
+                x =>
+                x.AdminApproved
+                &&
+                !x.IsRented
+            );
+
+
+
+
+
+            ViewBag.RentedItems =
+            _context.Items.Count(
+                x => x.IsRented
+            );
+
+
+
+
+
+            ViewBag.TotalRentals =
+            _context.Rentals.Count();
+
+
+
+
+
+            ViewBag.CompletedPayments =
+            _context.Payments.Count(
+                x =>
+                x.PaymentStatus == "Completed"
+            );
+
+
+
+
+
+            ViewBag.TotalRevenue =
+            _context.Payments
+            .Where(
+                x =>
+                x.PaymentStatus == "Completed"
+            )
+            .Sum(
+                x => x.Amount
+            );
+
+
+
+
+
+
+
+
+            return View(data);
 
 
         }
@@ -95,10 +227,12 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
             if (student != null)
             {
 
                 student.IsApproved = true;
+
 
                 _context.SaveChanges();
 
@@ -107,9 +241,11 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
             return RedirectToAction(
                 "Index"
             );
+
 
         }
 
@@ -139,14 +275,17 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
             if (student != null)
             {
 
                 _context.Students.Remove(student);
 
+
                 _context.SaveChanges();
 
             }
+
 
 
 
@@ -184,12 +323,14 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
             if (student == null)
             {
 
                 return NotFound();
 
             }
+
 
 
 
@@ -209,21 +350,17 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
         // ==================================================
         // ITEM MANAGEMENT
+        // ITEM SEARCH + CATEGORY FILTER
         // ==================================================
 
 
 
-
-
-
-
-        // =========================
-        // ALL ITEMS
-        // =========================
-
-
-        public IActionResult Items()
+        public IActionResult Items(
+            string search,
+            string category
+        )
         {
+
 
 
             if (HttpContext.Session.GetString("Admin") == null)
@@ -241,8 +378,59 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
             var items =
             _context.Items
+            .AsQueryable();
+
+
+
+
+
+
+
+
+            if (!string.IsNullOrEmpty(search))
+            {
+
+                items =
+                items.Where(
+                    x =>
+                    x.ItemName.Contains(search)
+                );
+
+
+            }
+
+
+
+
+
+
+
+
+            if (!string.IsNullOrEmpty(category))
+            {
+
+                items =
+                items.Where(
+                    x =>
+                    x.Category == category
+                );
+
+
+            }
+
+
+
+
+
+
+
+
+            var data =
+            items
             .OrderByDescending(
                 x => x.CreatedDate
             )
@@ -254,44 +442,30 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-            // OWNER DATA LOAD
 
-
-            foreach (var item in items)
+            foreach (var item in data)
             {
 
 
                 var owner =
                 _context.Students
                 .FirstOrDefault(
-                    x => x.StudentId == item.StudentId
+                    x =>
+                    x.StudentId == item.StudentId
                 );
 
 
 
-                if (owner != null)
-                {
 
-                    ViewData[
-                        "Owner_" + item.ItemId
-                    ] =
-                    owner.FullName
-                    +
-                    " | "
-                    +
-                    owner.Mobile;
 
-                }
-                else
-                {
-
-                    ViewData[
-                        "Owner_" + item.ItemId
-                    ] =
-                    "Unknown";
-
-                }
-
+                ViewData[
+                    "Owner_" + item.ItemId
+                ] =
+                owner != null
+                ?
+                owner.FullName + " | " + owner.Mobile
+                :
+                "Unknown";
 
 
             }
@@ -302,7 +476,24 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-            return View(items);
+
+            ViewBag.Categories =
+            _context.Items
+            .Select(
+                x => x.Category
+            )
+            .Distinct()
+            .ToList();
+
+
+
+
+
+
+
+
+            return View(data);
+
 
 
         }
@@ -338,11 +529,17 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
             var item =
             _context.Items
             .FirstOrDefault(
                 x => x.ItemId == id
             );
+
+
+
 
 
 
@@ -359,18 +556,18 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
-            var owner =
-            _context.Students
-            .FirstOrDefault(
-                x => x.StudentId == item.StudentId
-            );
-
-
 
 
 
             ViewBag.Owner =
-            owner;
+            _context.Students
+            .FirstOrDefault(
+                x =>
+                x.StudentId == item.StudentId
+            );
+
+
+
 
 
 
@@ -380,14 +577,6 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
         }
-
-
-
-
-
-
-
-
 
         // =========================
         // APPROVE ITEM
@@ -487,10 +676,14 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
         // ==================================================
         // RENTAL + PAYMENT MONITORING
+        // SEARCH + FILTER
         // ==================================================
 
 
-        public IActionResult Rentals()
+        public IActionResult Rentals(
+            string search,
+            string status
+        )
         {
 
 
@@ -508,12 +701,16 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
+
             var rentals =
             _context.Rentals
             .OrderByDescending(
                 x => x.RentalId
             )
-            .ToList();
+            .AsQueryable();
+
 
 
 
@@ -522,13 +719,16 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
             var data =
-            rentals.Select(
+            rentals
+            .Select(
                 rental => new AdminRentalViewModel
                 {
 
 
                     RentalId =
                     rental.RentalId,
+
+
 
 
 
@@ -545,6 +745,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                     .FirstOrDefault()
                     ??
                     "Unknown",
+
 
 
 
@@ -567,8 +768,11 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
                     StartDate =
                     rental.StartDate,
+
+
 
 
 
@@ -579,8 +783,12 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
                     RentalDays =
                     rental.RentalDays,
+
+
 
 
 
@@ -591,8 +799,11 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+
                     RentalStatus =
                     rental.Status,
+
 
 
 
@@ -615,6 +826,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
                     TransactionId =
                     _context.Payments
                     .Where(
@@ -627,6 +839,7 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                     .FirstOrDefault()
                     ??
                     "N/A",
+
 
 
 
@@ -656,7 +869,177 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
 
+
+            if (!string.IsNullOrEmpty(search))
+            {
+
+                data =
+                data
+                .Where(
+                    x =>
+                    x.StudentName.Contains(search)
+                    ||
+                    x.ItemName.Contains(search)
+                )
+                .ToList();
+
+
+            }
+
+
+
+
+
+
+
+
+            if (!string.IsNullOrEmpty(status))
+            {
+
+
+                data =
+                data
+                .Where(
+                    x =>
+                    x.RentalStatus == status
+                )
+                .ToList();
+
+
+            }
+
+
+
+
+
+
+
+
+            ViewBag.StatusList =
+            new List<string>
+            {
+        "Active",
+        "Returned",
+        "Late",
+        "Pending"
+            };
+
+
+
+
+
+
+
+
             return View(data);
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
+        // RENTAL DETAILS
+        // =========================
+
+
+        public IActionResult RentalDetails(int id)
+        {
+
+
+            if (HttpContext.Session.GetString("Admin") == null)
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Admin"
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var rental =
+            _context.Rentals
+            .FirstOrDefault(
+                x => x.RentalId == id
+            );
+
+
+
+
+
+
+
+
+            if (rental == null)
+            {
+
+                return NotFound();
+
+            }
+
+
+
+
+
+
+
+
+            ViewBag.Student =
+            _context.Students
+            .FirstOrDefault(
+                x =>
+                x.StudentId == rental.StudentId
+            );
+
+
+
+
+
+
+
+
+            ViewBag.Item =
+            _context.Items
+            .FirstOrDefault(
+                x =>
+                x.ItemId == rental.ItemId
+            );
+
+
+
+
+
+
+
+
+            ViewBag.Payment =
+            _context.Payments
+            .FirstOrDefault(
+                x =>
+                x.RentalId == rental.RentalId
+            );
+
+
+
+
+
+
+
+
+            return View(rental);
 
 
         }
