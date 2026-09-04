@@ -989,6 +989,42 @@ namespace StudentRentalSystem.Controllers
 
 
 
+                var rentalItem =
+                _context.Items
+                .FirstOrDefault(
+                    x => x.ItemId == rental.ItemId
+                );
+
+
+
+
+
+
+                decimal totalCharge = 0;
+
+
+
+
+
+                if (rentalItem != null)
+                {
+
+
+                    decimal dailyCharge =
+                    rentalItem.PricePerDay * 0.20m;
+
+
+
+                    totalCharge =
+                    dailyCharge * lateDays;
+
+
+                }
+
+
+
+
+
 
 
 
@@ -1023,7 +1059,7 @@ namespace StudentRentalSystem.Controllers
 
 
                 charge.Amount =
-                lateDays * 50;
+                totalCharge;
 
 
 
