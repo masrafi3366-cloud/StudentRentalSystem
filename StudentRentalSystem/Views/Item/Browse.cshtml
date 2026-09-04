@@ -7,15 +7,74 @@
 
 
 
+<style>
+
+
+    .item-card {
+        transition: 0.3s;
+    }
+
+
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(32,178,170,0.25) !important;
+        }
+
+
+
+    .sea-btn {
+        background-color: #20B2AA;
+        border-color: #20B2AA;
+        color: white;
+    }
+
+
+
+        .sea-btn:hover {
+            background-color: #178F89;
+            border-color: #178F89;
+            color: white;
+        }
+
+
+
+    .category-badge {
+        background-color: #20B2AA;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+    }
+
+
+
+    .price-text {
+        color: #178F89;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+</style>
+
+
+
+
+
+
+
 <div class="container mt-4">
 
 
 
 
 
-    <h2 class="mb-4 text-center">
+
+    <h2 class="mb-4 text-center fw-bold"
+        style="color:#20B2AA;">
+
 
         Browse Available Items 🔍
+
 
     </h2>
 
@@ -25,12 +84,16 @@
 
 
 
-    <!-- SEARCH + CATEGORY FILTER -->
+
+    <!-- SEARCH FILTER -->
 
 
     <form method="get"
           action="/Item/Browse"
           class="card shadow p-3 mb-4">
+
+
+
 
 
         <div class="row g-2">
@@ -66,8 +129,11 @@
 
 
                     <option value="">
+
                         All Categories
+
                     </option>
+
 
 
 
@@ -83,23 +149,31 @@
                             if (ViewBag.SelectedCategory == cat)
                             {
 
+
                                 <option value="@cat"
                                         selected>
 
+
                                     @cat
 
+
                                 </option>
+
 
                             }
 
                             else
                             {
 
+
                                 <option value="@cat">
+
 
                                     @cat
 
+
                                 </option>
+
 
                             }
 
@@ -123,20 +197,22 @@
 
 
 
+
             <div class="col-md-2">
 
 
                 <button type="submit"
-                        class="btn btn-primary w-100">
+                        class="btn sea-btn w-100">
 
 
-                    Search
+                    Search 🔍
 
 
                 </button>
 
 
             </div>
+
 
 
 
@@ -158,14 +234,19 @@
     {
 
 
+
         <div class="card shadow p-5 text-center">
 
 
             <h4 class="text-muted">
 
+
                 No Available Items
 
+
             </h4>
+
+
 
 
 
@@ -176,23 +257,27 @@
             </p>
 
 
+
+
+
+
+
             <a href="/Item/Browse"
-               class="btn btn-outline-primary">
+               class="btn btn-outline-secondary">
+
 
                 Clear Filter
 
+
             </a>
+
 
 
         </div>
 
 
+
     }
-
-
-
-
-
 
     else
     {
@@ -206,7 +291,6 @@
 
 
 
-
             @foreach (var item in Model)
             {
 
@@ -215,7 +299,10 @@
 
 
 
-                    <div class="card shadow h-100">
+
+
+                    <div class="card shadow h-100 item-card">
+
 
 
 
@@ -230,7 +317,7 @@
 
                             <img src="@item.Image"
                                  class="card-img-top"
-                                 style="height:220px; object-fit:cover;" />
+                                 style="height:220px;object-fit:cover;" />
 
 
                         }
@@ -239,11 +326,9 @@
                         {
 
 
-                            <div class="bg-secondary text-white text-center p-5">
-
+                            <div class="text-center p-5 bg-light">
 
                                 No Image
-
 
                             </div>
 
@@ -264,9 +349,10 @@
 
 
 
-                            <h5 class="card-title">
+                            <h5 class="fw-bold">
 
                                 @item.ItemName
+
 
                             </h5>
 
@@ -279,9 +365,11 @@
 
                             <p>
 
-                                <span class="badge bg-info text-dark">
+
+                                <span class="category-badge">
 
                                     @item.Category
+
 
                                 </span>
 
@@ -299,11 +387,19 @@
 
 
                                 <strong>
+
                                     Price:
+
                                 </strong>
 
 
-                                ৳ @item.PricePerDay / day
+
+                                <span class="price-text">
+
+                                    ৳ @item.PricePerDay / day
+
+                                </span>
+
 
 
                             </p>
@@ -337,9 +433,8 @@
                             <div class="mt-auto">
 
 
-
                                 <a href="/Item/Details/@item.ItemId"
-                                   class="btn btn-primary w-100">
+                                   class="btn sea-btn w-100">
 
 
                                     View Details
@@ -355,12 +450,14 @@
 
 
 
-
                         </div>
 
 
 
+
+
                     </div>
+
 
 
 
