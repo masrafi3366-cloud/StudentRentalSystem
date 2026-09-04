@@ -57,13 +57,20 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
+
             var items =
             _context.Items
+            .Where(
+                x => x.IsRented == false
+            )
             .OrderByDescending(
                 x => x.ItemId
             )
             .Take(12)
             .ToList();
+
+
 
 
 
@@ -129,10 +136,13 @@ namespace StudentRentalSystem.Controllers
 
 
 
+
             _logger.LogError(
                 "Application error occurred. RequestId: {RequestId}",
                 requestId
             );
+
+
 
 
 
@@ -146,6 +156,8 @@ namespace StudentRentalSystem.Controllers
                 RequestId = requestId
 
             };
+
+
 
 
 
