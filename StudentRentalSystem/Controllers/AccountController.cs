@@ -1138,7 +1138,8 @@ namespace StudentRentalSystem.Controllers
 
 
             return RedirectToAction(
-                "Login"
+                "Index",
+                "Home"
             );
 
 
