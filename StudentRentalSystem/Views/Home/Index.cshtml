@@ -16,21 +16,42 @@
     <div class="card shadow p-5 text-center mb-5">
 
 
-        <h1 class="fw-bold">
+        <h2 class="fw-bold">
 
             Welcome
-            @(ViewBag.StudentName ?? "to Student Rental System")
-            👋
+            <span style="color:#20B2AA;">
+
+                @(ViewBag.StudentName ?? "Student")
+
+            </span>
+            to
+
+        </h2>
+
+
+
+
+
+        <h1 class="fw-bold mt-2">
+
+            Student Rental System 👋
 
         </h1>
 
 
 
-        <p class="fs-4 text-muted">
 
-            Student Rental System
+
+
+        <p class="fs-6 text-muted mt-3">
+
+            Rent, share and manage items easily
+            with other students through a secure platform.
 
         </p>
+
+
+
 
 
 
@@ -41,9 +62,13 @@
             <a href="/Item/Create"
                class="btn btn-success btn-lg me-2">
 
+
                 📦 Post Items
 
+
             </a>
+
+
 
 
 
@@ -52,15 +77,19 @@
             <a href="/Item/Browse"
                class="btn btn-primary btn-lg">
 
+
                 🔍 Browse Items
 
+
             </a>
+
 
 
         </div>
 
 
     </div>
+
 
 
 
@@ -75,23 +104,26 @@
     <div class="row text-center mb-5">
 
 
+
+
+
         <div class="col-md-4 mb-3">
 
 
             <div class="card shadow p-4 h-100">
 
 
-                <h3>
+                <h4>
 
                     📦 Post Items
 
-                </h3>
+                </h4>
 
 
                 <p>
 
-                    Students can post their unused
-                    items for rent.
+                    Share unused items with other students
+                    and earn through rentals.
 
                 </p>
 
@@ -107,23 +139,25 @@
 
 
 
+
+
         <div class="col-md-4 mb-3">
 
 
             <div class="card shadow p-4 h-100">
 
 
-                <h3>
+                <h4>
 
                     🛒 Rent Items
 
-                </h3>
+                </h4>
 
 
                 <p>
 
-                    Find useful items from
-                    other students.
+                    Find and rent useful items
+                    from other students easily.
 
                 </p>
 
@@ -139,23 +173,25 @@
 
 
 
+
+
         <div class="col-md-4 mb-3">
 
 
             <div class="card shadow p-4 h-100">
 
 
-                <h3>
+                <h4>
 
                     🔐 Secure System
 
-                </h3>
+                </h4>
 
 
                 <p>
 
-                    Safe rental system with
-                    payment tracking.
+                    Manage rentals and payments
+                    through a secure system.
 
                 </p>
 
@@ -177,7 +213,7 @@
 
 
 
-    <!-- PRODUCTS -->
+    <!-- FEATURED ITEMS -->
 
 
     <h2 class="text-center mb-4">
@@ -185,6 +221,8 @@
         Featured Items 🛍️
 
     </h2>
+
+
 
 
 
@@ -217,17 +255,21 @@
 
                             <img src="@item.Image"
                                  class="card-img-top"
-                                 style="height:180px;object-fit:cover;" />
+                                 style="height:180px; object-fit:cover;" />
+
 
                         }
+
                         else
                         {
+
 
                             <div class="bg-secondary text-white text-center p-5">
 
                                 No Image
 
                             </div>
+
 
                         }
 
@@ -249,24 +291,30 @@
 
 
 
-                            <p>
-
-                                <span class="badge bg-info">
-
-                                    @item.Category
-
-                                </span>
-
-                            </p>
 
 
 
+                            <span class="badge bg-info text-dark">
 
-                            <p>
+                                @item.Category
+
+                            </span>
+
+
+
+
+
+
+
+                            <p class="mt-3">
+
 
                                 ৳ @item.PricePerDay / day
 
+
                             </p>
+
+
 
 
 
@@ -280,7 +328,6 @@
 
 
                             </a>
-
 
 
 
@@ -299,6 +346,20 @@
 
         }
 
+        else
+        {
+
+
+            <div class="text-center text-muted">
+
+                No items available currently.
+
+            </div>
+
+
+        }
+
+
 
     </div>
 
@@ -310,7 +371,7 @@
 
 
 
-    <!-- MORE BUTTON -->
+    <!-- BROWSE MORE -->
 
 
     <div class="text-center mt-4 mb-5">
@@ -324,6 +385,7 @@
 
 
         </a>
+
 
 
     </div>
