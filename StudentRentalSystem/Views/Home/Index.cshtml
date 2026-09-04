@@ -59,14 +59,37 @@
         <div class="mt-4">
 
 
-            <a href="/Item/Create"
-               class="btn btn-success btn-lg me-2">
+            @if (Context.Session.GetInt32("StudentId") != null)
+            {
 
 
-                📦 Post Items
+                <a href="/Item/Create"
+                   class="btn btn-success btn-lg me-2">
 
 
-            </a>
+                    📦 Post Items
+
+
+                </a>
+
+
+            }
+
+            else
+            {
+
+
+                <a href="/Account/Login"
+                   class="btn btn-success btn-lg me-2">
+
+
+                    🔐 Login to Post Items
+
+
+                </a>
+
+
+            }
 
 
 
