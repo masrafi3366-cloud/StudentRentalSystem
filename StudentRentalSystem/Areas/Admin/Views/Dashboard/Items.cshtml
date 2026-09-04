@@ -20,6 +20,8 @@
 
 
 
+
+
     @if (Model == null || !Model.Any())
     {
 
@@ -37,10 +39,12 @@
     {
 
 
+
         <div class="table-responsive">
 
 
-            <table class="table table-bordered table-hover shadow">
+            <table class="table table-bordered table-hover shadow align-middle">
+
 
 
                 <thead class="table-dark">
@@ -55,7 +59,12 @@
 
 
                         <th>
-                            Item Name
+                            Item
+                        </th>
+
+
+                        <th>
+                            Owner
                         </th>
 
 
@@ -65,12 +74,7 @@
 
 
                         <th>
-                            Owner ID
-                        </th>
-
-
-                        <th>
-                            Price / Day
+                            Price
                         </th>
 
 
@@ -93,6 +97,8 @@
 
 
 
+
+
                 <tbody>
 
 
@@ -104,78 +110,37 @@
                         <tr>
 
 
+
                             <td>
 
 
                                 @if (!string.IsNullOrEmpty(item.Image))
                                 {
 
+
                                     <img src="@item.Image"
-                                         width="80"
-                                         height="60"
-                                         class="rounded"
+                                         width="90"
+                                         height="70"
+                                         class="rounded shadow"
                                          style="object-fit:cover;" />
+
 
                                 }
                                 else
                                 {
 
-                                    <span>
+                                    <span class="text-muted">
+
                                         No Image
+
                                     </span>
 
                                 }
 
 
-                            </td>
-
-
-
-
-
-
-
-                            <td>
-
-                                @item.ItemName
 
                             </td>
 
-
-
-
-
-
-
-                            <td>
-
-                                @item.Category
-
-                            </td>
-
-
-
-
-
-
-
-                            <td>
-
-                                @item.StudentId
-
-                            </td>
-
-
-
-
-
-
-
-                            <td>
-
-                                @item.PricePerDay
-
-                            </td>
 
 
 
@@ -186,16 +151,125 @@
                             <td>
 
 
-                                @if (item.AdminApproved)
+                                <strong>
+
+                                    @item.ItemName
+
+                                </strong>
+
+
+
+                                <br />
+
+
+                                <small class="text-muted">
+
+                                    ID: @item.ItemId
+
+                                </small>
+
+
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+
+                                <strong>
+
+                                    @item.Student?.FullName
+
+                                </strong>
+
+
+
+                                <br />
+
+
+                                <small>
+
+                                    @item.Student?.Mobile
+
+                                </small>
+
+
+
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+                                <span class="badge bg-info text-dark">
+
+                                    @item.Category
+
+                                </span>
+
+
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+                                ৳ @item.PricePerDay / day
+
+
+                            </td>
+
+
+
+
+
+
+
+
+                            <td>
+
+
+
+
+                                @if (item.IsRented)
+                                {
+
+                                    <span class="badge bg-danger">
+
+                                        Rented
+
+                                    </span>
+
+
+                                }
+
+                                else if (item.AdminApproved)
                                 {
 
                                     <span class="badge bg-success">
 
-                                        Approved
+                                        Available
 
                                     </span>
 
+
                                 }
+
                                 else
                                 {
 
@@ -205,7 +279,9 @@
 
                                     </span>
 
+
                                 }
+
 
 
 
@@ -217,11 +293,33 @@
 
 
 
+
+
                             <td>
+
+
+
+
+                                <a href="/Admin/Dashboard/ItemDetails/@item.ItemId"
+                                   class="btn btn-primary btn-sm mb-1">
+
+
+                                    Details
+
+
+                                </a>
+
+
+
+
+
 
 
                                 @if (!item.AdminApproved)
                                 {
+
+
+                                    <br />
 
 
                                     <a href="/Admin/Dashboard/ApproveItem/@item.ItemId"
@@ -249,9 +347,13 @@
                                     </a>
 
 
+
                                 }
+
                                 else
                                 {
+
+                                    <br />
 
 
                                     <span class="badge bg-success">
@@ -265,7 +367,10 @@
 
 
 
+
+
                             </td>
+
 
 
 
