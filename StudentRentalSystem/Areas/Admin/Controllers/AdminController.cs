@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentRentalSystem.Data;
+using StudentRentalSystem.Models.ViewModels;
 
 
 
@@ -132,14 +133,188 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
 
 
         // =========================
+        // ADMIN PAYMENTS
+        // =========================
+
+
+        [Route("Admin/Payments")]
+        public IActionResult Payments()
+        {
+
+
+            if (
+                HttpContext.Session.GetString(
+                    "Admin"
+                )
+                == null
+            )
+            {
+
+                return RedirectToAction(
+                    "Login",
+                    "Admin",
+                    new
+                    {
+                        area = "Admin"
+                    }
+                );
+
+            }
+
+
+
+
+
+
+
+
+            var payments =
+            _context.Payments
+            .Select(
+                p =>
+                new AdminPaymentViewModel
+                {
+
+
+                    PaymentId =
+                    p.PaymentId,
+
+
+
+                    Amount =
+                    p.Amount,
+
+
+
+                    PaymentMethod =
+                    p.PaymentMethod,
+
+
+
+                    TransactionId =
+                    p.TransactionId,
+
+
+
+                    PaymentStatus =
+                    p.PaymentStatus,
+
+
+
+                    PaymentDate =
+                    p.PaymentDate,
+
+
+
+
+
+
+
+                    StudentName =
+                    _context.Students
+                    .Where(
+                        s =>
+                        s.StudentId ==
+                        _context.Rentals
+                        .Where(
+                            r =>
+                            r.RentalId ==
+                            p.RentalId
+                        )
+                        .Select(
+                            r =>
+                            r.StudentId
+                        )
+                        .FirstOrDefault()
+                    )
+                    .Select(
+                        s =>
+                        s.FullName
+                    )
+                    .FirstOrDefault()
+                    ??
+                    "Unknown",
+
+
+
+
+
+
+
+
+                    ItemName =
+                    _context.Items
+                    .Where(
+                        i =>
+                        i.ItemId ==
+                        _context.Rentals
+                        .Where(
+                            r =>
+                            r.RentalId ==
+                            p.RentalId
+                        )
+                        .Select(
+                            r =>
+                            r.ItemId
+                        )
+                        .FirstOrDefault()
+                    )
+                    .Select(
+                        i =>
+                        i.ItemName
+                    )
+                    .FirstOrDefault()
+                    ??
+                    "Unknown"
+
+
+
+                }
+            )
+            .OrderByDescending(
+                x =>
+                x.PaymentDate
+            )
+            .ToList();
+
+
+
+
+
+
+
+
+            return View(
+                payments
+            );
+
+
+        }
+
+
+
+
+
+
+
+
+
+        // =========================
         // ADMIN LOGOUT
         // =========================
+
 
         [HttpGet]
         public IActionResult Logout()
         {
 
-            HttpContext.Session.Remove("Admin");
+
+            HttpContext.Session.Remove(
+                "Admin"
+            );
+
+
+
 
 
             return RedirectToAction(
@@ -151,7 +326,10 @@ namespace StudentRentalSystem.Areas.Admin.Controllers
                 }
             );
 
+
         }
+
+
 
 
 

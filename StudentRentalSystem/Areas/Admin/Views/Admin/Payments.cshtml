@@ -1,0 +1,282 @@
+﻿@model IEnumerable<StudentRentalSystem.Models.ViewModels.AdminPaymentViewModel>
+
+
+@{
+    ViewData["Title"] = "Admin Payments";
+}
+
+
+
+<div class="container mt-5">
+
+
+
+    <div class="card shadow p-4">
+
+
+
+        <h2 class="text-center mb-4">
+
+            Payment Management 💳
+
+        </h2>
+
+
+
+
+
+        <div class="table-responsive">
+
+
+
+            <table class="table table-bordered table-hover text-center">
+
+
+                <thead class="table-success">
+
+
+                    <tr>
+
+
+                        <th>
+                            Payment ID
+                        </th>
+
+
+                        <th>
+                            Student
+                        </th>
+
+
+                        <th>
+                            Item
+                        </th>
+
+
+                        <th>
+                            Amount
+                        </th>
+
+
+                        <th>
+                            Method
+                        </th>
+
+
+                        <th>
+                            Transaction ID
+                        </th>
+
+
+                        <th>
+                            Status
+                        </th>
+
+
+                        <th>
+                            Date
+                        </th>
+
+
+                    </tr>
+
+
+                </thead>
+
+
+
+
+
+
+
+                <tbody>
+
+
+                    @if (Model != null && Model.Any())
+                    {
+
+
+                        foreach (var payment in Model)
+                        {
+
+
+                            <tr>
+
+
+                                <td>
+
+                                    @payment.PaymentId
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+                                    @payment.StudentName
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+                                    @payment.ItemName
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+                                    ৳ @payment.Amount
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+                                    <span class="badge bg-info text-dark">
+
+                                        @payment.PaymentMethod
+
+                                    </span>
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+                                    @payment.TransactionId
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+
+                                    @if (payment.PaymentStatus == "Completed")
+                                    {
+
+                                        <span class="badge bg-success">
+
+                                            Completed
+
+                                        </span>
+
+                                    }
+
+                                    else
+                                    {
+
+                                        <span class="badge bg-warning text-dark">
+
+                                            @payment.PaymentStatus
+
+                                        </span>
+
+                                    }
+
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+                                    @payment.PaymentDate
+                                    .ToString("dd MMM yyyy")
+
+                                </td>
+
+
+
+                            </tr>
+
+
+                        }
+
+
+                    }
+
+                    else
+                    {
+
+
+                        <tr>
+
+
+                            <td colspan="8"
+                                class="text-muted">
+
+
+                                No payment records found.
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+
+            </table>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="text-center mt-3">
+
+
+            <a href="/Admin/Dashboard"
+               class="btn btn-outline-primary">
+
+
+                Back To Dashboard
+
+
+            </a>
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+</div>
