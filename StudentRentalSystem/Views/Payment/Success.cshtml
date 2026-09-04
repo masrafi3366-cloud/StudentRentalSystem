@@ -12,10 +12,15 @@
 <div class="container mt-5">
 
 
+
+
+
     <div class="row justify-content-center">
 
 
         <div class="col-md-6">
+
+
 
 
 
@@ -60,6 +65,33 @@
 
 
 
+                <div class="alert alert-success">
+
+
+                    <h4>
+
+                        ৳ @Model.Amount
+
+                    </h4>
+
+
+                    <p class="mb-0">
+
+                        Payment Completed
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
                 <div class="text-start">
 
 
@@ -88,11 +120,11 @@
                     <p>
 
                         <strong>
-                            Amount:
+                            Rental ID:
                         </strong>
 
 
-                        ৳ @Model.Amount
+                        @Model.RentalId
 
 
                     </p>
@@ -130,7 +162,7 @@
                         </strong>
 
 
-                        @Model.PaymentDate.ToShortDateString()
+                        @Model.PaymentDate.ToString("dd MMM yyyy")
 
 
                     </p>
@@ -161,7 +193,6 @@
                             </span>
 
                         }
-
                         else
                         {
 
@@ -178,6 +209,49 @@
                     </p>
 
 
+
+
+
+
+                    @if (ViewBag.Rental != null)
+                    {
+
+                        <hr />
+
+
+                        <h5>
+
+                            Rental Information
+
+                        </h5>
+
+
+
+                        <p>
+
+                            <strong>
+                                Rental Days:
+                            </strong>
+
+                            @ViewBag.Rental.RentalDays Days
+
+                        </p>
+
+
+
+
+                        <p>
+
+                            <strong>
+                                Total Rental Amount:
+                            </strong>
+
+                            ৳ @ViewBag.Rental.TotalAmount
+
+                        </p>
+
+
+                    }
 
 
 

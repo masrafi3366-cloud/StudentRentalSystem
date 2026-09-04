@@ -13,10 +13,35 @@
 <div class="container mt-5">
 
 
+
+
+
+
+    @if (TempData["Error"] != null)
+    {
+
+        <div class="alert alert-danger shadow">
+
+            @TempData["Error"]
+
+        </div>
+
+    }
+
+
+
+
+
+
+
+
+
     <div class="row justify-content-center">
 
 
         <div class="col-md-6">
+
+
 
 
 
@@ -26,9 +51,9 @@
 
 
 
-                <h2 class="text-center mb-4">
+                <h2 class="text-center text-primary mb-4">
 
-                    Payment 💳
+                    Complete Payment 💳
 
                 </h2>
 
@@ -38,22 +63,30 @@
 
 
 
-                <div class="alert alert-info text-center">
+                <div class="card bg-light mb-4">
 
 
-                    <h5>
-
-                        Rental Amount
-
-                    </h5>
+                    <div class="card-body text-center">
 
 
+                        <h5>
 
-                    <h3 class="text-success">
+                            Total Rental Amount
 
-                        ৳ @Model.TotalAmount
+                        </h5>
 
-                    </h3>
+
+
+
+                        <h2 class="text-success fw-bold">
+
+                            ৳ @Model.TotalAmount
+
+                        </h2>
+
+
+
+                    </div>
 
 
                 </div>
@@ -66,7 +99,20 @@
 
 
 
-                <div class="mb-3">
+                <div class="mb-4">
+
+
+
+                    <h5 class="mb-3">
+
+                        Rental Details
+
+                    </h5>
+
+
+
+
+
 
 
                     <p>
@@ -77,8 +123,10 @@
 
                         @Model.RentalId
 
-
                     </p>
+
+
+
 
 
 
@@ -90,10 +138,12 @@
                             Rental Days:
                         </strong>
 
-                        @Model.RentalDays
-
+                        @Model.RentalDays Days
 
                     </p>
+
+
+
 
 
 
@@ -107,8 +157,10 @@
 
                         @Model.StartDate.ToShortDateString()
 
-
                     </p>
+
+
+
 
 
 
@@ -122,13 +174,13 @@
 
                         @Model.EndDate.ToShortDateString()
 
-
                     </p>
 
 
 
-                </div>
 
+
+                </div>
 
 
 
@@ -146,12 +198,11 @@
 
 
 
-
                 <form method="post">
 
 
-
                     @Html.AntiForgeryToken()
+
 
 
 
@@ -171,7 +222,7 @@
                     <div class="mb-3">
 
 
-                        <label class="form-label">
+                        <label class="form-label fw-bold">
 
                             Transaction ID
 
@@ -179,16 +230,23 @@
 
 
 
+
                         <input type="text"
                                name="TransactionId"
                                class="form-control"
-                               placeholder="Enter transaction ID"
+                               placeholder="Enter payment transaction ID"
                                required />
 
 
 
-                    </div>
+                        <small class="text-muted">
 
+                            Enter your mobile banking transaction ID.
+
+                        </small>
+
+
+                    </div>
 
 
 
@@ -201,7 +259,7 @@
                             class="btn btn-success w-100">
 
 
-                        Confirm Payment
+                        Confirm Payment ✅
 
 
                     </button>
@@ -220,20 +278,15 @@
 
 
 
-                <div class="text-center mt-3">
+                <a href="/Rental/MyRentals"
+                   class="btn btn-outline-secondary w-100 mt-3">
 
 
-                    <a href="/Rental/MyRentals"
-                       class="btn btn-outline-secondary">
+                    Back To Rentals
 
 
-                        Back To Rentals
+                </a>
 
-
-                    </a>
-
-
-                </div>
 
 
 
@@ -243,10 +296,18 @@
             </div>
 
 
+
+
         </div>
 
 
+
+
     </div>
+
+
+
+
 
 
 </div>
