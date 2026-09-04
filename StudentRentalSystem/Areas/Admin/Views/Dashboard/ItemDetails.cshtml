@@ -1,0 +1,299 @@
+﻿@model StudentRentalSystem.Models.Item
+
+
+@{
+    ViewData["Title"] = "Item Details";
+}
+
+
+
+<div class="container mt-4">
+
+
+    <div class="card shadow">
+
+
+        <div class="card-body">
+
+
+
+            <h2 class="mb-4">
+
+                Item Details 📦
+
+            </h2>
+
+
+
+
+            <hr />
+
+
+
+
+
+
+
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+
+                <img src="@Model.Image"
+                     width="300"
+                     height="220"
+                     class="rounded shadow mb-3"
+                     style="object-fit:cover;" />
+
+            }
+
+            else
+            {
+
+                <div class="alert alert-secondary">
+
+                    No Image Available
+
+                </div>
+
+            }
+
+
+
+
+
+
+
+            <h3>
+
+                @Model.ItemName
+
+            </h3>
+
+
+
+
+
+
+
+
+            <p>
+
+                <strong>
+                    Category:
+                </strong>
+
+                @Model.Category
+
+            </p>
+
+
+
+
+
+
+
+
+            <p>
+
+                <strong>
+                    Description:
+                </strong>
+
+                @Model.Description
+
+            </p>
+
+
+
+
+
+
+
+
+            <p>
+
+                <strong>
+                    Price Per Day:
+                </strong>
+
+                ৳ @Model.PricePerDay
+
+            </p>
+
+
+
+
+
+
+
+
+            <p>
+
+                <strong>
+                    Owner:
+                </strong>
+
+
+                @if (ViewBag.Owner != null)
+                {
+
+                    @ViewBag.Owner.FullName
+
+                }
+                else
+                {
+
+                    <span>
+                        Unknown
+                    </span>
+
+                }
+
+            </p>
+
+
+
+
+
+
+
+
+            @if (ViewBag.Owner != null)
+            {
+
+
+                <p>
+
+                    <strong>
+                        Owner Mobile:
+                    </strong>
+
+
+                    @ViewBag.Owner.Mobile
+
+
+                </p>
+
+
+
+                <p>
+
+                    <strong>
+                        Owner Email:
+                    </strong>
+
+
+                    @ViewBag.Owner.Email
+
+
+                </p>
+
+
+            }
+
+
+
+
+
+
+
+
+            <p>
+
+                <strong>
+                    Item Status:
+                </strong>
+
+
+                @if (Model.IsRented)
+                {
+
+                    <span class="badge bg-danger">
+
+                        Rented
+
+                    </span>
+
+                }
+                else
+                {
+
+                    <span class="badge bg-success">
+
+                        Available
+
+                    </span>
+
+                }
+
+
+            </p>
+
+
+
+
+
+
+
+
+            <p>
+
+                <strong>
+                    Approval Status:
+                </strong>
+
+
+                @if (Model.AdminApproved)
+                {
+
+                    <span class="badge bg-success">
+
+                        Approved
+
+                    </span>
+
+                }
+                else
+                {
+
+                    <span class="badge bg-warning text-dark">
+
+                        Pending
+
+                    </span>
+
+                }
+
+
+            </p>
+
+
+
+
+
+
+
+
+            <br />
+
+
+
+            <a href="/Admin/Dashboard/Items"
+               class="btn btn-secondary">
+
+
+                Back To Items
+
+
+            </a>
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
